@@ -63,7 +63,10 @@ const styles = {
   cssFocused: {color: "white !important"},
     formControl: {
         minWidth: 300,
-    }
+    },
+    checkboxLabelA: {
+        color: "white !important"
+      },
   };
 
 class Assignments extends Component {
@@ -76,18 +79,19 @@ class Assignments extends Component {
         selectedDate: new Date(),
         assignmentsTotal: 0,
         offset: 0,
-        doctor:0,
+        doctor:"",
         doctors:[],
-        department:0,
+        department:"",
         departments:[],
-        seenonnly:0,
-        emr:0,
-        datefrom:Date(),
-        dateto:Date(),
+        seenonnly:"",
+        emr:"",
+        datefrom:new Date(),
+        dateto:new Date(),
         page:1,
       };
       Moment.locale('en')
       this.handleClick = this.handleClick.bind(this)
+      this.searchClick = this.searchClick.bind(this)
     }
     
     returnarrays(){
@@ -97,22 +101,41 @@ class Assignments extends Component {
         });
         return a;    
     }
+    searchClick(){
+        const assignmentsurl = 'http://192.168.1.6:8011/api/Assignments?datefrom='+this.state.datefrom.toLocaleDateString('en-US')+'&dateto='+this.state.dateto.toLocaleDateString('en-US')+'&page=1&emr='+this.state.emr+'&department='+this.state.department+'&doctor='+this.state.doctor+'&seenonlly='+this.state.seenonnly;
+        console.log(assignmentsurl);
+        axios.get(assignmentsurl)
+            .then((response)=>{
+                console.log(response.data);
+                this.setState({
+                    assignments: response.data.Data,
+                    assignmentsTotal: response.data.Paging.totalCount,
+                    isLoading : false
+                });
+            })
+            .catch((error)=>console.log(error));
+    }
     handleClick(offset) {
         this.setState({ 
-            offset
+            offset,
+            page:(this.state.offset+20)/10
          });
-        const assignmentsurl = 'http://192.168.1.8:8011/api/Assignments?datefrom=&dateto=&page='+(this.state.offset+20)/10+'&emr=&department=&doctor=&seenonlly=';
+        const assignmentsurl = 'http://192.168.1.6:8011/api/Assignments?datefrom='+this.state.datefrom.toLocaleDateString('en-US')+'&dateto='+this.state.dateto.toLocaleDateString('en-US')+'&page='+(this.state.offset+20)/10+'&emr='+this.state.emr+'&department='+this.state.department+'&doctor='+this.state.doctor+'&seenonlly='+this.state.seenonnly;
         axios.get(assignmentsurl)
             .then((response)=>{
                 this.setState({
-                    assignments: response.data,
+                    assignments: response.data.Data,
+                    assignmentsTotal: response.data.Paging.totalCount,
                     isLoading : false
                 })
             })
             .catch((error)=>console.log(error));
       }
-    handleDateChange = date => {
-        this.setState({ selectedDate: date });
+    handleDateFromChange = date => {
+        this.setState({ datefrom: date });
+      };
+    handleDateToChange = date => {
+        this.setState({ dateto: date });
       };
     doctorhandleChange = event => {
         this.setState({ doctor: event.target.value });
@@ -132,22 +155,16 @@ class Assignments extends Component {
       };
 
 	componentDidMount() {
-        const assignmentsurl = 'http://192.168.1.8:8011/api/Assignments?datefrom=&dateto=&page='+this.state.page+'&emr=&department=&doctor=&seenonlly=';
-        const assignmentstotalurl = 'http://192.168.1.8:8011/api/assignments';
-        const departmentsurl = 'http://192.168.1.8:8011/api/departments';
-        const usersurl = 'http://192.168.1.8:8011/api/users';
+        const assignmentsurl = 'http://192.168.1.6:8011/api/Assignments?datefrom=&dateto=&page='+this.state.page+'&emr=&department=&doctor=&seenonlly=';
+        const departmentsurl = 'http://192.168.1.6:8011/api/departments';
+        const usersurl = 'http://192.168.1.6:8011/api/users';
+        console.log(assignmentsurl);
         axios.get(assignmentsurl)
             .then((response)=>{
                 this.setState({
-                    assignments: response.data,
+                    assignments: response.data.Data,
+                    assignmentsTotal: response.data.Paging.totalCount,
                     isLoading : false
-                })
-            })
-            .catch((error)=>console.log(error));
-        axios.get(assignmentstotalurl)
-            .then((response)=>{
-                this.setState({
-                    assignmentsTotal: response.data
                 })
             })
             .catch((error)=>console.log(error));
@@ -199,7 +216,7 @@ class Assignments extends Component {
                                                 margin="normal"
                                                 label="From"
                                                 value={this.state.datefrom}
-                                                onChange={this.handleDateChange}
+                                                onChange={this.handleDateFromChange}
                                                 InputLabelProps={{
                                                     classes: {
                                                     root: classes.cssLabel,
@@ -213,7 +230,7 @@ class Assignments extends Component {
                                                 margin="normal"
                                                 label="To"
                                                 value={this.state.dateto}
-                                                onChange={this.handleDateChange}
+                                                onChange={this.handleDateToChange}
                                                 InputLabelProps={{
                                                     classes: {
                                                     root: classes.cssLabel,
@@ -231,15 +248,17 @@ class Assignments extends Component {
                                                 checked={this.state.seenonnly}
                                                 onChange={this.seenhandleChange(1)}
                                                 value={this.state.seenonnly}
+                                                style={{color: '#fff'}}
                                                 />
                                             }
+                                            classes={{label: classes.checkboxLabelA}}
                                             label="Seen Onlly"
                                             InputLabelProps={{
                                                 className: classes.input
                                             }}
                                         />
                                         <FormControl className={classes.formControl}>
-                                            <InputLabel htmlFor="doctor-simple">Doctor</InputLabel>
+                                            <InputLabel FormLabelClasses={{root: classes.input,focused: classes.input}} htmlFor="doctor-simple">Doctor</InputLabel>
                                             <Select
                                                 value={this.state.doctor}
                                                 onChange={this.doctorhandleChange}
@@ -247,11 +266,11 @@ class Assignments extends Component {
                                                 <MenuItem value="">
                                                 <em>None</em>
                                                 </MenuItem>
-                                                {this.state.doctors.map((item,i) => <MenuItem key={i} value={i}>{item}</MenuItem>)}
+                                                {this.state.doctors.map((item,i) => <MenuItem key={i} value={item}>{item}</MenuItem>)}
                                             </Select>
                                         </FormControl>
                                         <FormControl className={classes.formControl}>
-                                            <InputLabel htmlFor="department-simple">Departments</InputLabel>
+                                            <InputLabel FormLabelClasses={{root: classes.input,focused: classes.input}} htmlFor="department-simple">Departments</InputLabel>
                                             <Select
                                                 value={this.state.department}
                                                 onChange={this.departmenthandleChange}
@@ -263,7 +282,7 @@ class Assignments extends Component {
                                             </Select>
                                         </FormControl>
                                         <FormControl className={classes.formControl} style={{minWidth: 120,paddingLeft: 15}}>
-                                            <Button variant="contained" size="large" color="white" className={classes.button}>
+                                            <Button onClick={this.searchClick} variant="contained" size="large" color="white" className={classes.button}>
                                                 Search
                                             </Button>
                                         </FormControl>
@@ -287,7 +306,7 @@ class Assignments extends Component {
                             </Grid>
                         </CardHeader>
                         <CardBody>
-                            {this.returnarrays().length==0?<CircularProgress className={classes.progress} />:""}
+                            {this.state.isLoading?<CircularProgress className={classes.progress} />:""}
                             <Table
                                 tableHeaderColor="primary"
                                 tableHead={["MRN", "Full Name", "Doctor", "Date"]}
