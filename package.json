@@ -22,9 +22,12 @@
     "react-chartist": "^0.13.1",
     "react-dom": "^16.7.0",
     "react-google-maps": "^9.4.5",
+    "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.2",
-    "react-swipeable-views": "^0.13.0"
+    "react-swipeable-views": "^0.13.0",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
