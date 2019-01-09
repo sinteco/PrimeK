@@ -23,6 +23,12 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { FormGroup } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { fetchPosts } from '../../redux/actions/postActions';
+import { createPosts } from '../../redux/actions/postActions';
+import PropTypes from 'prop-types';
+import { compose } from 'redux';
+import { fetchAssignment } from '../../redux/actions/assignmentAction';
 
 
 const styles = {
@@ -96,24 +102,26 @@ class Assignments extends Component {
     
     returnarrays(){
         var a = new Array();
-        this.state.assignments.map((assignment)=>{
+        this.props.assignments.map((assignment)=>{
             a.push([[assignment.CardNumber],[assignment.PatientFullName],[assignment.DoctorFullName],[Moment(assignment.Date).format('d MMM')]])
         });
         return a;    
     }
     searchClick(){
-        const assignmentsurl = 'http://192.168.1.6:8011/api/Assignments?datefrom='+this.state.datefrom.toLocaleDateString('en-US')+'&dateto='+this.state.dateto.toLocaleDateString('en-US')+'&page=1&emr='+this.state.emr+'&department='+this.state.department+'&doctor='+this.state.doctor+'&seenonlly='+this.state.seenonnly;
+        const assignmentsurl = 'http://192.168.1.8:8011/api/Assignments?datefrom='+this.state.datefrom.toLocaleDateString('en-US')+'&dateto='+this.state.dateto.toLocaleDateString('en-US')+'&page=1&emr='+this.state.emr+'&department='+this.state.department+'&doctor='+this.state.doctor+'&seenonlly='+this.state.seenonnly;
         console.log(assignmentsurl);
-        axios.get(assignmentsurl)
-            .then((response)=>{
-                console.log(response.data);
-                this.setState({
-                    assignments: response.data.Data,
-                    assignmentsTotal: response.data.Paging.totalCount,
-                    isLoading : false
-                });
-            })
-            .catch((error)=>console.log(error));
+        this.props.fetchAssignment(assignmentsurl);
+        console.log(this.props.assignment);
+        // axios.get(assignmentsurl)
+        //     .then((response)=>{
+        //         console.log(response.data);
+        //         this.setState({
+        //             assignments: response.data.Data,
+        //             assignmentsTotal: response.data.Paging.totalCount,
+        //             isLoading : false
+        //         });
+        //     })
+        //     .catch((error)=>console.log(error));
     }
     handleClick(offset) {
         this.setState({ 
@@ -154,20 +162,31 @@ class Assignments extends Component {
         });
       };
 
+    componentWillReceiveProps(nextProps){
+        //if(nextProps.newPost){
+        //    this.props.posts.unshift(nextProps.newPost);
+        //}
+    }
+    componentWillMount(){
+        //const post = {title:"h",body:"n"}
+        //this.props.fetchPosts();
+        //this.props.createPosts(post);
+    }
 	componentDidMount() {
-        const assignmentsurl = 'http://192.168.1.6:8011/api/Assignments?datefrom=&dateto=&page='+this.state.page+'&emr=&department=&doctor=&seenonlly=';
+        const assignmentsurl = 'http://192.168.1.8:8011/api/Assignments?datefrom=&dateto=&page='+this.state.page+'&emr=&department=&doctor=&seenonlly=';
         const departmentsurl = 'http://192.168.1.6:8011/api/departments';
         const usersurl = 'http://192.168.1.6:8011/api/users';
         console.log(assignmentsurl);
-        axios.get(assignmentsurl)
-            .then((response)=>{
-                this.setState({
-                    assignments: response.data.Data,
-                    assignmentsTotal: response.data.Paging.totalCount,
-                    isLoading : false
-                })
-            })
-            .catch((error)=>console.log(error));
+        this.props.fetchAssignment(assignmentsurl);
+        // axios.get(assignmentsurl)
+        //     .then((response)=>{
+        //         this.setState({
+        //             assignments: response.data.Data,
+        //             assignmentsTotal: response.data.Paging.totalCount,
+        //             isLoading : false
+        //         })
+        //     })
+        //     .catch((error)=>console.log(error));
         axios.get(departmentsurl)
             .then((response)=>{
                 this.setState({
@@ -186,6 +205,7 @@ class Assignments extends Component {
 
 	render(){
         const { classes } = this.props;
+        //console.log("data => "+this.props.assignments+" hay hay hay");
 		return (
             <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
@@ -306,7 +326,7 @@ class Assignments extends Component {
                             </Grid>
                         </CardHeader>
                         <CardBody>
-                            {this.state.isLoading?<CircularProgress className={classes.progress} />:""}
+                            {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
                             <Table
                                 tableHeaderColor="primary"
                                 tableHead={["MRN", "Full Name", "Doctor", "Date"]}
@@ -326,4 +346,20 @@ class Assignments extends Component {
 	}
 }
 
-export default withStyles(styles)(Assignments);
+Assignments.PropTypes = {
+    //fetchPosts: PropTypes.func.isRequired,
+    //posts: PropTypes.array.isRequired,
+    //createPosts: PropTypes.func.isRequired,
+    //newPost: PropTypes.object,
+    fetchAssignment: PropTypes.func.isRequired,
+    assignments: PropTypes.array.isRequired
+}
+
+const mapStateToProps = state => ({
+    //posts: state.posts.items,
+    //newPost: state.posts.item,
+    assignments: state.assignments.items,
+    isLoading:false
+});
+
+export default compose(withStyles(styles),connect(mapStateToProps, { fetchAssignment }))(Assignments);
