@@ -24,9 +24,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { FormGroup } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { fetchPosts } from '../../redux/actions/postActions';
-import { createPosts } from '../../redux/actions/postActions';
-import PropTypes from 'prop-types';
+import { fetchDepartment } from '../../redux/actions/assignmentAction';
+import { fetchDoctor } from '../../redux/actions/assignmentAction';
+import propTypes from 'prop-types';
 import { compose } from 'redux';
 import { fetchAssignment } from '../../redux/actions/assignmentAction';
 
@@ -80,15 +80,15 @@ class Assignments extends Component {
 	constructor(props) {
 	  super(props);
 	  this.state = {
-        isLoading: true,
-        assignments: [],
+        //isLoading: true,
+        //assignments: [],
         selectedDate: new Date(),
-        assignmentsTotal: 0,
+        //assignmentsTotal: 0,
         offset: 0,
         doctor:"",
-        doctors:[],
+        //doctors:[],
         department:"",
-        departments:[],
+        //departments:[],
         seenonnly:"",
         emr:"",
         datefrom:new Date(),
@@ -108,10 +108,9 @@ class Assignments extends Component {
         return a;    
     }
     searchClick(){
-        const assignmentsurl = 'http://192.168.1.8:8011/api/Assignments?datefrom='+this.state.datefrom.toLocaleDateString('en-US')+'&dateto='+this.state.dateto.toLocaleDateString('en-US')+'&page=1&emr='+this.state.emr+'&department='+this.state.department+'&doctor='+this.state.doctor+'&seenonlly='+this.state.seenonnly;
-        console.log(assignmentsurl);
+        const assignmentsurl = '/Assignments?datefrom='+this.state.datefrom.toLocaleDateString('en-US')+'&dateto='+this.state.dateto.toLocaleDateString('en-US')+'&page=1&emr='+this.state.emr+'&department='+this.state.department+'&doctor='+this.state.doctor+'&seenonlly='+this.state.seenonnly;
+        this.state.isLoading=true;
         this.props.fetchAssignment(assignmentsurl);
-        console.log(this.props.assignment);
         // axios.get(assignmentsurl)
         //     .then((response)=>{
         //         console.log(response.data);
@@ -128,16 +127,18 @@ class Assignments extends Component {
             offset,
             page:(this.state.offset+20)/10
          });
-        const assignmentsurl = 'http://192.168.1.6:8011/api/Assignments?datefrom='+this.state.datefrom.toLocaleDateString('en-US')+'&dateto='+this.state.dateto.toLocaleDateString('en-US')+'&page='+(this.state.offset+20)/10+'&emr='+this.state.emr+'&department='+this.state.department+'&doctor='+this.state.doctor+'&seenonlly='+this.state.seenonnly;
-        axios.get(assignmentsurl)
-            .then((response)=>{
-                this.setState({
-                    assignments: response.data.Data,
-                    assignmentsTotal: response.data.Paging.totalCount,
-                    isLoading : false
-                })
-            })
-            .catch((error)=>console.log(error));
+        const assignmentsurl = '/Assignments?datefrom='+this.state.datefrom.toLocaleDateString('en-US')+'&dateto='+this.state.dateto.toLocaleDateString('en-US')+'&page='+(this.state.offset+20)/10+'&emr='+this.state.emr+'&department='+this.state.department+'&doctor='+this.state.doctor+'&seenonlly='+this.state.seenonnly;
+        this.props.fetchAssignment(assignmentsurl);
+        console.log(assignmentsurl);
+        // axios.get(assignmentsurl)
+        //     .then((response)=>{
+        //         this.setState({
+        //             assignments: response.data.Data,
+        //             assignmentsTotal: response.data.Paging.totalCount,
+        //             isLoading : false
+        //         })
+        //     })
+        //     .catch((error)=>console.log(error));
       }
     handleDateFromChange = date => {
         this.setState({ datefrom: date });
@@ -173,39 +174,17 @@ class Assignments extends Component {
         //this.props.createPosts(post);
     }
 	componentDidMount() {
-        const assignmentsurl = 'http://192.168.1.8:8011/api/Assignments?datefrom=&dateto=&page='+this.state.page+'&emr=&department=&doctor=&seenonlly=';
-        const departmentsurl = 'http://192.168.1.6:8011/api/departments';
-        const usersurl = 'http://192.168.1.6:8011/api/users';
+        const assignmentsurl = '/Assignments?datefrom=&dateto=&page='+this.state.page+'&emr=&department=&doctor=&seenonlly=';
+        const departmentsurl = '/departments';
+        const usersurl = '/users';
         console.log(assignmentsurl);
         this.props.fetchAssignment(assignmentsurl);
-        // axios.get(assignmentsurl)
-        //     .then((response)=>{
-        //         this.setState({
-        //             assignments: response.data.Data,
-        //             assignmentsTotal: response.data.Paging.totalCount,
-        //             isLoading : false
-        //         })
-        //     })
-        //     .catch((error)=>console.log(error));
-        axios.get(departmentsurl)
-            .then((response)=>{
-                this.setState({
-                    departments: response.data
-                })
-            })
-            .catch((error)=>console.log(error));
-        axios.get(usersurl)
-            .then((response)=>{
-                this.setState({
-                    doctors: response.data
-                })
-            })
-            .catch((error)=>console.log(error));
+        this.props.fetchDepartment(departmentsurl);
+        this.props.fetchDoctor(usersurl);
 	}
 
 	render(){
         const { classes } = this.props;
-        //console.log("data => "+this.props.assignments+" hay hay hay");
 		return (
             <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
@@ -286,7 +265,7 @@ class Assignments extends Component {
                                                 <MenuItem value="">
                                                 <em>None</em>
                                                 </MenuItem>
-                                                {this.state.doctors.map((item,i) => <MenuItem key={i} value={item}>{item}</MenuItem>)}
+                                                {this.props.doctors.map((item,i) => <MenuItem key={i} value={item}>{item}</MenuItem>)}
                                             </Select>
                                         </FormControl>
                                         <FormControl className={classes.formControl}>
@@ -298,7 +277,7 @@ class Assignments extends Component {
                                                 <MenuItem value="">
                                                 <em>None</em>
                                                 </MenuItem>
-                                                {this.state.departments.map((item,i) => <MenuItem key={i} value={item.Name}>{item.Name}</MenuItem>)}
+                                                {this.props.departments.map((item,i) => <MenuItem key={i} value={item.Name}>{item.Name}</MenuItem>)}
                                             </Select>
                                         </FormControl>
                                         <FormControl className={classes.formControl} style={{minWidth: 120,paddingLeft: 15}}>
@@ -335,7 +314,7 @@ class Assignments extends Component {
                             <Pagination
                                 limit={10}
                                 offset={this.state.offset}
-                                total={this.state.assignmentsTotal}
+                                total={this.props.totalCount}
                                 onClick={(e, offset) => this.handleClick(offset)}
                                 />
                         </CardBody>
@@ -346,20 +325,29 @@ class Assignments extends Component {
 	}
 }
 
-Assignments.PropTypes = {
-    //fetchPosts: PropTypes.func.isRequired,
-    //posts: PropTypes.array.isRequired,
-    //createPosts: PropTypes.func.isRequired,
-    //newPost: PropTypes.object,
-    fetchAssignment: PropTypes.func.isRequired,
-    assignments: PropTypes.array.isRequired
+Assignments.propTypes = {
+    //fetchPosts: propTypes.func.isRequired,
+    //posts: propTypes.array.isRequired,
+    //createPosts: propTypes.func.isRequired,
+    //newPost: propTypes.object,
+    fetchAssignment: propTypes.func.isRequired,
+    fetchDepartment: propTypes.func.isRequired,
+    fetchDoctor: propTypes.func.isRequired,
+    assignments: propTypes.array.isRequired,
+    totalCount: propTypes.number.isRequired,
+    departments: propTypes.array.isRequired,
+    doctors: propTypes.array.isRequired,
+    isLoading: propTypes.bool.isRequired,
+    hasError: propTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({
-    //posts: state.posts.items,
     //newPost: state.posts.item,
+    doctors: state.assignments.doc,
+    departments: state.assignments.dep,
+    totalCount: state.assignments.item,
     assignments: state.assignments.items,
-    isLoading:false
+    isLoading: state.assignments.isLoading,
+    hasError: state.assignments.hasError
 });
-
-export default compose(withStyles(styles),connect(mapStateToProps, { fetchAssignment }))(Assignments);
+export default compose(withStyles(styles),connect(mapStateToProps, { fetchAssignment,fetchDepartment,fetchDoctor }))(Assignments);

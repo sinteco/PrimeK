@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
-import postReducer from './postReducer';
-import assignmentReducer from './postReducer';
+import assignmentReducer from './assignmentReducer';
 
 export default combineReducers({
-    posts: postReducer,
     assignments: assignmentReducer
 });
