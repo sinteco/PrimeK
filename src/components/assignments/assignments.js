@@ -28,6 +28,12 @@ import { fetchDoctor } from '../../redux/actions/assignmentAction';
 import propTypes from 'prop-types';
 import { compose } from 'redux';
 import { fetchAssignment } from '../../redux/actions/assignmentAction';
+import { fetchSeen } from '../../redux/actions/assignmentAction';
+import { fetchTriaged } from '../../redux/actions/assignmentAction';
+import { fetchCancelled } from '../../redux/actions/assignmentAction';
+import { fetchAbsent } from '../../redux/actions/assignmentAction';
+import AddAlert from "@material-ui/icons/AddAlert";
+import Snackbar from "components/Snackbar/Snackbar.jsx";
 
 
 const styles = {
@@ -93,19 +99,33 @@ class Assignments extends Component {
         datefrom:new Date(),
         dateto:new Date(),
         page:1,
-        selected:'a'
+        selected:'a',
       };
       Moment.locale('en')
       this.handleClick = this.handleClick.bind(this)
       this.searchClick = this.searchClick.bind(this)
       this.handleSeenClick = this.handleSeenClick.bind(this);
       this.handleSelectChange = this.handleSelectChange.bind(this);
+      this.handleCancelledClick = this.handleCancelledClick.bind(this);
+      this.handleAbsentClick = this.handleAbsentClick.bind(this);
+      this.handleTriagedClick = this.handleTriagedClick.bind(this);
     }
-    
+    handleCancelledClick(){
+        const cancellednurl = '/Assignments/Cancelled/'+this.state.selected;
+        this.props.fetchCancelled(cancellednurl);
+    }
+    handleAbsentClick(){
+        const absenturl = '/Assignments/Absent/'+this.state.selected;
+        this.props.fetchAbsent(absenturl);
+    }
+    handleTriagedClick(){
+        const triagedurl = '/Assignments/Triaged/'+this.state.selected;
+        this.props.fetchTriaged(triagedurl);
+    }
     returnarrays(){
         var a = new Array();
         this.props.assignments.map((assignment)=>{
-            a.push([[assignment.CardNumber],[assignment.PatientFullName],[assignment.DoctorFullName],[Moment(assignment.Date).format('d MMM')]])
+            a.push([[assignment.Id],[assignment.CardNumber],[assignment.PatientFullName],[assignment.DoctorFullName],[Moment(assignment.Date).format('d MMM')]])
         });
         return a;    
     }
@@ -168,7 +188,8 @@ class Assignments extends Component {
         this.setState({ selected: event.target.value });
       };
     handleSeenClick() {
-        console.log(this.state.selected);
+        const makeseenurl = '/Assignments/Seen/'+this.state.selected;
+        this.props.fetchSeen(makeseenurl);
       }
 	componentDidMount() {
         const assignmentsurl = '/Assignments?datefrom=&dateto=&page='+this.state.page+'&emr=&department=&doctor=&seenonlly=';
@@ -286,13 +307,13 @@ class Assignments extends Component {
                                 </GridItem>
                             </MuiPickersUtilsProvider>
                                 <Grid xs={12} sm={12} md={12}>
-                                    <Button variant="contained" color="primary" className={classes.button} style={localStorage.getItem('role')!='Doctor' ? {} : { display: 'none' }}>
+                                    <Button onClick={this.handleTriagedClick} variant="contained" color="primary" className={classes.button} style={localStorage.getItem('role')!='Doctor' ? {} : { display: 'none' }}>
                                         Triaged
                                     </Button>
-                                    <Button variant="contained" color="info" className={classes.button} style={localStorage.getItem('role')!='Doctor' ? {} : { display: 'none' }}>
+                                    <Button onClick={this.handleAbsentClick} variant="contained" color="info" className={classes.button} style={localStorage.getItem('role')!='Doctor' ? {} : { display: 'none' }}>
                                         Absent
                                     </Button>
-                                    <Button variant="contained" color="danger" className={classes.button} style={localStorage.getItem('role')!='Doctor' ? {} : { display: 'none' }}>
+                                    <Button onClick={this.handleCancelledClick} variant="contained" color="danger" className={classes.button} style={localStorage.getItem('role')!='Doctor' ? {} : { display: 'none' }}>
                                         Cancelled
                                     </Button>
                                     <Button onClick={this.handleSeenClick} variant="contained" color="success" className={classes.button} style={localStorage.getItem('role')=='Doctor' ? {} : { display: 'none' }}>
@@ -305,10 +326,10 @@ class Assignments extends Component {
                             {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
                             <Table
                                 tableHeaderColor="primary"
-                                tableHead={["MRN", "Full Name", "Doctor", "Date"]}
+                                tableHead={["ID","MRN", "Full Name", "Doctor", "Date"]}
                                 tableData={this.returnarrays()}
                                 handleSelectChange = {this.handleSelectChange}
-                                selected={this.props.selected}
+                                selected={this.state.selected}
                             />
                             <Pagination
                                 limit={10}
@@ -316,6 +337,46 @@ class Assignments extends Component {
                                 total={this.props.totalCount}
                                 onClick={(e, offset) => this.handleClick(offset)}
                                 />
+                            <Snackbar
+                                autoHideDuration={6000}
+                                place="br"
+                                color="info"
+                                icon={AddAlert}
+                                message="Selected Pateient has seen !"
+                                open={this.props.make_it_seen}
+                                closeNotification={() => this.setState({ bl: false })}
+                                close
+                            />
+                            <Snackbar
+                                autoHideDuration={6000}
+                                place="br"
+                                color="info"
+                                icon={AddAlert}
+                                message="Selected Pateient has marked as absent !"
+                                open={this.props.absent}
+                                closeNotification={() => this.setState({ bl: false })}
+                                close
+                            />
+                            <Snackbar
+                                autoHideDuration={6000}
+                                place="br"
+                                color="info"
+                                icon={AddAlert}
+                                message="Selected Pateient has marked as cancelled !"
+                                open={this.props.cancelled}
+                                closeNotification={() => this.setState({ bl: false })}
+                                close
+                            />
+                            <Snackbar
+                                autoHideDuration={6000}
+                                place="br"
+                                color="info"
+                                icon={AddAlert}
+                                message="Selected Pateient has marked as triaged !"
+                                open={this.props.triaged}
+                                closeNotification={() => this.setState({ bl: false })}
+                                close
+                            />
                         </CardBody>
                     </Card>
                 </GridItem>
@@ -332,12 +393,20 @@ Assignments.propTypes = {
     fetchAssignment: propTypes.func.isRequired,
     fetchDepartment: propTypes.func.isRequired,
     fetchDoctor: propTypes.func.isRequired,
+    fetchSeen: propTypes.func.isRequired,
+    fetchAbsent: propTypes.func.isRequired,
+    fetchAssignment: propTypes.func.isRequired,
+    fetchCancelled: propTypes.func.isRequired,
     assignments: propTypes.array.isRequired,
     totalCount: propTypes.number.isRequired,
     departments: propTypes.array.isRequired,
     doctors: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
-    hasError: propTypes.bool.isRequired
+    hasError: propTypes.bool.isRequired,
+    make_it_seen: propTypes.bool.isRequired,
+    triaged: propTypes.bool.isRequired,
+    cancelled: propTypes.bool.isRequired,
+    absent: propTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -347,6 +416,10 @@ const mapStateToProps = state => ({
     totalCount: state.assignments.item,
     assignments: state.assignments.items,
     isLoading: state.assignments.isLoading,
-    hasError: state.assignments.hasError
+    hasError: state.assignments.hasError,
+    make_it_seen: state.assignments.make_it_seen,
+    absent: state.assignments.absent,
+    cancelled: state.assignments.cancelled,
+    triaged: state.assignments.Triaged
 });
-export default compose(withStyles(styles),connect(mapStateToProps, { fetchAssignment,fetchDepartment,fetchDoctor }))(Assignments);
+export default compose(withStyles(styles),connect(mapStateToProps, { fetchAssignment,fetchDepartment,fetchDoctor,fetchSeen,fetchTriaged,fetchAbsent,fetchCancelled }))(Assignments);

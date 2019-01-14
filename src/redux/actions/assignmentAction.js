@@ -1,4 +1,4 @@
-import { ASSINMENTS_LOAD,DEPARTMENT_LOAD,DOCTORS_LOAD,ASSINMENTS_LOAD_SUCCESS,ASSINMENTS_LOAD_FAIL,DEPARTMENT_LOAD_FAIL,DEPARTMENT_LOAD_SUCCESS,DOCTORS_LOAD_FAIL,DOCTORS_LOAD_SUCCESS } from './types';
+import { ASSINMENTS_LOAD,DEPARTMENT_LOAD,DOCTORS_LOAD,MAKE_IT_SEEN,CANCELLED_LOAD,ABSENT_LOAD,TRIAGED_LOAD } from './types';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export type Action =
@@ -71,11 +71,35 @@ export const fetchDoctor = (usersurl) : Action => ({
             }
         }
 });
-export const fetchSeen = (usersurl) : Action => ({
-    type: DOCTORS_LOAD,
+export const fetchSeen = (makeseenurl) : Action => ({
+    type: MAKE_IT_SEEN,
         payload: {
             request:{
-                url:usersurl
+                url:makeseenurl
+            }
+        }
+});
+export const fetchTriaged = (Triagedurl) : Action => ({
+    type: TRIAGED_LOAD,
+        payload: {
+            request:{
+                url:Triagedurl
+            }
+        }
+});
+export const fetchAbsent = (Absenturl) : Action => ({
+    type: ABSENT_LOAD,
+        payload: {
+            request:{
+                url:Absenturl
+            }
+        }
+});
+export const fetchCancelled = (Cancelledurl) : Action => ({
+    type: CANCELLED_LOAD,
+        payload: {
+            request:{
+                url:Cancelledurl
             }
         }
 });
