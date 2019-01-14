@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Table from "../Table/CustomTable";
 import Moment from 'moment';
@@ -94,10 +93,13 @@ class Assignments extends Component {
         datefrom:new Date(),
         dateto:new Date(),
         page:1,
+        selected:'a'
       };
       Moment.locale('en')
       this.handleClick = this.handleClick.bind(this)
       this.searchClick = this.searchClick.bind(this)
+      this.handleSeenClick = this.handleSeenClick.bind(this);
+      this.handleSelectChange = this.handleSelectChange.bind(this);
     }
     
     returnarrays(){
@@ -162,17 +164,12 @@ class Assignments extends Component {
           emr: event.target.value,
         });
       };
-
-    componentWillReceiveProps(nextProps){
-        //if(nextProps.newPost){
-        //    this.props.posts.unshift(nextProps.newPost);
-        //}
-    }
-    componentWillMount(){
-        //const post = {title:"h",body:"n"}
-        //this.props.fetchPosts();
-        //this.props.createPosts(post);
-    }
+    handleSelectChange = event => {
+        this.setState({ selected: event.target.value });
+      };
+    handleSeenClick() {
+        console.log(this.state.selected);
+      }
 	componentDidMount() {
         const assignmentsurl = '/Assignments?datefrom=&dateto=&page='+this.state.page+'&emr=&department=&doctor=&seenonlly=';
         const departmentsurl = '/departments';
@@ -289,16 +286,16 @@ class Assignments extends Component {
                                 </GridItem>
                             </MuiPickersUtilsProvider>
                                 <Grid xs={12} sm={12} md={12}>
-                                    <Button variant="contained" color="primary" className={classes.button}>
+                                    <Button variant="contained" color="primary" className={classes.button} style={localStorage.getItem('role')!='Doctor' ? {} : { display: 'none' }}>
                                         Triaged
                                     </Button>
-                                    <Button variant="contained" color="info" className={classes.button}>
+                                    <Button variant="contained" color="info" className={classes.button} style={localStorage.getItem('role')!='Doctor' ? {} : { display: 'none' }}>
                                         Absent
                                     </Button>
-                                    <Button variant="contained" color="danger" className={classes.button}>
+                                    <Button variant="contained" color="danger" className={classes.button} style={localStorage.getItem('role')!='Doctor' ? {} : { display: 'none' }}>
                                         Cancelled
                                     </Button>
-                                    <Button variant="contained" color="success" className={classes.button}>
+                                    <Button onClick={this.handleSeenClick} variant="contained" color="success" className={classes.button} style={localStorage.getItem('role')=='Doctor' ? {} : { display: 'none' }}>
                                         Seen
                                     </Button>
                                 </Grid>
@@ -310,6 +307,8 @@ class Assignments extends Component {
                                 tableHeaderColor="primary"
                                 tableHead={["MRN", "Full Name", "Doctor", "Date"]}
                                 tableData={this.returnarrays()}
+                                handleSelectChange = {this.handleSelectChange}
+                                selected={this.props.selected}
                             />
                             <Pagination
                                 limit={10}

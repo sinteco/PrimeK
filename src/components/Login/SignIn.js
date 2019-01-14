@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -12,6 +12,10 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { Field, reduxForm } from 'redux-form';
+import { compose } from 'redux';
+import { signInAction } from '../../redux/actions/signInAction';
+import { connect } from 'react-redux';
 
 const styles = theme => ({
   main: {
@@ -45,9 +49,41 @@ const styles = theme => ({
   },
 });
 
-function SignIn(props) {
-  const { classes } = props;
 
+
+class SignIn extends Component {
+  constructor(props) {
+    super(props);
+  }
+  submit = (values) => {
+    this.props.signInAction(values, this.props.history);
+  }
+  errorMessage() {
+    if (this.props.errorMessage) {
+      return (
+        <div className="info-red">
+          {this.props.errorMessage}
+        </div>
+      );
+    }
+  }
+render(){
+  const renderTextField = ({
+    input,
+    label,
+    meta: { touched, error },
+    ...custom
+  }) => (
+    <Input
+      hintText={label}
+      floatingLabelText={label}
+      errorText={touched && error}
+      {...input}
+      {...custom}
+    />
+  )
+  const { handleSubmit } = this.props;
+  const { classes } = this.props;
   return (
     <main className={classes.main}>
       <CssBaseline />
@@ -58,17 +94,17 @@ function SignIn(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form}>
+        <form className={classes.form} onSubmit={ handleSubmit(this.submit) }>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">UserName</InputLabel>
-            <Input id="email" name="username" autoComplete="email" autoFocus />
+            <Field id="email" type="text" component={renderTextField} name="username" autoComplete="email" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
+            <Field name="password" component={renderTextField} type="password" id="password" autoComplete="current-password" />
           </FormControl>
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<Checkbox checked value="remember" color="primary" />}
             label="Remember me"
           />
           <Button
@@ -81,13 +117,21 @@ function SignIn(props) {
             Sign in
           </Button>
         </form>
+        {this.errorMessage()}
       </Paper>
     </main>
   );
+}
 }
 
 SignIn.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SignIn);
+function mapStateToProps(state) {
+  return { errorMessage: state.auth.error };
+}
+
+export default compose(withStyles(styles),connect(mapStateToProps, {signInAction}),reduxForm({
+  form: 'signin'
+}))(SignIn);

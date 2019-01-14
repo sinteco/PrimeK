@@ -16,7 +16,6 @@ import Icons from "views/Icons/Icons.jsx";
 import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import Assignments from "../components/assignments/assignments";
-import SignIn from "../components/Login/SignIn";
 
 const dashboardRoutes = [
   {
@@ -75,7 +74,12 @@ const dashboardRoutes = [
     icon: Notifications,
     component: NotificationsPage
   },
-  { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
+  { 
+    redirect: true,
+    path: "/",
+    to: "/dashboard",
+    navbarName: "Redirect"
+   }
 ];
 
 export default dashboardRoutes;

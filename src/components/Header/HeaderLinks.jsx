@@ -17,10 +17,18 @@ import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "components/CustomInput/CustomInput.jsx";
 import Button from "components/CustomButtons/Button.jsx";
-
+import IconButton from '@material-ui/core/IconButton';
 import headerLinksStyle from "assets/jss/material-dashboard-react/components/headerLinksStyle.jsx";
+import ExitToApp from '@material-ui/icons/ExitToApp';
+import { compose } from 'redux';
+import { signOutAction } from '../../redux/actions/signInAction';
+import { connect } from 'react-redux';
 
 class HeaderLinks extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
   state = {
     open: false
   };
@@ -35,6 +43,9 @@ class HeaderLinks extends React.Component {
 
     this.setState({ open: false });
   };
+  handleClick = () => {
+    this.props.signOutAction(this.props.history);
+  }
 
   render() {
     const { classes } = this.props;
@@ -162,9 +173,19 @@ class HeaderLinks extends React.Component {
             <p className={classes.linkText}>Profile</p>
           </Hidden>
         </Button>
+        <IconButton
+          color={window.innerWidth > 959 ? "transparent" : "white"}
+          justIcon={window.innerWidth > 959}
+          simple={!(window.innerWidth > 959)}
+          aria-label="Person"
+          className={classes.buttonLink}
+          onClick={this.handleClick}
+        >
+          <ExitToApp/>
+        </IconButton>
       </div>
     );
   }
 }
 
-export default withStyles(headerLinksStyle)(HeaderLinks);
+export default compose(withStyles(headerLinksStyle),connect(null, {signOutAction}))(HeaderLinks);

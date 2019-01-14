@@ -16,13 +16,6 @@ class CustomTable extends React.Component {
     constructor(props){
         super(props);
     }
-    state = {
-        selectedValue: 'a',
-      };
-  
-    handleChange = event => {
-        this.setState({ selectedValue: event.target.value });
-      };
   render() {
   const { classes, tableHead, tableData, tableHeaderColor } = this.props;
   return (
@@ -51,12 +44,12 @@ class CustomTable extends React.Component {
               <TableRow key={key}>
                 <TableCell className={classes.tableCell} key={key}>
                     <Radio
-                        checked={this.state.selectedValue === ""+prop[0]+""}
-                        onChange={this.handleChange}
+                        checked={this.props.selected === ""+prop[0]+""}
+                        onChange={this.props.handleSelectChange}
                         value={prop[0]}
                         name="radio-button-demo"
                         aria-label="A"
-                        />
+                        >{this.props.selected}</Radio>
                 </TableCell>
                 {prop.map((prop, key) => {
                   return (

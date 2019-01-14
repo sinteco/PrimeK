@@ -1,5 +1,5 @@
 import { ASSINMENTS_LOAD,DEPARTMENT_LOAD,DOCTORS_LOAD,ASSINMENTS_LOAD_SUCCESS,ASSINMENTS_LOAD_FAIL,DEPARTMENT_LOAD_FAIL,DEPARTMENT_LOAD_SUCCESS,DOCTORS_LOAD_FAIL,DOCTORS_LOAD_SUCCESS } from './types';
-import { axios, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export type Action =
     {
@@ -64,6 +64,14 @@ export const fetchDepartment = (departmentsurl) : Action => ({
         }
 });
 export const fetchDoctor = (usersurl) : Action => ({
+    type: DOCTORS_LOAD,
+        payload: {
+            request:{
+                url:usersurl
+            }
+        }
+});
+export const fetchSeen = (usersurl) : Action => ({
     type: DOCTORS_LOAD,
         payload: {
             request:{

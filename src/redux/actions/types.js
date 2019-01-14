@@ -7,3 +7,6 @@ export const DEPARTMENT_LOAD_FAIL = 'DEPARTMENT_LOAD_FAIL';
 export const DOCTORS_LOAD = 'DOCTORS_LOAD';
 export const DOCTORS_LOAD_SUCCESS = 'DOCTORS_LOAD_SUCCESS';
 export const DOCTORS_LOAD_FAIL = 'DOCTORS_LOAD_FAIL';
+export const AUTHENTICATED = 'authenticated_user';
+export const UNAUTHENTICATED = 'unauthenticated_user';
+export const AUTHENTICATION_ERROR = 'authentication_error';
