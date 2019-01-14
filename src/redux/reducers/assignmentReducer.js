@@ -1,4 +1,4 @@
-import { ASSINMENTS_LOAD,DEPARTMENT_LOAD,DOCTORS_LOAD,ASSINMENTS_LOAD_SUCCESS,ASSINMENTS_LOAD_FAIL,DEPARTMENT_LOAD_FAIL,DEPARTMENT_LOAD_SUCCESS,DOCTORS_LOAD_FAIL,DOCTORS_LOAD_SUCCESS,MAKE_IT_SEEN,MAKE_IT_SEEN_SUCCESS,MAKE_IT_SEEN_FAIL,ABSENT_LOAD,ABSENT_SUCCESS,ABSENT_FAIL,CANCELLED_LOAD,CANCELLED_SUCCESS,CANCELLED_FAIL,TRIAGED_LOAD,TRIAGED_SUCCESS,TRIAGED_FAIL } from '../actions/types';
+import { CANCELLED_ALL_NOTIF,ASSINMENTS_LOAD,DEPARTMENT_LOAD,DOCTORS_LOAD,ASSINMENTS_LOAD_SUCCESS,ASSINMENTS_LOAD_FAIL,DEPARTMENT_LOAD_FAIL,DEPARTMENT_LOAD_SUCCESS,DOCTORS_LOAD_FAIL,DOCTORS_LOAD_SUCCESS,MAKE_IT_SEEN,MAKE_IT_SEEN_SUCCESS,MAKE_IT_SEEN_FAIL,ABSENT_LOAD,ABSENT_SUCCESS,ABSENT_FAIL,CANCELLED_LOAD,CANCELLED_SUCCESS,CANCELLED_FAIL,TRIAGED_LOAD,TRIAGED_SUCCESS,TRIAGED_FAIL } from '../actions/types';
 
 const initialState = {
     items: [],
@@ -137,6 +137,14 @@ export default function(state = initialState, action){
             return {
                 ...state,
                 triaged:false
+            }
+        case CANCELLED_ALL_NOTIF:
+            return{
+                ...state,
+                triaged:false,
+                cancelled:false,
+                absent:false,
+                make_it_seen:false
             }
         default:
             return state;

@@ -5,7 +5,7 @@ import axios from 'axios';
 import axiosMiddleware from 'redux-axios-middleware';
 
 const client = axios.create({ //all axios can be used, shown in axios documentation
-    baseURL:'http://192.168.1.6:8011/api',
+    baseURL:'http://localhost:8011/api',
     responseType: 'json'
   });
 

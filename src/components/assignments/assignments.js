@@ -32,6 +32,7 @@ import { fetchSeen } from '../../redux/actions/assignmentAction';
 import { fetchTriaged } from '../../redux/actions/assignmentAction';
 import { fetchCancelled } from '../../redux/actions/assignmentAction';
 import { fetchAbsent } from '../../redux/actions/assignmentAction';
+import { Cancel_All_Not } from '../../redux/actions/assignmentAction';
 import AddAlert from "@material-ui/icons/AddAlert";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
 
@@ -151,7 +152,6 @@ class Assignments extends Component {
          });
         const assignmentsurl = '/Assignments?datefrom='+this.state.datefrom.toLocaleDateString('en-US')+'&dateto='+this.state.dateto.toLocaleDateString('en-US')+'&page='+(this.state.offset+20)/10+'&emr='+this.state.emr+'&department='+this.state.department+'&doctor='+this.state.doctor+'&seenonlly='+this.state.seenonnly;
         this.props.fetchAssignment(assignmentsurl);
-        console.log(assignmentsurl);
         // axios.get(assignmentsurl)
         //     .then((response)=>{
         //         this.setState({
@@ -344,7 +344,7 @@ class Assignments extends Component {
                                 icon={AddAlert}
                                 message="Selected Pateient has seen !"
                                 open={this.props.make_it_seen}
-                                closeNotification={() => this.setState({ bl: false })}
+                                closeNotification={() => this.props.Cancel_All_Not()}
                                 close
                             />
                             <Snackbar
@@ -354,7 +354,7 @@ class Assignments extends Component {
                                 icon={AddAlert}
                                 message="Selected Pateient has marked as absent !"
                                 open={this.props.absent}
-                                closeNotification={() => this.setState({ bl: false })}
+                                closeNotification={() => this.props.Cancel_All_Not()}
                                 close
                             />
                             <Snackbar
@@ -364,7 +364,7 @@ class Assignments extends Component {
                                 icon={AddAlert}
                                 message="Selected Pateient has marked as cancelled !"
                                 open={this.props.cancelled}
-                                closeNotification={() => this.setState({ bl: false })}
+                                closeNotification={() => this.props.Cancel_All_Not()}
                                 close
                             />
                             <Snackbar
@@ -374,7 +374,7 @@ class Assignments extends Component {
                                 icon={AddAlert}
                                 message="Selected Pateient has marked as triaged !"
                                 open={this.props.triaged}
-                                closeNotification={() => this.setState({ bl: false })}
+                                closeNotification={() => this.props.Cancel_All_Not()}
                                 close
                             />
                         </CardBody>
@@ -397,6 +397,7 @@ Assignments.propTypes = {
     fetchAbsent: propTypes.func.isRequired,
     fetchAssignment: propTypes.func.isRequired,
     fetchCancelled: propTypes.func.isRequired,
+    Cancel_All_Not: propTypes.func.isRequired,
     assignments: propTypes.array.isRequired,
     totalCount: propTypes.number.isRequired,
     departments: propTypes.array.isRequired,
@@ -420,6 +421,6 @@ const mapStateToProps = state => ({
     make_it_seen: state.assignments.make_it_seen,
     absent: state.assignments.absent,
     cancelled: state.assignments.cancelled,
-    triaged: state.assignments.Triaged
+    triaged: state.assignments.triaged
 });
-export default compose(withStyles(styles),connect(mapStateToProps, { fetchAssignment,fetchDepartment,fetchDoctor,fetchSeen,fetchTriaged,fetchAbsent,fetchCancelled }))(Assignments);
+export default compose(withStyles(styles),connect(mapStateToProps, { fetchAssignment,fetchDepartment,fetchDoctor,fetchSeen,fetchTriaged,fetchAbsent,fetchCancelled,Cancel_All_Not }))(Assignments);

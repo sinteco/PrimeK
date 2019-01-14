@@ -1,4 +1,4 @@
-import { ASSINMENTS_LOAD,DEPARTMENT_LOAD,DOCTORS_LOAD,MAKE_IT_SEEN,CANCELLED_LOAD,ABSENT_LOAD,TRIAGED_LOAD } from './types';
+import { CANCELLED_ALL_NOTIF,ASSINMENTS_LOAD,DEPARTMENT_LOAD,DOCTORS_LOAD,MAKE_IT_SEEN,CANCELLED_LOAD,ABSENT_LOAD,TRIAGED_LOAD } from './types';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export type Action =
@@ -102,4 +102,7 @@ export const fetchCancelled = (Cancelledurl) : Action => ({
                 url:Cancelledurl
             }
         }
+});
+export const Cancel_All_Not = () : Action => ({
+    type: CANCELLED_ALL_NOTIF
 });
