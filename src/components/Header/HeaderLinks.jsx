@@ -30,7 +30,7 @@ class HeaderLinks extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
   state = {
-    open: false
+    open: false,
   };
   handleToggle = () => {
     this.setState(state => ({ open: !state.open }));
@@ -54,6 +54,7 @@ class HeaderLinks extends React.Component {
       <div>
         <div className={classes.searchWrapper}>
           <CustomInput
+            value={this.props.selectedPatient.FirstName!=null?this.props.selectedPatient.FirstName +" "+this.props.selectedPatient.MiddleName+" "+this.props.selectedPatient.LastName:null}
             formControlProps={{
               className: classes.margin + " " + classes.search
             }}
@@ -180,12 +181,15 @@ class HeaderLinks extends React.Component {
           aria-label="Person"
           className={classes.buttonLink}
           onClick={this.handleClick}
-        >
+          >
           <ExitToApp/>
         </IconButton>
       </div>
     );
   }
 }
+const mapStateToProps = state => ({
+  selectedPatient: state.assignments.selectedPatient
+});
 
-export default compose(withStyles(headerLinksStyle),connect(null, {signOutAction}))(HeaderLinks);
+export default compose(withStyles(headerLinksStyle),connect(mapStateToProps, {signOutAction}))(HeaderLinks);

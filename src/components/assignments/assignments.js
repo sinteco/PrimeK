@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Table from "../Table/CustomTable";
-import Moment from 'moment';
+import Moment, { calendarFormat } from 'moment';
 import GridItem from "../Grid/GridItem.jsx";
 import GridContainer from "../Grid/GridContainer.jsx";
 import Card from "../Card/Card.jsx";
@@ -35,6 +35,7 @@ import { fetchAbsent } from '../../redux/actions/assignmentAction';
 import { Cancel_All_Not } from '../../redux/actions/assignmentAction';
 import AddAlert from "@material-ui/icons/AddAlert";
 import Snackbar from "components/Snackbar/Snackbar.jsx";
+import { Select_Patient } from '../../redux/actions/assignmentAction';
 
 
 const styles = {
@@ -110,18 +111,35 @@ class Assignments extends Component {
       this.handleCancelledClick = this.handleCancelledClick.bind(this);
       this.handleAbsentClick = this.handleAbsentClick.bind(this);
       this.handleTriagedClick = this.handleTriagedClick.bind(this);
+      this.handleOnRowClick = this.handleOnRowClick.bind(this);
+    }
+    handleOnRowClick(assignmentId){
+        const selectpatienturl = '/Assignments/Select/'+assignmentId;
+        this.props.Select_Patient(selectpatienturl);
     }
     handleCancelledClick(){
-        const cancellednurl = '/Assignments/Cancelled/'+this.state.selected;
-        this.props.fetchCancelled(cancellednurl);
+        if(this.state.selected!='a'){
+            const cancellednurl = '/Assignments/Cancelled/'+this.state.selected;
+            this.props.fetchCancelled(cancellednurl);
+        }else{
+            console.log("assignment not selected");
+        }
     }
     handleAbsentClick(){
-        const absenturl = '/Assignments/Absent/'+this.state.selected;
-        this.props.fetchAbsent(absenturl);
+        if(this.state.selected!='a'){
+            const absenturl = '/Assignments/Absent/'+this.state.selected;
+            this.props.fetchAbsent(absenturl);
+        }else{
+            console.log("assignment not selected");
+        }
     }
     handleTriagedClick(){
-        const triagedurl = '/Assignments/Triaged/'+this.state.selected;
-        this.props.fetchTriaged(triagedurl);
+        if(this.state.selected!='a'){
+            const triagedurl = '/Assignments/Triaged/'+this.state.selected;
+            this.props.fetchTriaged(triagedurl);
+        }else{
+            console.log("assignment not selected");
+        }
     }
     returnarrays(){
         var a = new Array();
@@ -188,8 +206,12 @@ class Assignments extends Component {
         this.setState({ selected: event.target.value });
       };
     handleSeenClick() {
-        const makeseenurl = '/Assignments/Seen/'+this.state.selected;
-        this.props.fetchSeen(makeseenurl);
+        if(this.state.selected!='a'){
+            const makeseenurl = '/Assignments/Seen/'+this.state.selected;
+            this.props.fetchSeen(makeseenurl);
+        }else{
+            console.log("assignment not selected");
+        }
       }
 	componentDidMount() {
         const assignmentsurl = '/Assignments?datefrom=&dateto=&page='+this.state.page+'&emr=&department=&doctor=&seenonlly=';
@@ -274,7 +296,7 @@ class Assignments extends Component {
                                                 className: classes.input
                                             }}
                                         />
-                                        <FormControl className={classes.formControl}>
+                                        <FormControl className={classes.formControl} style={localStorage.getItem('role')!='Doctor' ? {} : { display: 'none' }}>
                                             <InputLabel FormLabelClasses={{root: classes.input,focused: classes.input}} htmlFor="doctor-simple">Doctor</InputLabel>
                                             <Select
                                                 value={this.state.doctor}
@@ -286,7 +308,7 @@ class Assignments extends Component {
                                                 {this.props.doctors.map((item,i) => <MenuItem key={i} value={item}>{item}</MenuItem>)}
                                             </Select>
                                         </FormControl>
-                                        <FormControl className={classes.formControl}>
+                                        <FormControl className={classes.formControl} style={localStorage.getItem('role')!='Doctor' ? {} : { display: 'none' }}>
                                             <InputLabel FormLabelClasses={{root: classes.input,focused: classes.input}} htmlFor="department-simple">Departments</InputLabel>
                                             <Select
                                                 value={this.state.department}
@@ -330,6 +352,7 @@ class Assignments extends Component {
                                 tableData={this.returnarrays()}
                                 handleSelectChange = {this.handleSelectChange}
                                 selected={this.state.selected}
+                                handleOnRowClick = {this.handleOnRowClick}
                             />
                             <Pagination
                                 limit={10}
@@ -377,6 +400,16 @@ class Assignments extends Component {
                                 closeNotification={() => this.props.Cancel_All_Not()}
                                 close
                             />
+                            <Snackbar
+                                autoHideDuration={6000}
+                                place="br"
+                                color="info"
+                                icon={AddAlert}
+                                message="Pateient Selected !"
+                                open={this.props.patientSelected}
+                                closeNotification={() => this.props.Cancel_All_Not()}
+                                close
+                            />
                         </CardBody>
                     </Card>
                 </GridItem>
@@ -398,6 +431,7 @@ Assignments.propTypes = {
     fetchAssignment: propTypes.func.isRequired,
     fetchCancelled: propTypes.func.isRequired,
     Cancel_All_Not: propTypes.func.isRequired,
+    Select_Patient: propTypes.func.isRequired,
     assignments: propTypes.array.isRequired,
     totalCount: propTypes.number.isRequired,
     departments: propTypes.array.isRequired,
@@ -407,7 +441,8 @@ Assignments.propTypes = {
     make_it_seen: propTypes.bool.isRequired,
     triaged: propTypes.bool.isRequired,
     cancelled: propTypes.bool.isRequired,
-    absent: propTypes.bool.isRequired
+    absent: propTypes.bool.isRequired,
+    patientSelected: propTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({
@@ -421,6 +456,7 @@ const mapStateToProps = state => ({
     make_it_seen: state.assignments.make_it_seen,
     absent: state.assignments.absent,
     cancelled: state.assignments.cancelled,
-    triaged: state.assignments.triaged
+    triaged: state.assignments.triaged,
+    patientSelected: state.assignments.patientSelected
 });
-export default compose(withStyles(styles),connect(mapStateToProps, { fetchAssignment,fetchDepartment,fetchDoctor,fetchSeen,fetchTriaged,fetchAbsent,fetchCancelled,Cancel_All_Not }))(Assignments);
+export default compose(withStyles(styles),connect(mapStateToProps, { fetchAssignment,fetchDepartment,fetchDoctor,fetchSeen,fetchTriaged,fetchAbsent,fetchCancelled,Cancel_All_Not,Select_Patient }))(Assignments);

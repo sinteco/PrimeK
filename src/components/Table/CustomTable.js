@@ -53,7 +53,7 @@ class CustomTable extends React.Component {
                 </TableCell>
                 {prop.map((prop, key) => {
                   return (
-                    <TableCell className={classes.tableCell} key={key}>
+                    <TableCell onClick={() => this.props.handleOnRowClick(prop[0])} className={classes.tableCell} key={key}>
                       {prop}
                     </TableCell>
                   );

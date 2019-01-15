@@ -21,7 +21,8 @@ function CustomInput({ ...props }) {
     labelProps,
     inputProps,
     error,
-    success
+    success,
+    value
   } = props;
 
   const labelClasses = classNames({
@@ -51,6 +52,7 @@ function CustomInput({ ...props }) {
         </InputLabel>
       ) : null}
       <Input
+        value={value}
         classes={{
           root: marginTop,
           disabled: classes.disabled,

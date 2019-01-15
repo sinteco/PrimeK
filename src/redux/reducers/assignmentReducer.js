@@ -1,4 +1,4 @@
-import { CANCELLED_ALL_NOTIF,ASSINMENTS_LOAD,DEPARTMENT_LOAD,DOCTORS_LOAD,ASSINMENTS_LOAD_SUCCESS,ASSINMENTS_LOAD_FAIL,DEPARTMENT_LOAD_FAIL,DEPARTMENT_LOAD_SUCCESS,DOCTORS_LOAD_FAIL,DOCTORS_LOAD_SUCCESS,MAKE_IT_SEEN,MAKE_IT_SEEN_SUCCESS,MAKE_IT_SEEN_FAIL,ABSENT_LOAD,ABSENT_SUCCESS,ABSENT_FAIL,CANCELLED_LOAD,CANCELLED_SUCCESS,CANCELLED_FAIL,TRIAGED_LOAD,TRIAGED_SUCCESS,TRIAGED_FAIL } from '../actions/types';
+import { SELECT_LOAD,SELECT_LOAD_FAIL,SELECT_LOAD_SUCCESS,CANCELLED_ALL_NOTIF,ASSINMENTS_LOAD,DEPARTMENT_LOAD,DOCTORS_LOAD,ASSINMENTS_LOAD_SUCCESS,ASSINMENTS_LOAD_FAIL,DEPARTMENT_LOAD_FAIL,DEPARTMENT_LOAD_SUCCESS,DOCTORS_LOAD_FAIL,DOCTORS_LOAD_SUCCESS,MAKE_IT_SEEN,MAKE_IT_SEEN_SUCCESS,MAKE_IT_SEEN_FAIL,ABSENT_LOAD,ABSENT_LOAD_SUCCESS,ABSENT_LOAD_FAIL,CANCELLED_LOAD,CANCELLED_LOAD_SUCCESS,CANCELLED_LOAD_FAIL,TRIAGED_LOAD,TRIAGED_LOAD_SUCCESS,TRIAGED_LOAD_FAIL } from '../actions/types';
 
 const initialState = {
     items: [],
@@ -10,7 +10,9 @@ const initialState = {
     make_it_seen: false,
     absent: false,
     cancelled: false,
-    triaged: false
+    triaged: false,
+    selectedPatient: [],
+    patientSelected: false
 };
 
 export default function(state = initialState, action){
@@ -98,12 +100,12 @@ export default function(state = initialState, action){
                 ...state,
                 absent:false
             }
-        case ABSENT_SUCCESS:
+        case ABSENT_LOAD_SUCCESS:
             return {
                 ...state,
                 absent:action.payload.data
             }
-        case ABSENT_FAIL:
+        case ABSENT_LOAD_FAIL:
             return {
                 ...state,
                 absent:false
@@ -113,12 +115,12 @@ export default function(state = initialState, action){
                 ...state,
                 cancelled:false
             }
-        case CANCELLED_SUCCESS:
+        case CANCELLED_LOAD_SUCCESS:
             return {
                 ...state,
                 cancelled:action.payload.data
             }
-        case CANCELLED_FAIL:
+        case CANCELLED_LOAD_FAIL:
             return {
                 ...state,
                 cancelled:false
@@ -128,12 +130,12 @@ export default function(state = initialState, action){
                 ...state,
                 triaged:false
             }
-        case TRIAGED_SUCCESS:
+        case TRIAGED_LOAD_SUCCESS:
             return {
                 ...state,
                 triaged:action.payload.data
             }
-        case TRIAGED_FAIL:
+        case TRIAGED_LOAD_FAIL:
             return {
                 ...state,
                 triaged:false
@@ -144,7 +146,24 @@ export default function(state = initialState, action){
                 triaged:false,
                 cancelled:false,
                 absent:false,
-                make_it_seen:false
+                make_it_seen:false,
+                patientSelected:false
+            }
+        case SELECT_LOAD:
+            return{
+                ...state,
+                patientSelected:false
+            }
+        case SELECT_LOAD_SUCCESS:
+            return{
+                ...state,
+                selectedPatient: action.payload.data.Patient,
+                patientSelected: true
+            }
+        case SELECT_LOAD_FAIL:
+            return{
+                ...state,
+                patientSelected: false
             }
         default:
             return state;
