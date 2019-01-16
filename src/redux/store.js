@@ -8,6 +8,23 @@ const client = axios.create({ //all axios can be used, shown in axios documentat
     baseURL:'http://192.168.1.6:8011/api',
     responseType: 'json'
   });
+  const axiosMiddlewareOptions = {
+    interceptors: {
+        request: [
+            ({ getState, dispatch }, config) => {
+                if (localStorage.getItem('user')) {
+                    config.headers['Authorization'] = 'Bearer ' + localStorage.getItem('user')
+                }
+                return config
+            }
+        ],
+        response: [
+            ({ getState, dispatch }, response) => {
+                return response
+            }
+        ]
+    }
+}
 
 const initialState = {};
 
