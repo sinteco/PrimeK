@@ -41,6 +41,13 @@ const dashboardRoutes = [
     component: VitalSigns
   },
   {
+    path: "/PatientNote",
+    sidebarName: "Patient Note",
+    navbarName: "Patient Note",
+    icon: Unarchive,
+    component: VitalSigns
+  },
+  {
     path: "/user",
     sidebarName: "User Profile",
     navbarName: "Profile",

@@ -51,10 +51,10 @@ class CustomTable extends React.Component {
                         aria-label="A"
                         >{this.props.selected}</Radio>
                 </TableCell>
-                {prop.map((prop, key) => {
+                {prop.map((prop0, key) => {
                   return (
                     <TableCell onClick={() => this.props.handleOnRowClick(prop[0])} className={classes.tableCell} key={key}>
-                      {prop}
+                      {prop0}
                     </TableCell>
                   );
                 })}

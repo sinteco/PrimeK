@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import withStyles from "@material-ui/core/styles/withStyles";
 import Table from "../Table/CustomTable";
-import Moment, { calendarFormat } from 'moment';
+import Moment from 'moment';
 import GridItem from "../Grid/GridItem.jsx";
 import GridContainer from "../Grid/GridContainer.jsx";
 import Card from "../Card/Card.jsx";

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
@@ -9,6 +8,26 @@ import Table from "components/Table/Table.jsx";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import { fetchVitalSigen } from '../../redux/actions/vitalsigneAction';
+import { compose } from 'redux';
+import propTypes from 'prop-types';
+import Moment from 'moment';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import TextField from '@material-ui/core/TextField';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControl from '@material-ui/core/FormControl';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { saveVitalSigen } from '../../redux/actions/vitalsigneAction';
 
 const styles = {
     cardCategoryWhite: {
@@ -39,77 +58,371 @@ const styles = {
       }
     }
   };
-
 export class vitalSigns extends Component {
   constructor(props) {
         super(props);
     }
-  static propTypes = {
-    prop: PropTypes
+    state = {
+      open: false,
+      temperature: '',
+      bps: '',
+      bpd: '',
+      pulserate: '',
+      respiratoryrate: '',
+      spo2onra: '',
+      spo22lmm: '',
+      height: '',
+      weight: '',
+      headcircumference: '',
+      waistcircumference: '',
+      rbs: '',
+      fbs: '',
+      muac: '',
+      smoking: '',
+      input: '',
+      putput: '',
+      balance: '',
+      wtage: '',
+      wtht: '',
+      bmi: '',
+      bmiage: '',
+      muacage: '',
+      hcage: '',
+      bpageht: '',
+      note: ''
+
+    };
+    handleOpen = () => {
+      this.setState({ open: true });
+    };
+  
+    handleClose = () => {
+      this.setState({ open: false });
+    };
+    handleSave = () => {
+      const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
+      const vitalSign = {
+        Temprature: this.state.temperature,
+        BPS: this.state.bps,
+        BPD: this.state.bpd,
+        PulseRate: this.state.pulserate,
+        RespiratoryRate: this.state.respiratoryrate,
+        SPO2ONRA: this.state.spo2onra,
+        SPO22LMM: this.state.spo22lmm,
+        Height: this.state.height,
+        Weight: this.state.weight,
+        HeadCircumference: this.state.headcircumference,
+        WaistCircumference: this.state.waistcircumference,
+        RBS: this.state.rbs,
+        FBS: this.state.fbs,
+        MUAC: this.state.muac,
+        Smoking: this.state.smoking,
+        Input: this.state.input,
+        Output: this.state.Output,
+        Balance: this.state.balance,
+        WtAge: this.state.wtage,
+        WtHt: this.state.wtht,
+        BMI: this.state.bmi,
+        BMIAge: this.state.bmiage,
+        MUACAge: this.state.muacage,
+        HCage: this.state.hcage,
+        BPAgeHt: this.state.bpageht,
+        Note: this.state.note,
+        PatientId: id
+      }
+      if(id===0){
+        alert("patient is not selected");
+        return
+      }
+      const savevitalsignURL = '/VitalSigns';
+      const data = '';
+      this.setState({ open: false });
+      this.props.saveVitalSigen(savevitalsignURL, vitalSign);
+    };
+    handleClickOpen = () => {
+      this.setState({ open: true });
+    }
+    handleChange = (name) => (event) => {
+      this.setState({[name]: event.target.value});
+    }
+    returnarrays(){
+        var a = new Array();
+        this.props.vitalSigns.map((vitalSign)=>{
+            a.push([[Moment(vitalSign.DateTime).format('d MMM')],[vitalSign.Temperature],[vitalSign.BPS+"/"+vitalSign.BPD],[vitalSign.PulseRate],[vitalSign.RespiratoryRate],[vitalSign.SPO2OnRA],[vitalSign.SPO22LMM],[vitalSign.Height],[vitalSign.Weight],[vitalSign.SPO2OnRA],[vitalSign.Input],[vitalSign.Output],[vitalSign.SPO2OnRA],[vitalSign.RBS],[vitalSign.FBS]])
+        });
+        return a;    
+    }
+
+  componentDidMount() {
+    const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
+    const vitalSigneURL = '/VitalSigns/GetVitalSignsOfPatient/' + id;
+    this.props.fetchVitalSigen(vitalSigneURL);
   }
 
   render() {
     const { classes } = this.props;
+    const { fullScreen } = this.props;
     return (
         <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Simple Table</h4>
-              <p className={classes.cardCategoryWhite}>
-                Here is a subtitle for this table
-              </p>
+                <Grid container className={classes.grid} justify="space-around">
+                    <Grid xs={12} sm={12} md={12}>
+                        <Button onClick={this.handleClickOpen} variant="contained" color="primary" className={classes.button}>
+                            Create New
+                        </Button>
+                        <Dialog
+                          fullScreen={fullScreen}
+                          open={this.state.open}
+                          onClose={this.handleClose}
+                          aria-labelledby="responsive-dialog-title"
+                        >
+                          <DialogTitle id="responsive-dialog-title">{"New Vital Sign"}</DialogTitle>
+                          <DialogContent>
+                            <DialogContentText>
+                            </DialogContentText>
+                            <form className={classes.container} noValidate autoComplete="off">
+                              <FormControl component="fieldset" className={classes.formControl}>
+                              <FormGroup row>
+                                <TextField
+                                  autoFocus
+                                  id="standard-name"
+                                  label="Temprature"
+                                  className={classes.textField}
+                                  value={this.state.temperature}
+                                  onChange={this.handleChange('temperature')}
+                                  margin="normal"
+                                />
+                                <FormGroup row>
+                                  <TextField
+                                    id="standard-name"
+                                    label="BPS"
+                                    className={classes.textField}
+                                    value={this.state.bps}
+                                    onChange={this.handleChange('bps')}
+                                    margin="normal"
+                                  />
+                                  <TextField
+                                    id="standard-name"
+                                    label="BPD"
+                                    className={classes.textField}
+                                    value={this.state.bpd}
+                                    onChange={this.handleChange('bpd')}
+                                    margin="normal"
+                                  />
+                                </FormGroup>
+                                <TextField
+                                  id="standard-name"
+                                  label="Pulse Rate"
+                                  className={classes.textField}
+                                  value={this.state.pulserate}
+                                  onChange={this.handleChange('pulserate')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="Respiratory Rate"
+                                  className={classes.textField}
+                                  value={this.state.respiratoryrate}
+                                  onChange={this.handleChange('respiratoryrate')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="SpO2"
+                                  className={classes.textField}
+                                  value={this.state.spo2onra}
+                                  onChange={this.handleChange('spo2onra')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="SpO2"
+                                  className={classes.textField}
+                                  value={this.state.spo22lmm}
+                                  onChange={this.handleChange('spo22lmm')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="Height"
+                                  className={classes.textField}
+                                  value={this.state.height}
+                                  onChange={this.handleChange('height')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="Weight"
+                                  className={classes.textField}
+                                  value={this.state.weight}
+                                  onChange={this.handleChange('weight')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="Head Circumference"
+                                  className={classes.textField}
+                                  value={this.state.headcircumference}
+                                  onChange={this.handleChange('headcircumference')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="Waist Circumference"
+                                  className={classes.textField}
+                                  value={this.state.waistcircumference}
+                                  onChange={this.handleChange('waistcircumference')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="RBS"
+                                  className={classes.textField}
+                                  value={this.state.rbs}
+                                  onChange={this.handleChange('rbs')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="FBS"
+                                  className={classes.textField}
+                                  value={this.state.fbs}
+                                  onChange={this.handleChange('fbs')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="MUAC"
+                                  className={classes.textField}
+                                  value={this.state.muac}
+                                  onChange={this.handleChange('muac')}
+                                  margin="normal"
+                                />
+                                <RadioGroup
+                                  row
+                                  aria-label="Smoking"
+                                  name="smoking"
+                                  className={classes.group}
+                                  value={this.state.smoking}
+                                  onChange={this.handleChange('smoking')}
+                                  >
+                                  <FormControlLabel value="1" control={<Radio />} label="Smoking" />
+                                  <FormControlLabel value="0" control={<Radio />} label="Non Smoking" />
+                                </RadioGroup>
+                                <TextField
+                                  id="standard-name"
+                                  label="Input"
+                                  className={classes.textField}
+                                  value={this.state.input}
+                                  onChange={this.handleChange('input')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="Output"
+                                  className={classes.textField}
+                                  value={this.state.Output}
+                                  onChange={this.handleChange('Output')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="Balance"
+                                  className={classes.textField}
+                                  value={this.state.balance}
+                                  onChange={this.handleChange('balance')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="WT/Age"
+                                  className={classes.textField}
+                                  value={this.state.wtage}
+                                  onChange={this.handleChange('wtage')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="WT/Ht"
+                                  className={classes.textField}
+                                  value={this.state.wtht}
+                                  onChange={this.handleChange('wtht')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="BIM"
+                                  className={classes.textField}
+                                  value={this.state.bmi}
+                                  onChange={this.handleChange('bmi')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="BIM/Age"
+                                  className={classes.textField}
+                                  value={this.state.bmiage}
+                                  onChange={this.handleChange('bmiage')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="MUAC/Age"
+                                  className={classes.textField}
+                                  value={this.state.muacage}
+                                  onChange={this.handleChange('muacage')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="HC/Age"
+                                  className={classes.textField}
+                                  value={this.state.hcage}
+                                  onChange={this.handleChange('hcage')}
+                                  margin="normal"
+                                />
+                                <TextField
+                                  id="standard-name"
+                                  label="BP for Age and Ht"
+                                  className={classes.textField}
+                                  value={this.state.bpageht}
+                                  onChange={this.handleChange("bpageht")}
+                                  margin="normal"
+                                />
+                                </FormGroup>
+                                <TextField
+                                  id="standard-multiline-flexible"
+                                  label="Note"
+                                  multiline
+                                  rowsMax="4"
+                                  value={this.state.note}
+                                  onChange={this.handleChange('note')}
+                                  className={classes.textField}
+                                  margin="normal"
+                                />
+                              </FormControl>
+                            </form>
+                          </DialogContent>
+                          <DialogActions>
+                            <Button onClick={this.handleClose} color="default">
+                              Cancel
+                            </Button>
+                            <Button onClick={this.handleSave} color="primary">
+                              Save
+                            </Button>
+                          </DialogActions>
+                        </Dialog>
+                    </Grid>
+                </Grid>
             </CardHeader>
             <CardBody>
+            {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
               <Table
                 tableHeaderColor="primary"
-                tableHead={["Name", "Country", "City", "Salary"]}
-                tableData={[
-                  ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                  ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                  ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                  ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                  ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                  ["Mason Porter", "Chile", "Gloucester", "$78,615"]
-                ]}
-              />
-            </CardBody>
-          </Card>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card plain>
-            <CardHeader plain color="primary">
-              <h4 className={classes.cardTitleWhite}>
-                Table on Plain Background
-              </h4>
-              <p className={classes.cardCategoryWhite}>
-                Here is a subtitle for this table
-              </p>
-            </CardHeader>
-            <CardBody>
-              <Table
-                tableHeaderColor="primary"
-                tableHead={["ID", "Name", "Country", "City", "Salary"]}
-                tableData={[
-                  ["1", "Dakota Rice", "$36,738", "Niger", "Oud-Turnhout"],
-                  ["2", "Minerva Hooper", "$23,789", "Curaçao", "Sinaai-Waas"],
-                  ["3", "Sage Rodriguez", "$56,142", "Netherlands", "Baileux"],
-                  [
-                    "4",
-                    "Philip Chaney",
-                    "$38,735",
-                    "Korea, South",
-                    "Overland Park"
-                  ],
-                  [
-                    "5",
-                    "Doris Greene",
-                    "$63,542",
-                    "Malawi",
-                    "Feldkirchen in Kärnten"
-                  ],
-                  ["6", "Mason Porter", "$78,615", "Chile", "Gloucester"]
-                ]}
+                tableHead={["Date Time", "Temprature", "BP", "PR", "RR", "SPO2", "SPO2", "Height", "Wight", "BMI", "Input", "Output", "Balance", "RBS", "FBS"]}
+                tableData={this.returnarrays()}
               />
             </CardBody>
           </Card>
@@ -118,13 +431,25 @@ export class vitalSigns extends Component {
     )
   }
 }
-
-const mapStateToProps = (state) => ({
-  
-})
-
-const mapDispatchToProps = {
-  
+vitalSigns.propTypes = {
+  fetchVitalSigen: propTypes.func.isRequired,
+  saveVitalSigen: propTypes.func.isRequired,
+  vitalSigns: propTypes.array.isRequired,
+  isLoading: propTypes.bool.isRequired,
+  hasError: propTypes.bool.isRequired,
+  confirmStatus: propTypes.bool.isRequired
 }
+const mapStateToProps = (state) => ({
+  vitalSigns: state.vitalSign.vitalsigns,
+  isLoading: state.vitalSign.isLoading,
+  hasError: state.vitalSign.hasError,
+  totalCount: state.vitalSign.totalCount,
+  selectedPatient: state.assignments.selectedPatient,
+  confirmStatus: state.vitalSign.confirmStatus
+});
+const mapDispatchToProps = dispatch => ({
+  fetchVitalSigen: (url) => dispatch(fetchVitalSigen(url)),
+  saveVitalSigen: (url,data) => dispatch(saveVitalSigen(url,data))
+});
 
-export default connect(mapStateToProps, mapDispatchToProps,withStyles(styles))(vitalSigns)
+export default compose(withStyles(styles),withMobileDialog(),connect(mapStateToProps,mapDispatchToProps))(vitalSigns)
