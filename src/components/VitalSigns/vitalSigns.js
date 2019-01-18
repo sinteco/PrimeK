@@ -28,6 +28,7 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { saveVitalSigen } from '../../redux/actions/vitalsigneAction';
+import qs from 'qs';
 
 const styles = {
     cardCategoryWhite: {
@@ -135,9 +136,8 @@ export class vitalSigns extends Component {
         return
       }
       const savevitalsignURL = '/VitalSigns';
-      const data = '';
       this.setState({ open: false });
-      this.props.saveVitalSigen(savevitalsignURL, vitalSign);
+      this.props.saveVitalSigen(savevitalsignURL, qs.stringify(vitalSign));
     };
     handleClickOpen = () => {
       this.setState({ open: true });

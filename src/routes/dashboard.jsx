@@ -35,8 +35,8 @@ const dashboardRoutes = [
   },
   {
     path: "/VitalSigns",
-    sidebarName: "VitalSigns",
-    navbarName: "VitalSigns",
+    sidebarName: "Vital Signs",
+    navbarName: "Vital Signs",
     icon: Unarchive,
     component: VitalSigns
   },

@@ -9,7 +9,7 @@ export function signInAction({ username, password }, history) {
       try {
         const header = { headers: { "Content-Type": "application/x-www-form-urlencoded" } };
         const param = { Username: username, Password: password };
-        delete axios.defaults.headers.common["Authorization"];
+        // delete axios.defaults.headers.common["Authorization"];
 
         const res = await axios.post(`${URL}/login`, qs.stringify(param), header);
   
