@@ -18,9 +18,13 @@ import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboar
 
 import image from "assets/img/sidebar-4.jpg";
 import logo from "assets/img/reactlogo.png";
+import HistoryAndPhysical from '../../components/PatientNote/historyAndPhysical';
+import ProgressNote from '../../components/PatientNote/progressNote';
 
 const switchRoutes = (
   <Switch>
+    <Route path="/historyAndPhysical" component={HistoryAndPhysical}/>
+    <Route path="/progressNote" component={ProgressNote}/>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;
@@ -33,9 +37,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mobileOpen: false
+      mobileOpen: false,
+      menuopen: false
     };
     this.resizeFunction = this.resizeFunction.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
@@ -47,6 +53,11 @@ class App extends React.Component {
     if (window.innerWidth >= 960) {
       this.setState({ mobileOpen: false });
     }
+  }
+  handleClick = () => {
+    this.setState({
+      menuopen: !this.state.menuopen
+    })
   }
   componentDidMount() {
     if (navigator.platform.indexOf("Win") > -1) {
@@ -78,6 +89,8 @@ class App extends React.Component {
           open={this.state.mobileOpen}
           color="blue"
           {...rest}
+          menuopen={this.state.menuopen}
+          handleClick = { this.handleClick}
         />
         <div className={classes.mainPanel} ref="mainPanel">
           <Header

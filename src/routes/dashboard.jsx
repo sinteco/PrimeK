@@ -17,6 +17,7 @@ import Maps from "views/Maps/Maps.jsx";
 import NotificationsPage from "views/Notifications/Notifications.jsx";
 import Assignments from "../components/assignments/assignments";
 import VitalSigns from "../components/VitalSigns/vitalSigns";
+import PatientNote from "../components/PatientNote/patientNote";
 
 const dashboardRoutes = [
   {
@@ -38,14 +39,15 @@ const dashboardRoutes = [
     sidebarName: "Vital Signs",
     navbarName: "Vital Signs",
     icon: Unarchive,
-    component: VitalSigns
+    component: VitalSigns,
   },
   {
     path: "/PatientNote",
     sidebarName: "Patient Note",
     navbarName: "Patient Note",
     icon: Unarchive,
-    component: VitalSigns
+    component: PatientNote,
+    menu: true
   },
   {
     path: "/user",
