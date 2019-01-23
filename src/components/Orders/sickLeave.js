@@ -43,7 +43,7 @@ const styles = {
     }
   };
 
-class patientNote extends Component {
+class sickLeave extends Component {
     constructor(props) {
         super(props);
     }
@@ -62,37 +62,37 @@ class patientNote extends Component {
     render() {
         const { classes } = this.props;
         return (
-                <GridContainer>
-                    <GridItem xs={12} sm={12} md={12}>
-                        <Card>
-                        <CardHeader color="primary">
-                            <h4 className={classes.cardTitleWhite}>Patient Note</h4>
-                            <p className={classes.cardCategoryWhite}>
-                            {/* Here is a subtitle for this table */}
-                            </p>
-                        </CardHeader>
-                        <CardBody>
-                        {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
-                            <Table
-                            tableHeaderColor="primary"
-                            tableHead={["Patient", "DateTime", "Category", "Note","Doctor"]}
-                            tableData={this.returnarrays()}
-                            />
-                        </CardBody>
-                        </Card>
-                    </GridItem>
-                </GridContainer>
+            <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                    <Card>
+                    <CardHeader color="primary">
+                        <h4 className={classes.cardTitleWhite}>Sick Leave</h4>
+                        <p className={classes.cardCategoryWhite}>
+                        {/* Here is a subtitle for this table */}
+                        </p>
+                    </CardHeader>
+                    <CardBody>
+                    {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
+                        <Table
+                        tableHeaderColor="primary"
+                        tableHead={["Patient", "DateTime", "Category", "Note","Doctor"]}
+                        tableData={this.returnarrays()}
+                        />
+                    </CardBody>
+                    </Card>
+                </GridItem>
+            </GridContainer>
         );
     }
 }
 
-patientNote.propTypes = {
+sickLeave.propTypes = {
     fetchVitalSigen: propTypes.func.isRequired,
     patientNotes: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired
   }
-  const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({
     patientNotes: state.patientNote.patientnotes,
     isLoading: state.patientNote.isLoading,
     hasError: state.patientNote.hasError,
@@ -103,4 +103,4 @@ patientNote.propTypes = {
     fetchPatientNotes: (url) => dispatch(fetchPatientNotes(url))
   });
 
-export default compose(withStyles(styles), connect(mapStateToProps,mapDispatchToProps))(patientNote);
+export default compose(withStyles(styles), connect(mapStateToProps,mapDispatchToProps))(sickLeave);

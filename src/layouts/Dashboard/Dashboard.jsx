@@ -11,20 +11,23 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import Header from "components/Header/Header.jsx";
 import Footer from "components/Footer/Footer.jsx";
 import Sidebar from "components/Sidebar/Sidebar.jsx";
-
 import dashboardRoutes from "routes/dashboard.jsx";
-
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
-
 import image from "assets/img/sidebar-4.jpg";
 import logo from "assets/img/reactlogo.png";
 import HistoryAndPhysical from '../../components/PatientNote/historyAndPhysical';
 import ProgressNote from '../../components/PatientNote/progressNote';
+import OrderSheet from '../../components/Orders/orderSheet';
+import MedicationOrder from '../../components/Orders/medicationOrder';
+import LabOrder from '../../components/Orders/labOrder';
 
 const switchRoutes = (
   <Switch>
     <Route path="/historyAndPhysical" component={HistoryAndPhysical}/>
     <Route path="/progressNote" component={ProgressNote}/>
+    <Route path="/OrderSheet" component={OrderSheet}/>
+    <Route path="/MedicationOrder" component={MedicationOrder}/>
+    <Route path="/LabOrder" component={LabOrder}/>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;
@@ -38,10 +41,12 @@ class App extends React.Component {
     super(props);
     this.state = {
       mobileOpen: false,
-      menuopen: false
+      pnmenuopen: false,
+      omenuopen: false
     };
     this.resizeFunction = this.resizeFunction.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.pnhandleClick = this.pnhandleClick.bind(this);
+    this.ohandleClick = this.ohandleClick.bind(this);
   }
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
@@ -54,9 +59,14 @@ class App extends React.Component {
       this.setState({ mobileOpen: false });
     }
   }
-  handleClick = () => {
+  pnhandleClick = () => {
     this.setState({
-      menuopen: !this.state.menuopen
+      pnmenuopen: !this.state.pnmenuopen,
+    })
+  }
+  ohandleClick = () => {
+    this.setState({
+      omenuopen: !this.state.omenuopen
     })
   }
   componentDidMount() {
@@ -89,8 +99,10 @@ class App extends React.Component {
           open={this.state.mobileOpen}
           color="blue"
           {...rest}
-          menuopen={this.state.menuopen}
-          handleClick = { this.handleClick}
+          pnmenuopen={this.state.pnmenuopen}
+          omenuopen={this.state.omenuopen}
+          pnhandleClick = { this.pnhandleClick}
+          ohandleClick = { this.ohandleClick}
         />
         <div className={classes.mainPanel} ref="mainPanel">
           <Header

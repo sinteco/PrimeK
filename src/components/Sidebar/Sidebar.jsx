@@ -22,12 +22,12 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 
-const Sidebar = ({ handleClick, ...props}) => {
+const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
   // verifies if routeName is the one active (in browser input)
   function activeRoute(routeName) {
     return props.location.pathname.indexOf(routeName) > -1 ? true : false;
   }
-  const { classes, color, logo, image, logoText, routes, menuopen } = props;
+  const { classes, color, logo, image, logoText, routes, pnmenuopen, omenuopen } = props;
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
@@ -53,10 +53,137 @@ const Sidebar = ({ handleClick, ...props}) => {
             className={activePro + classes.item}
             activeClassName="active"
             key={key}
-          >
-          {prop.menu!=null?
+          >{(prop.omenu!=null)?
             <List>
-              <ListItem className={whiteFontClasses} button onClick={handleClick}>
+              <ListItem className={whiteFontClasses} button onClick={ohandleClick}>
+                <ListItemIcon className={classes.itemIcon}>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText
+                 disableTypography
+                 className={classes.itemText + whiteFontClasses}
+                 inset
+                 primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Orders</Typography>} />
+                {omenuopen ? <ExpandLess /> : <ExpandMore />}
+              </ListItem>
+              <Collapse in={omenuopen} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                  <ListItem button className={classes.nested} component={Link} to="/SickLeave">
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Sick Leave</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested} component={Link} to="/OrderSheet">
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Order Seet</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested} component={Link} to="/MedicationOrder">
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Medication Order</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested} component={Link} to="/LabOrder">
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Lab Order</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>ECG Order</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>X-ray</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Ultrasound</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Echo</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Conseltation Order</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Procedure Order</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested}>
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Other Investigation Order</Typography>} />
+                  </ListItem>
+                </List>
+              </Collapse>
+            </List>
+          : (prop.pnmenu!=null)?
+            <List>
+              <ListItem className={whiteFontClasses} button onClick={pnhandleClick}>
                 <ListItemIcon className={classes.itemIcon}>
                   <InboxIcon />
                 </ListItemIcon>
@@ -65,9 +192,9 @@ const Sidebar = ({ handleClick, ...props}) => {
                  className={classes.itemText + whiteFontClasses}
                  inset
                  primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Patient Note</Typography>} />
-                {menuopen ? <ExpandLess /> : <ExpandMore />}
+                {pnmenuopen ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
-              <Collapse in={menuopen} timeout="auto" unmountOnExit>
+              <Collapse in={pnmenuopen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItem button className={classes.nested} component={Link} to="/historyAndPhysical">
                     <ListItemIcon className={classes.itemIcon}>

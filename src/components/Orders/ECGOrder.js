@@ -12,6 +12,7 @@ import Moment from 'moment';
 import { fetchPatientNotes } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Pagination from "material-ui-flat-pagination";
 
 const styles = {
     cardCategoryWhite: {
@@ -43,10 +44,23 @@ const styles = {
     }
   };
 
-class patientNote extends Component {
+class ECGOrder extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            offset: 0,
+            page: 1
+        }
     }
+    handleClick(offset) {
+        this.setState({ 
+            offset,
+            page:(this.state.offset+20)/10
+         });
+        const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
+        const medicatioOrdersURL = '/PatientNotes/GetOrderSheetOfPatient/' + id + "?page="+ (this.state.offset+20)/10;
+        this.props.fetchMedicationOrders(medicatioOrdersURL);
+      }
     returnarrays(){
         var a = new Array();
         this.props.patientNotes.map((patientNote)=>{
@@ -62,31 +76,37 @@ class patientNote extends Component {
     render() {
         const { classes } = this.props;
         return (
-                <GridContainer>
-                    <GridItem xs={12} sm={12} md={12}>
-                        <Card>
-                        <CardHeader color="primary">
-                            <h4 className={classes.cardTitleWhite}>Patient Note</h4>
-                            <p className={classes.cardCategoryWhite}>
-                            {/* Here is a subtitle for this table */}
-                            </p>
-                        </CardHeader>
-                        <CardBody>
-                        {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
-                            <Table
-                            tableHeaderColor="primary"
-                            tableHead={["Patient", "DateTime", "Category", "Note","Doctor"]}
-                            tableData={this.returnarrays()}
-                            />
-                        </CardBody>
-                        </Card>
-                    </GridItem>
-                </GridContainer>
+            <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                    <Card>
+                    <CardHeader color="primary">
+                        <h4 className={classes.cardTitleWhite}>ECG Order</h4>
+                        <p className={classes.cardCategoryWhite}>
+                        {/* Here is a subtitle for this table */}
+                        </p>
+                    </CardHeader>
+                    <CardBody>
+                    {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
+                        <Table
+                        tableHeaderColor="primary"
+                        tableHead={["Patient", "DateTime", "Category", "Note","Doctor"]}
+                        tableData={this.returnarrays()}
+                        />
+                        <Pagination
+                                limit={10}
+                                offset={this.state.offset}
+                                total={this.props.totalCount}
+                                onClick={(e, offset) => this.handleClick(offset)}
+                                />
+                    </CardBody>
+                    </Card>
+                </GridItem>
+            </GridContainer>
         );
     }
 }
 
-patientNote.propTypes = {
+ECGOrder.propTypes = {
     fetchVitalSigen: propTypes.func.isRequired,
     patientNotes: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
@@ -103,4 +123,4 @@ patientNote.propTypes = {
     fetchPatientNotes: (url) => dispatch(fetchPatientNotes(url))
   });
 
-export default compose(withStyles(styles), connect(mapStateToProps,mapDispatchToProps))(patientNote);
+export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(ECGOrder);
