@@ -108,7 +108,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Lab Order</Typography>} />
                   </ListItem>
-                  <ListItem button className={classes.nested}>
+                  <ListItem button className={classes.nested} component={Link} to="/RadOrder">
                     <ListItemIcon className={classes.itemIcon}>
                       <StarBorder />
                     </ListItemIcon>
@@ -116,39 +116,9 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      disableTypography
                      className={classes.itemText + whiteFontClasses}
                      inset
-                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>ECG Order</Typography>} />
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Imaging Studies</Typography>} />
                   </ListItem>
-                  <ListItem button className={classes.nested}>
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
-                    </ListItemIcon>
-                    <ListItemText
-                     disableTypography
-                     className={classes.itemText + whiteFontClasses}
-                     inset
-                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>X-ray</Typography>} />
-                  </ListItem>
-                  <ListItem button className={classes.nested}>
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
-                    </ListItemIcon>
-                    <ListItemText
-                     disableTypography
-                     className={classes.itemText + whiteFontClasses}
-                     inset
-                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Ultrasound</Typography>} />
-                  </ListItem>
-                  <ListItem button className={classes.nested}>
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
-                    </ListItemIcon>
-                    <ListItemText
-                     disableTypography
-                     className={classes.itemText + whiteFontClasses}
-                     inset
-                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Echo</Typography>} />
-                  </ListItem>
-                  <ListItem button className={classes.nested}>
+                  <ListItem button className={classes.nested} component={Link} to="/ConseltationOrder">
                     <ListItemIcon className={classes.itemIcon}>
                       <StarBorder />
                     </ListItemIcon>
@@ -158,7 +128,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Conseltation Order</Typography>} />
                   </ListItem>
-                  <ListItem button className={classes.nested}>
+                  <ListItem button className={classes.nested} component={Link} to="/ProcedureOrder">
                     <ListItemIcon className={classes.itemIcon}>
                       <StarBorder />
                     </ListItemIcon>
@@ -168,7 +138,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Procedure Order</Typography>} />
                   </ListItem>
-                  <ListItem button className={classes.nested}>
+                  <ListItem button className={classes.nested} component={Link} to="/InvestigationOrder">
                     <ListItemIcon className={classes.itemIcon}>
                       <StarBorder />
                     </ListItemIcon>

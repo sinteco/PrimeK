@@ -12,6 +12,7 @@ import Moment from 'moment';
 import { fetchPatientNotes } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Pagination from "material-ui-flat-pagination";
 
 const styles = {
     cardCategoryWhite: {
@@ -46,6 +47,10 @@ const styles = {
 class sickLeave extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            offset: 0,
+            page: 1
+        }
     }
     returnarrays(){
         var a = new Array();
@@ -54,9 +59,18 @@ class sickLeave extends Component {
         });
         return a;    
     }
+    handleClick(offset) {
+        this.setState({ 
+            offset,
+            page:(this.state.offset+20)/10
+         });
+        const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
+        const patientNotesURL = '/PatientNotes/GetPatientNotesOfPatient/' + id + "?page="+ (this.state.offset+20)/10;
+        this.props.fetchProcedureOrders(patientNotesURL);
+      }
     componentWillMount(){
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const patientNotesURL = '/PatientNotes/GetPatientNotesOfPatient/' + id;
+        const patientNotesURL = '/PatientNotes/GetPatientNotesOfPatient/' + id + "?page="+ this.state.page;
         this.props.fetchPatientNotes(patientNotesURL);
     }
     render() {
@@ -78,6 +92,12 @@ class sickLeave extends Component {
                         tableHead={["Patient", "DateTime", "Category", "Note","Doctor"]}
                         tableData={this.returnarrays()}
                         />
+                        <Pagination
+                                limit={10}
+                                offset={this.state.offset}
+                                total={this.props.totalCount}
+                                onClick={(e, offset) => this.handleClick(offset)}
+                                />
                     </CardBody>
                     </Card>
                 </GridItem>

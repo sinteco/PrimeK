@@ -20,6 +20,10 @@ import ProgressNote from '../../components/PatientNote/progressNote';
 import OrderSheet from '../../components/Orders/orderSheet';
 import MedicationOrder from '../../components/Orders/medicationOrder';
 import LabOrder from '../../components/Orders/labOrder';
+import RadOrder from '../../components/Orders/RadOrder';
+import ProcedureOrder from '../../components/Orders/procedureOrder';
+import ConseltationOrder from '../../components/Orders/consultationOrder';
+import InvestigationOrder from '../../components/Orders/otherInvestigationOrder';
 
 const switchRoutes = (
   <Switch>
@@ -28,6 +32,10 @@ const switchRoutes = (
     <Route path="/OrderSheet" component={OrderSheet}/>
     <Route path="/MedicationOrder" component={MedicationOrder}/>
     <Route path="/LabOrder" component={LabOrder}/>
+    <Route path="/RadOrder" component={RadOrder}/>
+    <Route path="/ProcedureOrder" component={ProcedureOrder}/>
+    <Route path="/ConseltationOrder" component={ConseltationOrder}/>
+    <Route path="/InvestigationOrder" component={InvestigationOrder}/>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;

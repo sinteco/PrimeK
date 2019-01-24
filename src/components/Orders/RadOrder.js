@@ -9,7 +9,7 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Moment from 'moment';
-import { fetchPatientNotes } from '../../redux/actions/patientNoteAction';
+import { fetchRadOrders } from '../../redux/actions/radOrderAction';
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from "material-ui-flat-pagination";
@@ -44,7 +44,7 @@ const styles = {
     }
   };
 
-class ECGOrder extends Component {
+class RadOrder extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -52,26 +52,26 @@ class ECGOrder extends Component {
             page: 1
         }
     }
+    returnarrays(){
+        var a = new Array();
+        this.props.radOrders.map((radOrder)=>{
+            a.push([[Moment(radOrder.Date).format('d MMM')], [radOrder.Type], [radOrder.SubType], [radOrder.Conclusion], [radOrder.OrderBy]])
+        });
+        return a;    
+    }
     handleClick(offset) {
         this.setState({ 
             offset,
             page:(this.state.offset+20)/10
          });
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const medicatioOrdersURL = '/PatientNotes/GetOrderSheetOfPatient/' + id + "?page="+ (this.state.offset+20)/10;
-        this.props.fetchMedicationOrders(medicatioOrdersURL);
+        const radOrdersURL = '/RadOrders/GetRadOrdersOfPatient/' + id + "?page="+ (this.state.offset+20)/10;
+        this.props.fetchRadOrders(radOrdersURL);
       }
-    returnarrays(){
-        var a = new Array();
-        this.props.patientNotes.map((patientNote)=>{
-            a.push([[patientNote.PatientId], [Moment(patientNote.DateTime).format('d MMM')],[patientNote.NoteCategory], [patientNote.Note], [patientNote.Doctor]])
-        });
-        return a;    
-    }
     componentWillMount(){
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const patientNotesURL = '/PatientNotes/GetPatientNotesOfPatient/' + id;
-        this.props.fetchPatientNotes(patientNotesURL);
+        const radOrdersURL = '/RadOrders/GetRadOrdersOfPatient/' + id + "?page="+ this.state.page;
+        this.props.fetchRadOrders(radOrdersURL);
     }
     render() {
         const { classes } = this.props;
@@ -80,7 +80,7 @@ class ECGOrder extends Component {
                 <GridItem xs={12} sm={12} md={12}>
                     <Card>
                     <CardHeader color="primary">
-                        <h4 className={classes.cardTitleWhite}>ECG Order</h4>
+                        <h4 className={classes.cardTitleWhite}>Rad Order</h4>
                         <p className={classes.cardCategoryWhite}>
                         {/* Here is a subtitle for this table */}
                         </p>
@@ -89,7 +89,7 @@ class ECGOrder extends Component {
                     {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
                         <Table
                         tableHeaderColor="primary"
-                        tableHead={["Patient", "DateTime", "Category", "Note","Doctor"]}
+                        tableHead={["Date", "Type", "Sub Type", "Conclusion","Orderedby"]}
                         tableData={this.returnarrays()}
                         />
                         <Pagination
@@ -106,21 +106,23 @@ class ECGOrder extends Component {
     }
 }
 
-ECGOrder.propTypes = {
-    fetchVitalSigen: propTypes.func.isRequired,
-    patientNotes: propTypes.array.isRequired,
+RadOrder.propTypes = {
+    fetchRadOrders: propTypes.func.isRequired,
+    radOrders: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired
   }
+  
   const mapStateToProps = (state) => ({
-    patientNotes: state.patientNote.patientnotes,
-    isLoading: state.patientNote.isLoading,
-    hasError: state.patientNote.hasError,
-    totalCount: state.patientNote.totalCount,
+    radOrders: state.radOrder.radOrders,
+    isLoading: state.radOrder.isLoading,
+    hasError: state.radOrder.hasError,
+    totalCount: state.radOrder.totalCount,
     selectedPatient: state.assignments.selectedPatient
   });
+
   const mapDispatchToProps = dispatch => ({
-    fetchPatientNotes: (url) => dispatch(fetchPatientNotes(url))
+    fetchRadOrders: (url) => dispatch(fetchRadOrders(url))
   });
 
-export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(ECGOrder);
+export default compose(withStyles(styles), connect(mapStateToProps,mapDispatchToProps))(RadOrder);
