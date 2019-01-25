@@ -10,6 +10,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Moment from 'moment';
 import { fetchConsultationOrders } from '../../redux/actions/consultationOrderAction';
+import { saveConsultationOrder } from '../../redux/actions/consultationOrderAction';
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from "material-ui-flat-pagination";
@@ -22,6 +23,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import TextField from '@material-ui/core/TextField';
 import { FormGroup } from '@material-ui/core';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
+import qs from 'qs';
 
 const styles = {
     cardCategoryWhite: {
@@ -51,6 +55,10 @@ const styles = {
         lineHeight: "1"
       }
     },
+    dialog: {
+        width: '80%',
+        maxHeight: 435,
+    },
   };
 
 class consultationOrder extends Component {
@@ -60,16 +68,22 @@ class consultationOrder extends Component {
             offset: 0,
             page: 1,
             open: false,
-            reasonForConsultation:''
+            reasonForConsultation:'',
+            selectedDate: new Date()
         }
     }
     handleClickOpen = () => {
         this.setState({ open: true });
       };
     
-      handleClose = () => {
-        this.setState({ open: false });
-      };
+    handleClose = () => {
+    this.setState({ open: false });
+    };
+    handleDateChange = date => {
+        this.setState({
+            selectedDate: date
+        });
+    };
     returnarrays(){
         var a = new Array();
         this.props.consultationOrders.map((consultationOrder)=>{
@@ -91,6 +105,23 @@ class consultationOrder extends Component {
             [name]: event.target.value,
         });
     };
+    handleSave = () => {
+        const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
+        const input = {
+            DateTime: this.state.selectedDate,
+            reasonForConsultation: this.state.reasonForConsultation,
+            patientId: id
+        }
+        if (id === 0) {
+            alert("patient is not selected");
+            return
+        }
+        const URL = '/InvestigationOrders';
+        this.setState({
+            open: false
+        });
+        this.props.saveConsultationOrder(URL, qs.stringify(input));
+    };
     componentWillMount(){
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
         const radOrdersURL = '/Consultations/GetConsultationsOfPatient/' + id + "?page="+ this.state.page;
@@ -100,75 +131,84 @@ class consultationOrder extends Component {
         const { fullScreen } = this.props;
         const { classes } = this.props;
         return (
-            <GridContainer>
-                <GridItem xs={12} sm={12} md={12}>
-                    <Card>
-                    <CardHeader color="primary">
-                        <h4 className={classes.cardTitleWhite}>Consultation Order</h4>
-                        <p className={classes.cardCategoryWhite}>
-                        {/* Here is a subtitle for this table */}
-                        </p>
-                        <Button variant="contained" color="primary" onClick={this.handleClickOpen}>Create New</Button>
-                    </CardHeader>
-                    <CardBody>
-                    {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
-                        <Table
-                        tableHeaderColor="primary"
-                        tableHead={["MRN", "Patient Full Name", "Order by", "Date Time","Consultation Reason"]}
-                        tableData={this.returnarrays()}
-                        />
-                        <Pagination
-                                limit={10}
-                                offset={this.state.offset}
-                                total={this.props.totalCount}
-                                onClick={(e, offset) => this.handleClick(offset)}
-                                />
-                    </CardBody>
-                    </Card>
-                    <Dialog
-                        fullScreen={fullScreen}
-                        open={this.state.open}
-                        onClose={this.handleClose}
-                        aria-labelledby="responsive-dialog-title"
-                        >
-                        <DialogTitle id="responsive-dialog-title">{"New Consultation Order"}</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                <form className={classes.container} noValidate autoComplete="off">
-                                    <FormGroup 
-                                        row
-                                        className={classes.FormGroup}
-                                        >
-                                        <TextField
-                                            id="standard-name"
-                                            label="Reason For Consultation"
-                                            style={{ margin: 8 }}
-                                            className={classes.textField}
-                                            value={this.state.reasonForConsultation}
-                                            onChange={this.handleChange('reasonForConsultation')}
-                                            margin="normal"
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <GridContainer>
+                    <GridItem xs={12} sm={12} md={12}>
+                        <Card>
+                        <CardHeader color="primary">
+                            <h4 className={classes.cardTitleWhite}>Consultation Order</h4>
+                            <p className={classes.cardCategoryWhite}>
+                            {/* Here is a subtitle for this table */}
+                            </p>
+                            <Button variant="contained" color="primary" onClick={this.handleClickOpen}>Create New</Button>
+                        </CardHeader>
+                        <CardBody>
+                        {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
+                            <Table
+                            tableHeaderColor="primary"
+                            tableHead={["MRN", "Patient Full Name", "Order by", "Date Time","Consultation Reason"]}
+                            tableData={this.returnarrays()}
+                            />
+                            <Pagination
+                                    limit={10}
+                                    offset={this.state.offset}
+                                    total={this.props.totalCount}
+                                    onClick={(e, offset) => this.handleClick(offset)}
+                                    />
+                        </CardBody>
+                        </Card>
+                        <Dialog
+                            fullScreen={fullScreen}
+                            open={this.state.open}
+                            onClose={this.handleClose}
+                            aria-labelledby="responsive-dialog-title"
+                            classes = {{ paper: classes.dialog }}
+                            >
+                            <DialogTitle id="responsive-dialog-title">{"New Consultation Order"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    <form className={classes.container} noValidate autoComplete="off">
+                                        <FormGroup
+                                            className={classes.FormGroup}
+                                            >
+                                            <DatePicker
+                                                margin="normal"
+                                                label="Date Time"
+                                                value={this.state.selectedDate}
+                                                onChange={this.handleDateChange}
                                             />
-                                    </FormGroup>
-                                </form>
-                            </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={this.handleClose} color="primary">
-                                Cancel
-                            </Button>
-                            <Button onClick={this.handleClose} color="primary" autoFocus>
-                                Save
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
-                </GridItem>
-            </GridContainer>
+                                            <TextField
+                                                id="standard-textarea"
+                                                label = "Reason For Consultation"
+                                                multiline
+                                                className={classes.textField}
+                                                margin="normal"
+                                                value={this.state.reasonForConsultation}
+                                                onChange={this.handleChange('reasonForConsultation')}
+                                                />
+                                        </FormGroup>
+                                    </form>
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={this.handleClose} color="primary">
+                                    Cancel
+                                </Button>
+                                <Button onClick={this.handleSave} color="primary" autoFocus>
+                                    Save
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </GridItem>
+                </GridContainer>
+            </MuiPickersUtilsProvider>
         );
     }
 }
 
 consultationOrder.propTypes = {
     fetchConsultationOrders: propTypes.func.isRequired,
+    saveConsultationOrder: propTypes.func.isRequired,
     consultationOrders: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired,
@@ -184,7 +224,8 @@ consultationOrder.propTypes = {
   });
 
   const mapDispatchToProps = dispatch => ({
-    fetchConsultationOrders: (url) => dispatch(fetchConsultationOrders(url))
+    fetchConsultationOrders: (url) => dispatch(fetchConsultationOrders(url)),
+    saveConsultationOrder: (url) => dispatch(saveConsultationOrder(url))
   });
 
 export default compose(withStyles(styles),withMobileDialog(), connect(mapStateToProps,mapDispatchToProps))(consultationOrder);

@@ -22,6 +22,13 @@ import withMobileDialog from '@material-ui/core/withMobileDialog';
 import TextField from '@material-ui/core/TextField';
 import { FormGroup } from '@material-ui/core';
 import FormControl from '@material-ui/core/FormControl';
+import { fetchInvestigationItem } from '../../redux/actions/InvestigationOrderAction';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
+import qs from 'qs';
 
 const styles = {
     cardCategoryWhite: {
@@ -62,10 +69,13 @@ class otherInvestigationOrder extends Component {
             open: false,
             investigation: '',
             clinicalData: '',
-            remark: ''
+            remark: '',
+            selectedDate: new Date()
         }
     }
     handleClickOpen = () => {
+        const URL = 'InvestigationOrders/GetInvestigationItem/0';
+        this.props.fetchInvestigationItem(URL);
         this.setState({ open: true });
       };
     
@@ -92,6 +102,30 @@ class otherInvestigationOrder extends Component {
         this.setState({
             [name]: event.target.value,
         });
+    };
+    handleDateChange = date => {
+        this.setState({
+            selectedDate: date
+        });
+    };
+    handleSave = () => {
+        const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
+        const input = {
+            DateTime: this.state.selectedDate,
+            investigation: this.state.selectedDate,
+            clinicalData: this.state.clinicalData,
+            remark: this.state.remark,
+            patientId: id
+        }
+        if (id === 0) {
+            alert("patient is not selected");
+            return
+        }
+        const URL = '/InvestigationOrders';
+        this.setState({
+            open: false
+        });
+        this.props.saveConsultationOrder(URL, qs.stringify(input));
     };
     componentWillMount(){
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
@@ -139,6 +173,27 @@ class otherInvestigationOrder extends Component {
                         <DialogContent>
                             <form className={classes.container} noValidate autoComplete="off">
                                 <FormControl component="fieldset" className={classes.formControl}>
+                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <DatePicker
+                                            margin="normal"
+                                            label="Date Time"
+                                            value={this.state.selectedDate}
+                                            onChange={this.handleDateChange}
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                    <FormLabel component="legend"> Investigation </FormLabel>
+                                            {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
+                                            <FormGroup row>
+                                                {this.props.InvestigationItems.map((subtype)=>
+                                                    <FormControlLabel
+                                                        control={<Checkbox //checked={gilad}
+                                                        onChange={this.handleChange('subType')}
+                                                        value={subtype.Name} />}
+                                                        label={subtype.Name}
+                                                    />
+                                                )
+                                            }
+                                    </FormGroup>
                                     <FormGroup className={classes.FormGroup}>
                                         <TextField
                                             id="standard-multiline-flexible"
@@ -168,7 +223,7 @@ class otherInvestigationOrder extends Component {
                             <Button onClick={this.handleClose} color="primary">
                                 Cancel
                             </Button>
-                            <Button onClick={this.handleClose} color="primary" autoFocus>
+                            <Button onClick={this.handleSave} color="primary" autoFocus>
                                 Save
                             </Button>
                         </DialogActions>
@@ -181,13 +236,16 @@ class otherInvestigationOrder extends Component {
 
 otherInvestigationOrder.propTypes = {
     fetchInvestigationOrders: propTypes.func.isRequired,
+    fetchInvestigationItem: propTypes.func.isRequired,
     investigationOrders: propTypes.array.isRequired,
+    InvestigationItems: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired
   }
   
   const mapStateToProps = (state) => ({
     investigationOrders: state.investigationOrder.investigationOrders,
+    InvestigationItems: state.investigationOrder.InvestigationItems,
     isLoading: state.investigationOrder.isLoading,
     hasError: state.investigationOrder.hasError,
     totalCount: state.investigationOrder.totalCount,
@@ -195,7 +253,8 @@ otherInvestigationOrder.propTypes = {
   });
 
   const mapDispatchToProps = dispatch => ({
-    fetchInvestigationOrders: (url) => dispatch(fetchInvestigationOrders(url))
+    fetchInvestigationOrders: (url) => dispatch(fetchInvestigationOrders(url)),
+    fetchInvestigationItem: (url) => dispatch(fetchInvestigationItem(url))
   });
 
 export default compose(withStyles(styles),withMobileDialog(),connect(mapStateToProps,mapDispatchToProps))(otherInvestigationOrder);

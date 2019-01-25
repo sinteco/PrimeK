@@ -10,10 +10,23 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Moment from 'moment';
 import { fetchProcedureOrders } from '../../redux/actions/procedureOrderAction';
+import { fetchProceduresType } from '../../redux/actions/procedureOrderAction';
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from "material-ui-flat-pagination";
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import { FormGroup } from '@material-ui/core';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import qs from 'qs';
 
 const styles = {
     cardCategoryWhite: {
@@ -42,7 +55,11 @@ const styles = {
         fontWeight: "400",
         lineHeight: "1"
       }
-    }
+    },
+    dialog: {
+        width: '80%',
+        maxHeight: 435,
+    },
   };
 
 class procedureOrder extends Component {
@@ -50,7 +67,9 @@ class procedureOrder extends Component {
         super(props);
         this.state = {
             offset: 0,
-            page: 1
+            page: 1,
+            open: false,
+            subType:''
         }
     }
     returnarrays(){
@@ -69,6 +88,35 @@ class procedureOrder extends Component {
         const procedureOrderURL = '/Procedures/GetProceduresOfPatient/' + id + "?page="+ (this.state.offset+20)/10;
         this.props.fetchProcedureOrders(procedureOrderURL);
       }
+    handleClickOpen = () => {
+        const URL = '/Procedures/GetProcedureCategory/0';
+        this.props.fetchProceduresType(URL);
+        this.setState({
+            open: true
+        });
+    };
+
+    handleClose = () => {
+        this.setState({
+            open: false
+        });
+    };
+    handleSave = () => {
+        const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
+        const input = {
+            subType: this.state.subType,
+            patientId: id
+        }
+        if (id === 0) {
+            alert("patient is not selected");
+            return
+        }
+        const URL = '/Procedures';
+        this.setState({
+            open: false
+        });
+        this.props.saveConsultationOrder(URL, qs.stringify(input));
+    };
     componentWillMount(){
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
         const procedureOrderURL = '/Procedures/GetProceduresOfPatient/' + id + "?page="+ this.state.page;
@@ -76,6 +124,7 @@ class procedureOrder extends Component {
     }
     render() {
         const { classes } = this.props;
+        const { fullScreen } = this.props;
         return (
             <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
@@ -85,7 +134,9 @@ class procedureOrder extends Component {
                         <p className={classes.cardCategoryWhite}>
                         {/* Here is a subtitle for this table */}
                         </p>
-                        <Button>Create New</Button>
+                        <Button variant="contained" color="primary" onClick={this.handleClickOpen}>
+                            Create New
+                        </Button>
                     </CardHeader>
                     <CardBody>
                     {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
@@ -102,6 +153,44 @@ class procedureOrder extends Component {
                                 />
                     </CardBody>
                     </Card>
+                    <Dialog
+                            fullScreen={fullScreen}
+                            open={this.state.open}
+                            onClose={this.handleClose}
+                            aria-labelledby="responsive-dialog-title"
+                            classes = {{ paper: classes.dialog }}
+                            >
+                            <DialogTitle id="responsive-dialog-title">{"New Procedure Order"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    <form className={classes.container} noValidate autoComplete="off">
+                                        <FormControl component="fieldset" className={classes.formControl}>
+                                            <FormLabel component="legend">Procedures</FormLabel>
+                                            {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
+                                            <FormGroup row>
+                                                {this.props.procedureType.map((subtype)=>
+                                                    <FormControlLabel
+                                                        control={<Checkbox //checked={gilad}
+                                                        onChange={this.handleChange('subType')}
+                                                        value={subtype.Name} />}
+                                                        label={subtype.Name}
+                                                    />
+                                                )
+                                            }
+                                            </FormGroup>
+                                        </FormControl>
+                                    </form>
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={this.handleClose} color="primary">
+                                    Cancel
+                                </Button>
+                                <Button onClick={this.handleSave} color="primary" autoFocus>
+                                    Save
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                 </GridItem>
             </GridContainer>
         );
@@ -111,12 +200,14 @@ class procedureOrder extends Component {
 procedureOrder.propTypes = {
     fetchProcedureOrders: propTypes.func.isRequired,
     procedureOrders: propTypes.array.isRequired,
+    procedureType: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired
   }
   
   const mapStateToProps = (state) => ({
     procedureOrders: state.procedureOrder.procedureOrders,
+    procedureType: state.procedureOrder.procedureType,
     isLoading: state.procedureOrder.isLoading,
     hasError: state.procedureOrder.hasError,
     totalCount: state.procedureOrder.totalCount,
@@ -124,7 +215,8 @@ procedureOrder.propTypes = {
   });
 
   const mapDispatchToProps = dispatch => ({
-    fetchProcedureOrders: (url) => dispatch(fetchProcedureOrders(url))
+    fetchProcedureOrders: (url) => dispatch(fetchProcedureOrders(url)),
+    fetchProceduresType: (url) => dispatch(fetchProceduresType(url))
   });
 
-export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(procedureOrder);
+export default compose(withStyles(styles), withMobileDialog(), connect(mapStateToProps, mapDispatchToProps))(procedureOrder);
