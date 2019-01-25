@@ -8,7 +8,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import {Editor, EditorState, RichUtils} from 'draft-js';
-import { compose } from '../../../../../../AppData/Local/Microsoft/TypeScript/3.2/node_modules/redux';
+import { compose } from 'redux';
 import 'draft-js/dist/Draft.css';
 import Typography from '@material-ui/core/Typography';
 import { fetchXraySubType } from '../../redux/actions/radOrderAction';
