@@ -18,7 +18,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import TextField from '@material-ui/core/TextField';
@@ -180,8 +179,6 @@ export class vitalSigns extends Component {
                         >
                           <DialogTitle id="responsive-dialog-title">{"New Vital Sign"}</DialogTitle>
                           <DialogContent>
-                            <DialogContentText>
-                            </DialogContentText>
                             <form className={classes.container} noValidate autoComplete="off">
                               <FormControl component="fieldset" className={classes.formControl}>
                               <FormGroup row>

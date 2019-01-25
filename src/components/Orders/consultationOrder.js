@@ -13,6 +13,15 @@ import { fetchConsultationOrders } from '../../redux/actions/consultationOrderAc
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from "material-ui-flat-pagination";
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import TextField from '@material-ui/core/TextField';
+import { FormGroup } from '@material-ui/core';
 
 const styles = {
     cardCategoryWhite: {
@@ -41,7 +50,7 @@ const styles = {
         fontWeight: "400",
         lineHeight: "1"
       }
-    }
+    },
   };
 
 class consultationOrder extends Component {
@@ -49,9 +58,18 @@ class consultationOrder extends Component {
         super(props);
         this.state = {
             offset: 0,
-            page: 1
+            page: 1,
+            open: false,
+            reasonForConsultation:''
         }
     }
+    handleClickOpen = () => {
+        this.setState({ open: true });
+      };
+    
+      handleClose = () => {
+        this.setState({ open: false });
+      };
     returnarrays(){
         var a = new Array();
         this.props.consultationOrders.map((consultationOrder)=>{
@@ -68,12 +86,18 @@ class consultationOrder extends Component {
         const radOrdersURL = '/Consultations/GetConsultationsOfPatient/' + id + "?page="+ (this.state.offset+20)/10;
         this.props.fetchConsultationOrders(radOrdersURL);
       }
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
     componentWillMount(){
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
         const radOrdersURL = '/Consultations/GetConsultationsOfPatient/' + id + "?page="+ this.state.page;
         this.props.fetchConsultationOrders(radOrdersURL);
     }
     render() {
+        const { fullScreen } = this.props;
         const { classes } = this.props;
         return (
             <GridContainer>
@@ -84,6 +108,7 @@ class consultationOrder extends Component {
                         <p className={classes.cardCategoryWhite}>
                         {/* Here is a subtitle for this table */}
                         </p>
+                        <Button variant="contained" color="primary" onClick={this.handleClickOpen}>Create New</Button>
                     </CardHeader>
                     <CardBody>
                     {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
@@ -100,6 +125,42 @@ class consultationOrder extends Component {
                                 />
                     </CardBody>
                     </Card>
+                    <Dialog
+                        fullScreen={fullScreen}
+                        open={this.state.open}
+                        onClose={this.handleClose}
+                        aria-labelledby="responsive-dialog-title"
+                        >
+                        <DialogTitle id="responsive-dialog-title">{"New Consultation Order"}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                <form className={classes.container} noValidate autoComplete="off">
+                                    <FormGroup 
+                                        row
+                                        className={classes.FormGroup}
+                                        >
+                                        <TextField
+                                            id="standard-name"
+                                            label="Reason For Consultation"
+                                            style={{ margin: 8 }}
+                                            className={classes.textField}
+                                            value={this.state.reasonForConsultation}
+                                            onChange={this.handleChange('reasonForConsultation')}
+                                            margin="normal"
+                                            />
+                                    </FormGroup>
+                                </form>
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleClose} color="primary">
+                                Cancel
+                            </Button>
+                            <Button onClick={this.handleClose} color="primary" autoFocus>
+                                Save
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                 </GridItem>
             </GridContainer>
         );
@@ -110,7 +171,8 @@ consultationOrder.propTypes = {
     fetchConsultationOrders: propTypes.func.isRequired,
     consultationOrders: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
-    hasError: propTypes.bool.isRequired
+    hasError: propTypes.bool.isRequired,
+    fullScreen: propTypes.bool.isRequired,
   }
   
   const mapStateToProps = (state) => ({
@@ -125,4 +187,4 @@ consultationOrder.propTypes = {
     fetchConsultationOrders: (url) => dispatch(fetchConsultationOrders(url))
   });
 
-export default compose(withStyles(styles), connect(mapStateToProps,mapDispatchToProps))(consultationOrder);
+export default compose(withStyles(styles),withMobileDialog(), connect(mapStateToProps,mapDispatchToProps))(consultationOrder);

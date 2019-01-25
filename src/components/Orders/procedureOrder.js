@@ -13,6 +13,7 @@ import { fetchProcedureOrders } from '../../redux/actions/procedureOrderAction';
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from "material-ui-flat-pagination";
+import Button from '@material-ui/core/Button';
 
 const styles = {
     cardCategoryWhite: {
@@ -84,6 +85,7 @@ class procedureOrder extends Component {
                         <p className={classes.cardCategoryWhite}>
                         {/* Here is a subtitle for this table */}
                         </p>
+                        <Button>Create New</Button>
                     </CardHeader>
                     <CardBody>
                     {this.props.isLoading?<CircularProgress className={classes.progress} />:""}

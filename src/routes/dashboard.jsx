@@ -19,6 +19,7 @@ import Assignments from "../components/assignments/assignments";
 import VitalSigns from "../components/VitalSigns/vitalSigns";
 import PatientNote from "../components/PatientNote/patientNote";
 import SickLeave from "../components/Orders/sickLeave";
+import Appointment from "../components/Appointment/appointments";
 
 const dashboardRoutes = [
   {
@@ -57,6 +58,13 @@ const dashboardRoutes = [
     icon: Unarchive,
     component: PatientNote,
     pnmenu: true
+  },
+  {
+    path: "/Appointment",
+    sidebarName: "Appointment",
+    navbarName: "Appointment",
+    icon: Unarchive,
+    component: Appointment
   },
   {
     path: "/user",

@@ -24,6 +24,10 @@ import RadOrder from '../../components/Orders/RadOrder';
 import ProcedureOrder from '../../components/Orders/procedureOrder';
 import ConseltationOrder from '../../components/Orders/consultationOrder';
 import InvestigationOrder from '../../components/Orders/otherInvestigationOrder';
+import NewXrayOrder from '../../components/Orders/newXRayOrder';
+import NewUltrasound from '../../components/Orders/newUltarsoundOrder';
+import NewECG from '../../components/Orders/newECGOrder';
+import NewEcho from '../../components/Orders/newEchoOrder';
 
 const switchRoutes = (
   <Switch>
@@ -36,6 +40,11 @@ const switchRoutes = (
     <Route path="/ProcedureOrder" component={ProcedureOrder}/>
     <Route path="/ConseltationOrder" component={ConseltationOrder}/>
     <Route path="/InvestigationOrder" component={InvestigationOrder}/>
+    <Route path="/NewXrayOrder" component={NewXrayOrder}/>
+    <Route path="/UltarSound" component={NewXrayOrder}/>
+    <Route path="/NewUltrasound" component={NewUltrasound}/>
+    <Route path="/NewECG" component={NewECG}/>
+    <Route path="/NewEcho" component={NewEcho}/>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;
