@@ -9,10 +9,23 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Moment from 'moment';
-import { fetchLabOrders } from '../../redux/actions/labOrderAction';
+import { fetchLabOrders, fetchTests } from '../../redux/actions/labOrderAction';
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from "material-ui-flat-pagination";
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import { FormGroup } from '@material-ui/core';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import qs from 'qs';
+import Collapsible from 'react-collapsible';
 
 const styles = {
     cardCategoryWhite: {
@@ -41,6 +54,13 @@ const styles = {
         fontWeight: "400",
         lineHeight: "1"
       }
+    },
+    collapsible:{
+        color: "#000000"
+    },
+    collapsibleChiled: {
+        color: "#0366d6",
+        marginLeft: "5%"
     }
   };
 
@@ -49,7 +69,8 @@ class labOrder extends Component {
         super(props);
         this.state = {
             offset: 0,
-            page: 1
+            page: 1,
+            subType: ''
         }
     }
     returnarrays(){
@@ -68,6 +89,16 @@ class labOrder extends Component {
         const labOrdersURL = '/TestOrders/GetTestOrdersOfPatient/' + id + "?page="+ (this.state.offset+20)/10;
         this.props.fetchLabOrders(labOrdersURL);
       }
+    handleClickOpen = () => {
+        const URL = '/TestOrders/GetTestOrdersCategory/0';
+        this.props.fetchTests(URL);
+        this.setState({ open: true });
+    };
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
     componentWillMount(){
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
         const labOrdersURL = '/TestOrders/GetTestOrdersOfPatient/' + id + "?page="+ this.state.page;
@@ -75,6 +106,7 @@ class labOrder extends Component {
     }
     render() {
         const { classes } = this.props;
+        const { fullScreen } = this.props;
         return (
             <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
@@ -84,6 +116,7 @@ class labOrder extends Component {
                         <p className={classes.cardCategoryWhite}>
                         {/* Here is a subtitle for this table */}
                         </p>
+                        <Button variant="contained" color="primary" onClick={this.handleClickOpen}>Create New</Button>
                     </CardHeader>
                     <CardBody>
                     {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
@@ -100,6 +133,61 @@ class labOrder extends Component {
                                 />
                     </CardBody>
                     </Card>
+                    <Dialog
+                            fullScreen={fullScreen}
+                            open={this.state.open}
+                            onClose={this.handleClose}
+                            aria-labelledby="responsive-dialog-title"
+                            classes = {{ paper: classes.dialog }}
+                            >
+                            <DialogTitle id="responsive-dialog-title">{"New Lab Order"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    <form className={classes.container} noValidate autoComplete="off">
+                                        <FormLabel component="legend">Orders</FormLabel>
+                                        {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
+                                        <FormGroup
+                                            // row
+                                            className={classes.FormGroup}
+                                            >
+                                            {
+                                                this.props.Tests.map((subtype)=>
+                                                    < FormGroup > 
+                                                        <Collapsible trigger={subtype.name} className={classes.collapsible}>
+                                                            {
+                                                                subtype.TreeChileds.map((tree)=>
+                                                                    <FormGroup>
+                                                                        <Collapsible trigger={tree.name} className={classes.collapsibleChiled}>
+                                                                            {
+                                                                                tree.SubChileds.map((chiled) =>
+                                                                                    <FormControlLabel
+                                                                                        control={<Checkbox //checked={gilad}
+                                                                                        onChange={this.handleChange('subType')}
+                                                                                        value={chiled.name} />}
+                                                                                        label={chiled.name}
+                                                                                    />
+                                                                                )
+                                                                            }
+                                                                            </Collapsible>
+                                                                    </FormGroup>
+                                                            )}
+                                                        </Collapsible>
+                                                    </FormGroup>
+                                                )
+                                            }
+                                        </FormGroup>
+                                    </form>
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={this.handleClose} color="primary">
+                                    Cancel
+                                </Button>
+                                <Button onClick={this.handleSave} color="primary" autoFocus>
+                                    Save
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                 </GridItem>
             </GridContainer>
         );
@@ -107,12 +195,15 @@ class labOrder extends Component {
 }
 
 labOrder.propTypes = {
+    fetchTests: propTypes.func.isRequired,
     fetchLabOrders: propTypes.func.isRequired,
     labOrders: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
-    hasError: propTypes.bool.isRequired
+    hasError: propTypes.bool.isRequired,
+    Tests: propTypes.array.isRequired
   }
   const mapStateToProps = (state) => ({
+    Tests: state.labOrder.Tests,
     labOrders: state.labOrder.labOrders,
     isLoading: state.labOrder.isLoading,
     hasError: state.labOrder.hasError,
@@ -120,7 +211,8 @@ labOrder.propTypes = {
     selectedPatient: state.assignments.selectedPatient
   });
   const mapDispatchToProps = dispatch => ({
-    fetchLabOrders: (url) => dispatch(fetchLabOrders(url))
+    fetchLabOrders: (url) => dispatch(fetchLabOrders(url)),
+    fetchTests: (url) => dispatch(fetchTests(url))
   });
 
-export default compose(withStyles(styles), connect(mapStateToProps,mapDispatchToProps))(labOrder);
+export default compose(withStyles(styles), withMobileDialog(), connect(mapStateToProps, mapDispatchToProps))(labOrder);

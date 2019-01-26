@@ -74,8 +74,7 @@ class consultationOrder extends Component {
     }
     handleClickOpen = () => {
         this.setState({ open: true });
-      };
-    
+    };
     handleClose = () => {
     this.setState({ open: false });
     };

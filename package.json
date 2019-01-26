@@ -23,6 +23,7 @@
     "qs": "^6.6.0",
     "react": "^16.7.0",
     "react-chartist": "^0.13.1",
+    "react-collapsible": "^2.3.2",
     "react-dom": "^16.7.0",
     "react-google-maps": "^9.4.5",
     "react-redux": "^6.0.0",

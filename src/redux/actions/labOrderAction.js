@@ -1,4 +1,4 @@
-import { LOAD_LAB_ORDER } from "./types";
+import { LOAD_LAB_ORDER, LOAD_TESTS } from "./types";
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export type Action =
@@ -21,4 +21,12 @@ export const fetchLabOrders = (LabOrderURL) : Action => ({
               url:LabOrderURL
           }
       }
+});
+export const fetchTests = (URL): Action => ({
+    type: LOAD_TESTS,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
 });
