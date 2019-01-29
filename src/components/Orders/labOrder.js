@@ -94,6 +94,9 @@ class labOrder extends Component {
         this.props.fetchTests(URL);
         this.setState({ open: true });
     };
+    handleClose = () => {
+        this.setState({ open: false });
+    };
     handleChange = name => event => {
         this.setState({
             [name]: event.target.value,
@@ -145,7 +148,7 @@ class labOrder extends Component {
                                 <DialogContentText>
                                     <form className={classes.container} noValidate autoComplete="off">
                                         <FormLabel component="legend">Orders</FormLabel>
-                                        {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
+                                        {this.props.isLoadingTests?<CircularProgress className={classes.progress} />:""}
                                         <FormGroup
                                             // row
                                             className={classes.FormGroup}
@@ -200,7 +203,8 @@ labOrder.propTypes = {
     labOrders: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired,
-    Tests: propTypes.array.isRequired
+    Tests: propTypes.array.isRequired,
+    isLoadingTests: propTypes.bool.isRequired
   }
   const mapStateToProps = (state) => ({
     Tests: state.labOrder.Tests,
@@ -208,7 +212,8 @@ labOrder.propTypes = {
     isLoading: state.labOrder.isLoading,
     hasError: state.labOrder.hasError,
     totalCount: state.labOrder.totalCount,
-    selectedPatient: state.assignments.selectedPatient
+    selectedPatient: state.assignments.selectedPatient,
+    isLoadingTests: state.labOrder.isLoadingTests
   });
   const mapDispatchToProps = dispatch => ({
     fetchLabOrders: (url) => dispatch(fetchLabOrders(url)),

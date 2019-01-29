@@ -5,7 +5,8 @@ const initialState = {
     totalcount: {},
     isLoading: true,
     hasError: false,
-    Tests: []
+    Tests: [],
+    isLoadingTests: true
 }
 
 export default function(state = initialState, action){
@@ -33,20 +34,20 @@ export default function(state = initialState, action){
         case LOAD_TESTS:
           return { 
             ...state,
-            isLoading: true,
+            isLoadingTests: true,
             hasError: false
           }
         case LOAD_TESTS_SUCCESS:
           return { 
             ...state,
             Tests: action.payload.data,
-            isLoading: false,
+            isLoadingTests: false,
             hasError: false
           }
         case LOAD_TESTS_FAIL:
           return { 
             ...state,
-            isLoading: false,
+            isLoadingTests: false,
             hasError: true
           }
 

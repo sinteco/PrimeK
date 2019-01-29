@@ -85,10 +85,10 @@ class RadOrder extends Component {
                         <h4 className={classes.cardTitleWhite}>Rad Order</h4>
                         <p className={classes.cardCategoryWhite}>
                         {/* Here is a subtitle for this table */}<br/>
-                        <Button variant="contained" component={Link} to="newxrayorder" className={classes.button}> new XRay </Button>
-                        <Button variant="contained" component={Link} to="NewUltrasound" className={classes.button}> UltarSound </Button>
-                        <Button variant="contained" component={Link} to="NewECG" className={classes.button}> ECG </Button>
-                        <Button variant="contained" component={Link} to="NewEcho" className={classes.button}> Echo </Button>
+                        <Button variant="contained" color="primary" component={Link} to="newxrayorder" className={classes.button}> new XRay </Button>
+                        <Button variant="contained" color="primary" component={Link} to="NewUltrasound" className={classes.button}> UltarSound </Button>
+                        <Button variant="contained" color="primary" component={Link} to="NewECG" className={classes.button}> ECG </Button>
+                        <Button variant="contained" color="primary" component={Link} to="NewEcho" className={classes.button}> Echo </Button>
                         </p>
                     </CardHeader>
                     <CardBody>

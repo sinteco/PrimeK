@@ -115,7 +115,7 @@ class consultationOrder extends Component {
             alert("patient is not selected");
             return
         }
-        const URL = '/InvestigationOrders';
+        const URL = '/Consultations';
         this.setState({
             open: false
         });

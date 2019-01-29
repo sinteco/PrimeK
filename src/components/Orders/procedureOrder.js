@@ -97,9 +97,7 @@ class procedureOrder extends Component {
     };
 
     handleClose = () => {
-        this.setState({
-            open: false
-        });
+        this.setState({open: false});
     };
     handleSave = () => {
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;

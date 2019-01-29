@@ -80,7 +80,7 @@ class otherInvestigationOrder extends Component {
       };
     
     handleClose = () => {
-    this.setState({ open: false });
+        this.setState({ open: false });
     };
     returnarrays(){
         var a = new Array();
@@ -181,7 +181,7 @@ class otherInvestigationOrder extends Component {
                                             onChange={this.handleDateChange}
                                         />
                                     </MuiPickersUtilsProvider>
-                                    <FormLabel component="legend"> Investigation </FormLabel>
+                                    <FormLabel> Investigation </FormLabel>
                                             {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
                                             <FormGroup row>
                                                 {this.props.InvestigationItems.map((subtype)=>

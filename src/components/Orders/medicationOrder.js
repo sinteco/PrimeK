@@ -13,6 +13,14 @@ import { fetchMedicationOrders } from '../../redux/actions/medicatioOrderAction'
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from "material-ui-flat-pagination";
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import EditableTable from '../Table/EditableTable';
 
 const styles = {
     cardCategoryWhite: {
@@ -41,7 +49,8 @@ const styles = {
         fontWeight: "400",
         lineHeight: "1"
       }
-    }
+    },
+    
   };
 
 class medicationOrder extends Component {
@@ -49,9 +58,16 @@ class medicationOrder extends Component {
         super(props);
         this.state = {
             offset: 0,
-            page: 1
+            page: 1,
+            rows: [],
         }
     }
+    handleClickOpen = () => {
+        this.setState({ open: true });
+    };
+    handleClose = () => {
+        this.setState({ open: false });
+    };
     returnarrays(){
         var a = new Array();
         this.props.medicationOrders.map((medicatioOrder)=>{
@@ -68,6 +84,16 @@ class medicationOrder extends Component {
         const medicatioOrdersURL = '/MedicationOrders/GetMedicationOrdersOfPatient/' + id + "?page="+ (this.state.offset+20)/10;
         this.props.fetchMedicationOrders(medicatioOrdersURL);
       }
+    handleSave = () => {
+        alert("save");
+    }
+    handleSetstate = (childrows) => {
+        this.setState({
+            rows: childrows
+        })
+        console.log(this.state.rows);
+        alert("setstate" + childrows);
+    }
     componentWillMount(){
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
         const medicatioOrdersURL = '/MedicationOrders/GetMedicationOrdersOfPatient/' + id + "?page="+ this.state.page;
@@ -75,6 +101,7 @@ class medicationOrder extends Component {
     }
     render() {
         const { classes } = this.props;
+        const { fullScreen } = this.props;
         return (
             <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
@@ -84,6 +111,7 @@ class medicationOrder extends Component {
                         <p className={classes.cardCategoryWhite}>
                         {/* Here is a subtitle for this table */}
                         </p>
+                        <Button variant="contained" color="primary" onClick={this.handleClickOpen}>Create New</Button>
                     </CardHeader>
                     <CardBody>
                     {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
@@ -100,6 +128,31 @@ class medicationOrder extends Component {
                                 />
                     </CardBody>
                     </Card>
+                    <Dialog
+                            fullScreen={fullScreen}
+                            maxWidth = {'lg'}
+                            open={this.state.open}
+                            onClose={this.handleClose}
+                            aria-labelledby="responsive-dialog-title"
+                            classes = {{ paper: classes.dialog }}
+                            >
+                            <DialogTitle id="responsive-dialog-title">{"New Medication Order"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    < EditableTable
+                                        handleSetstate={this.handleSetstate}
+                                    ></EditableTable>
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={this.handleClose} color="primary">
+                                    Cancel
+                                </Button>
+                                <Button onClick={this.handleSave} color="primary" autoFocus>
+                                    Save
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                 </GridItem>
             </GridContainer>
         );
@@ -123,4 +176,4 @@ const mapStateToProps = (state) => ({
     fetchMedicationOrders: (url) => dispatch(fetchMedicationOrders(url))
   });
 
-export default compose(withStyles(styles), connect(mapStateToProps,mapDispatchToProps))(medicationOrder);
+export default compose(withStyles(styles), withMobileDialog(), connect(mapStateToProps, mapDispatchToProps))(medicationOrder);
