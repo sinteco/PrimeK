@@ -28,7 +28,7 @@ export const saveConsultationOrder = (URL, data): Action => ({
         request: {
             method: 'POST',
             url: URL,
-            headers: {'Access-Control-Allow-Origin': 'http://localhost:3000'},
+            headers: {'Access-Control-Allow-Origin': '*'},
             data: {
                 data
             }
