@@ -22,16 +22,13 @@ export const fetchConsultationOrders = (consultationOrderURL) : Action => ({
           }
       }
 });
-export const saveConsultationOrder = (URL, data): Action => ({
+export const saveConsultationOrder = (URL, consultationviewmodel): Action => ({
     type: SAVE_CONSULTATION,
     payload: {
         request: {
             method: 'POST',
             url: URL,
-            headers: {'Access-Control-Allow-Origin': '*'},
-            data: {
-                data
-            }
+            data: consultationviewmodel
         }
     }
 });

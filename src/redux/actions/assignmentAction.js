@@ -49,11 +49,11 @@ export type Action =
 
 export const fetchAssignment = (assignmentsurl) : Action => ({
     type: ASSINMENTS_LOAD,
-        payload: {
-            request:{
-                url:assignmentsurl
-            }
+    payload: {
+        request:{
+            url:assignmentsurl
         }
+    }
 });
 export const fetchDepartment = (departmentsurl) : Action => ({
     type: DEPARTMENT_LOAD,

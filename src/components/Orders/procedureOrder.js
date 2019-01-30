@@ -95,7 +95,11 @@ class procedureOrder extends Component {
             open: true
         });
     };
-
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
     handleClose = () => {
         this.setState({open: false});
     };

@@ -4,7 +4,7 @@ export default class appointments extends Component {
   render() {
     return (
       <div>
-        {/* calandar */}
+        calandar ui
       </div>
     )
   }

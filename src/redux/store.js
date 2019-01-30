@@ -41,7 +41,7 @@ const store = createStore(
     rootReducer,
     initialState,
     compose(
-        applyMiddleware(...middleware,axiosMiddleware(client)),
+        applyMiddleware(...middleware, axiosMiddleware(client, axiosMiddlewareOptions)),
         devTools
       )
      );

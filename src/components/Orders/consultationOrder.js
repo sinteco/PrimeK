@@ -106,7 +106,7 @@ class consultationOrder extends Component {
     };
     handleSave = () => {
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const input = {
+        const postdata = {
             DateTime: this.state.selectedDate,
             reasonForConsultation: this.state.reasonForConsultation,
             patientId: id
@@ -116,10 +116,8 @@ class consultationOrder extends Component {
             return
         }
         const URL = '/Consultations';
-        this.setState({
-            open: false
-        });
-        this.props.saveConsultationOrder(URL, qs.stringify(input));
+        this.setState({open: false});
+        this.props.saveConsultationOrder(URL, qs.stringify(postdata));
     };
     componentWillMount(){
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
@@ -224,7 +222,7 @@ consultationOrder.propTypes = {
 
   const mapDispatchToProps = dispatch => ({
     fetchConsultationOrders: (url) => dispatch(fetchConsultationOrders(url)),
-    saveConsultationOrder: (url) => dispatch(saveConsultationOrder(url))
+    saveConsultationOrder: (url,postdata) => dispatch(saveConsultationOrder(url, postdata))
   });
 
 export default compose(withStyles(styles),withMobileDialog(), connect(mapStateToProps,mapDispatchToProps))(consultationOrder);
