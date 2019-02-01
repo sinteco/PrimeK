@@ -1,4 +1,4 @@
-import { LOAD_RAD_ORDER, LOAD_XRAY_SUB_TYPE, LOAD_ULTRASOUND_SUB_TYPE, LOAD_ECG_SUB_TYPE, LOAD_ECHO_SUB_TYPE } from "./types";
+import { LOAD_RAD_ORDER, LOAD_XRAY_SUB_TYPE, LOAD_ULTRASOUND_SUB_TYPE, LOAD_ECG_SUB_TYPE, LOAD_ECHO_SUB_TYPE, RAD_ORDER_DETAIL_LOAD } from "./types";
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export type Action =
@@ -48,6 +48,14 @@ export const fetchXraySubType = (URL) : Action => ({
   });
   export const fetchECGSubType = (URL) : Action => ({
     type: LOAD_ECG_SUB_TYPE,
+        payload: {
+            request:{
+                url:URL
+            }
+        }
+  });
+  export const fetchRadOrderDetail = (URL) : Action => ({
+    type: RAD_ORDER_DETAIL_LOAD,
         payload: {
             request:{
                 url:URL

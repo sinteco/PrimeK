@@ -115,10 +115,10 @@ class sickLeave extends Component {
                     <CardBody>
                     {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
                         <Table
-                        tableHeaderColor="primary"
-                        tableHead={["Id","Patient", "DateTime", "Category", "Note","Doctor"]}
-                        tableData={this.returnarrays()}
-                        handleOnRowClick={this.handleOnRowClick}
+                            tableHeaderColor="primary"
+                            tableHead={["Id","Patient", "DateTime", "Category", "Note","Doctor"]}
+                            tableData={this.returnarrays()}
+                            handleOnRowClick={this.handleOnRowClick}
                         />
                         <Pagination
                                 limit={10}

@@ -1,4 +1,4 @@
-import { LOAD_RAD_ORDER, LOAD_RAD_ORDER_SUCCESS, LOAD_RAD_ORDER_FAIL, LOAD_XRAY_SUB_TYPE, LOAD_XRAY_SUB_TYPE_SUCCESS, LOAD_XRAY_SUB_TYPE_FAIL, LOAD_ULTRASOUND_SUB_TYPE, LOAD_ULTRASOUND_SUB_TYPE_SUCCESS, LOAD_ULTRASOUND_SUB_TYPE_FAIL, LOAD_ECG_SUB_TYPE, LOAD_ECG_SUB_TYPE_SUCCESS, LOAD_ECG_SUB_TYPE_FAIL, LOAD_ECHO_SUB_TYPE, LOAD_ECHO_SUB_TYPE_SUCCESS, LOAD_ECHO_SUB_TYPE_FAIL } from "../actions/types";
+import { LOAD_RAD_ORDER, LOAD_RAD_ORDER_SUCCESS, LOAD_RAD_ORDER_FAIL, LOAD_XRAY_SUB_TYPE, LOAD_XRAY_SUB_TYPE_SUCCESS, LOAD_XRAY_SUB_TYPE_FAIL, LOAD_ULTRASOUND_SUB_TYPE, LOAD_ULTRASOUND_SUB_TYPE_SUCCESS, LOAD_ULTRASOUND_SUB_TYPE_FAIL, LOAD_ECG_SUB_TYPE, LOAD_ECG_SUB_TYPE_SUCCESS, LOAD_ECG_SUB_TYPE_FAIL, LOAD_ECHO_SUB_TYPE, LOAD_ECHO_SUB_TYPE_SUCCESS, LOAD_ECHO_SUB_TYPE_FAIL, RAD_ORDER_DETAIL_LOAD_FAIL, RAD_ORDER_DETAIL_LOAD_SUCCESS, RAD_ORDER_DETAIL_LOAD } from "../actions/types";
 
 const initialState = {
     radOrders:[],
@@ -8,7 +8,8 @@ const initialState = {
     xraySubType:[],
     ultrasoundSubType:[],
     ecgSubType:[],
-    echoSubType:[]
+    echoSubType:[],
+    radOrderDetail:[]
 }
 
 export default function(state = initialState, action){
@@ -104,6 +105,25 @@ export default function(state = initialState, action){
             hasError: false,
           }
         case LOAD_ECG_SUB_TYPE_FAIL:
+          return { 
+            ...state,
+            isLoading: false,
+            hasError: true
+          }
+        case RAD_ORDER_DETAIL_LOAD:
+          return { 
+            ...state,
+            isLoading: true,
+            hasError: false
+          }
+        case RAD_ORDER_DETAIL_LOAD_SUCCESS:
+          return { 
+            ...state,
+            radOrderDetail: action.payload.data,
+            isLoading: false,
+            hasError: false,
+          }
+        case RAD_ORDER_DETAIL_LOAD_FAIL:
           return { 
             ...state,
             isLoading: false,
