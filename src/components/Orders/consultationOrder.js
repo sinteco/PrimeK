@@ -9,8 +9,7 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Moment from 'moment';
-import { fetchConsultationOrders } from '../../redux/actions/consultationOrderAction';
-import { saveConsultationOrder } from '../../redux/actions/consultationOrderAction';
+import { fetchConsultationOrders, fetchConsultationOrderDetail, saveConsultationOrder } from '../../redux/actions/consultationOrderAction';
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from "material-ui-flat-pagination";
@@ -25,6 +24,7 @@ import TextField from '@material-ui/core/TextField';
 import { FormGroup } from '@material-ui/core';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
+import Typography from '@material-ui/core/Typography';
 import qs from 'qs';
 
 const styles = {
@@ -69,7 +69,8 @@ class consultationOrder extends Component {
             page: 1,
             open: false,
             reasonForConsultation:'',
-            selectedDate: new Date()
+            selectedDate: new Date(),
+            detaildialog: false
         }
     }
     handleClickOpen = () => {
@@ -118,6 +119,18 @@ class consultationOrder extends Component {
         const URL = '/Consultations';
         this.setState({open: false});
         this.props.saveConsultationOrder(URL, qs.stringify(postdata));
+    };
+    handleOnRowClick = (id) => {
+        const URL = '/PatientNotes/GetPatientNoteDetail/' + id;
+        this.props.fetchConsultationOrderDetail(URL);
+        this.setState({
+            detaildialog: true
+        })
+    };
+    detaildialoguClose() {
+        this.setState({
+            detaildialog: false
+        })
     };
     componentWillMount(){
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
@@ -196,6 +209,28 @@ class consultationOrder extends Component {
                                 </Button>
                             </DialogActions>
                         </Dialog>
+                        <Dialog
+                            fullScreen={fullScreen}
+                            open={this.state.detaildialog}
+                            onClose={this.handleClose}
+                            aria-labelledby="responsive-dialog-title"
+                            classes={{ paper: classes.dialog }}
+                        >
+                            <DialogTitle id="responsive-dialog-title">{"Sick Leave Detail"}</DialogTitle>
+                            <DialogContent row>
+                                <Typography variant="overline" gutterBottom>
+                                    <b>DateTime:</b> {Moment(this.props.consultationOrderDetail.DateTime).format('d MMM YYYY')}
+                                </Typography>
+                                <Typography variant="overline" gutterBottom>
+                                    <b>Note:</b> {this.props.consultationOrderDetail.Note}
+                                </Typography>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={this.detaildialoguClose} color="primary" autoFocus>
+                                    Close
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </GridItem>
                 </GridContainer>
             </MuiPickersUtilsProvider>
@@ -204,12 +239,14 @@ class consultationOrder extends Component {
 }
 
 consultationOrder.propTypes = {
+    fetchConsultationOrderDetail: propTypes.func.isRequired,
     fetchConsultationOrders: propTypes.func.isRequired,
     saveConsultationOrder: propTypes.func.isRequired,
     consultationOrders: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired,
     fullScreen: propTypes.bool.isRequired,
+    consultationOrderDetail: propTypes.array.isRequired
   }
   
   const mapStateToProps = (state) => ({
@@ -217,12 +254,14 @@ consultationOrder.propTypes = {
     isLoading: state.consultationOrder.isLoading,
     hasError: state.consultationOrder.hasError,
     totalCount: state.consultationOrder.totalCount,
-    selectedPatient: state.assignments.selectedPatient
+    selectedPatient: state.assignments.selectedPatient,
+    consultationOrderDetail: state.consultationOrder.consultationOrderDetail
   });
 
   const mapDispatchToProps = dispatch => ({
     fetchConsultationOrders: (url) => dispatch(fetchConsultationOrders(url)),
-    saveConsultationOrder: (url,postdata) => dispatch(saveConsultationOrder(url, postdata))
+    saveConsultationOrder: (url,postdata) => dispatch(saveConsultationOrder(url, postdata)),
+    fetchConsultationOrderDetail: (url) => dispatch(fetchConsultationOrderDetail(url))
   });
 
 export default compose(withStyles(styles),withMobileDialog(), connect(mapStateToProps,mapDispatchToProps))(consultationOrder);

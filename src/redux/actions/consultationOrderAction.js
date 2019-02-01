@@ -1,4 +1,4 @@
-import { LOAD_CONSULTATION_ORDER, SAVE_CONSULTATION } from "./types";
+import { LOAD_CONSULTATION_ORDER, SAVE_CONSULTATION, LOAD_CONSULTATION_ORDER_DETAIL } from "./types";
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export type Action =
@@ -29,6 +29,14 @@ export const saveConsultationOrder = (URL, consultationviewmodel): Action => ({
             method: 'POST',
             url: URL,
             data: consultationviewmodel
+        }
+    }
+});
+export const fetchConsultationOrderDetail = (consultationOrderURL): Action => ({
+    type: LOAD_CONSULTATION_ORDER_DETAIL,
+    payload: {
+        request: {
+            url: consultationOrderURL
         }
     }
 });

@@ -37,9 +37,7 @@ export const saveVitalSigen = (savevitalSigneURL, data) : Action => ({
           request:{
               method: 'POST',
               url: savevitalSigneURL,
-              data: {
-                  data
-              }
+              data: data
           }
       }
 });

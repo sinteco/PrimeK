@@ -612,7 +612,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = dispatch => ({
   fetchVitalSigen: (url) => dispatch(fetchVitalSigen(url)),
-  saveVitalSigen: (url,data) => dispatch(saveVitalSigen(url,data)),
+  saveVitalSigen: (url, data) => dispatch(saveVitalSigen(url, data)),
   fetchVitalSigenDetail: (url) => dispatch(fetchVitalSigenDetail(url))
 });
 

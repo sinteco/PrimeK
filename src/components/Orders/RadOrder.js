@@ -60,11 +60,12 @@ class RadOrder extends Component {
             page: 1,
             detaildialog: false
         }
+        this.detaildialoguClose = this.detaildialoguClose.bind(this);
     }
     returnarrays(){
         var a = new Array();
         this.props.radOrders.map((radOrder)=>{
-            a.push([[Moment(radOrder.Date).format('d MMM')], [radOrder.Type], [radOrder.SubType], [radOrder.Conclusion], [radOrder.OrderBy]])
+            a.push([[radOrder.Id], [Moment(radOrder.Date).format('d MMM')], [radOrder.Type], [radOrder.SubType], [radOrder.Conclusion], [radOrder.OrderBy]])
         });
         return a;    
     }
@@ -115,7 +116,7 @@ class RadOrder extends Component {
                     {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
                         <Table
                             tableHeaderColor="primary"
-                            tableHead={["Date", "Type", "Sub Type", "Conclusion","Orderedby"]}
+                            tableHead={["Id", "Date", "Type", "Sub Type", "Conclusion","Orderedby"]}
                             tableData={this.returnarrays()}
                             handleOnRowClick={this.handleOnRowClick}
                         />
@@ -132,13 +133,16 @@ class RadOrder extends Component {
                             aria-labelledby="responsive-dialog-title"
                             classes={{ paper: classes.dialog }}
                         >
-                            <DialogTitle id="responsive-dialog-title">{"Sick Leave Detail"}</DialogTitle>
+                            <DialogTitle id="responsive-dialog-title">{"Rad Order Detail"}</DialogTitle>
                             <DialogContent row>
                                 <Typography variant="overline" gutterBottom>
-                                    <b>DateTime:</b> {Moment(this.props.radOrderDetail.DateTime).format('d MMM YYYY')}
+                                    <b>DateTime:</b> {Moment(this.props.radOrderDetail.Date).format('d MMM YYYY')}
                                 </Typography>
                                 <Typography variant="overline" gutterBottom>
-                                    <b>Note:</b> {this.props.radOrderDetail.Note}
+                                    <b>SubType:</b> {this.props.radOrderDetail.SubType}
+                                </Typography>
+                                <Typography variant="overline" gutterBottom>
+                                    <b>Conclusion:</b> {this.props.radOrderDetail.Conclusion}
                                 </Typography>
                             </DialogContent>
                             <DialogActions>

@@ -71,7 +71,7 @@ class medicationOrder extends Component {
     returnarrays(){
         var a = new Array();
         this.props.medicationOrders.map((medicatioOrder)=>{
-            a.push([[medicatioOrder.Medication], [medicatioOrder.Dose],[medicatioOrder.Route],[medicatioOrder.Frequency],[medicatioOrder.Quantity],[medicatioOrder.Form], [Moment(medicatioOrder.StartDate).format('d MMM')],[Moment(medicatioOrder.StopDate).format('d MMM')] ,[medicatioOrder.Status], [medicatioOrder.Orderby], [medicatioOrder.Remark]])
+            a.push([[medicatioOrder.Medication], [medicatioOrder.Dose], [medicatioOrder.Route], [medicatioOrder.Frequency], [medicatioOrder.Quantity], [Moment(medicatioOrder.StartDate).format('d MMM')], [Moment(medicatioOrder.StopDate).format('d MMM')], [medicatioOrder.Status], [medicatioOrder.Orderby]])
         });
         return a;    
     }
