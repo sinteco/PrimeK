@@ -1,4 +1,4 @@
-import {VITAL_SIGNE_LOAD,SAVE_VITAL_SIGNE} from "./types";
+import {VITAL_SIGNE_LOAD, SAVE_VITAL_SIGNE, VITAL_SIGNE_DETAIL_LOAD} from "./types";
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export type Action =
@@ -22,6 +22,14 @@ export const fetchVitalSigen = (vitalSigneURL) : Action => ({
               url:vitalSigneURL
           }
       }
+});
+export const fetchVitalSigenDetail = (URL): Action => ({
+    type: VITAL_SIGNE_DETAIL_LOAD,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
 });
 export const saveVitalSigen = (savevitalSigneURL, data) : Action => ({
   type: SAVE_VITAL_SIGNE,

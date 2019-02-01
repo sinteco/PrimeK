@@ -1,4 +1,4 @@
-import {PATIENT_NOTE_LOAD} from "./types";
+import { PATIENT_NOTE_LOAD, PATIENT_NOTE_DETAIL_LOAD} from "./types";
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export type Action =
@@ -21,4 +21,12 @@ export const fetchPatientNotes = (patientNoteURL) : Action => ({
               url:patientNoteURL
           }
       }
+});
+export const fetchPatientNoteDetail = (URL): Action => ({
+    type: PATIENT_NOTE_DETAIL_LOAD,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
 });

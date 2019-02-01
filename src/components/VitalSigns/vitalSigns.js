@@ -4,7 +4,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { connect } from 'react-redux';
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
+import Table from "components/Table/CustomTableWithPopUp.js";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
@@ -27,7 +27,9 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { saveVitalSigen } from '../../redux/actions/vitalsigneAction';
+import { fetchVitalSigenDetail } from '../../redux/actions/vitalsigneAction';
 import qs from 'qs';
+import Typography from '@material-ui/core/Typography';
 
 const styles = {
     cardCategoryWhite: {
@@ -56,14 +58,21 @@ const styles = {
         fontWeight: "400",
         lineHeight: "1"
       }
-    }
+    },
+    dialog: {
+        width: '80%',
+        maxHeight: 435,
+    },
   };
 export class vitalSigns extends Component {
   constructor(props) {
         super(props);
+        this.handleClickOpen = this.handleClickOpen.bind(this);
+        this.detaildialoguClose = this.detaildialoguClose.bind(this);
     }
     state = {
       open: false,
+      detaildialog: false,
       temperature: '',
       bps: '',
       bpd: '',
@@ -147,9 +156,21 @@ export class vitalSigns extends Component {
     returnarrays(){
         var a = new Array();
         this.props.vitalSigns.map((vitalSign)=>{
-            a.push([[Moment(vitalSign.DateTime).format('d MMM')],[vitalSign.Temperature],[vitalSign.BPS+"/"+vitalSign.BPD],[vitalSign.PulseRate],[vitalSign.RespiratoryRate],[vitalSign.SPO2OnRA],[vitalSign.SPO22LMM],[vitalSign.Height],[vitalSign.Weight],[vitalSign.SPO2OnRA],[vitalSign.Input],[vitalSign.Output],[vitalSign.SPO2OnRA],[vitalSign.RBS],[vitalSign.FBS]])
+            a.push([[vitalSign.Id],[Moment(vitalSign.DateTime).format('d MMM')],[vitalSign.Temperature],[vitalSign.BPS+"/"+vitalSign.BPD],[vitalSign.PulseRate],[vitalSign.RespiratoryRate],[vitalSign.SPO2OnRA],[vitalSign.SPO22LMM],[vitalSign.Height],[vitalSign.Weight],[vitalSign.SPO2OnRA],[vitalSign.Input],[vitalSign.Output],[vitalSign.SPO2OnRA],[vitalSign.RBS],[vitalSign.FBS]])
         });
         return a;    
+    }
+    handleOnRowClick = (id) => {
+      const vitalSigneURL = '/VitalSigns/GetVitalSignDetail/' + id;
+      this.props.fetchVitalSigenDetail(vitalSigneURL);
+      this.setState({
+        detaildialog: true
+      })
+    }
+    detaildialoguClose(){
+      this.setState({
+        detaildialog: false
+      })
     }
 
   componentDidMount() {
@@ -418,9 +439,89 @@ export class vitalSigns extends Component {
             {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
               <Table
                 tableHeaderColor="primary"
-                tableHead={["Date Time", "Temprature", "BP", "PR", "RR", "SPO2", "SPO2", "Height", "Wight", "BMI", "Input", "Output", "Balance", "RBS", "FBS"]}
+                tableHead={["Id","Date Time", "Temprature", "BP", "PR", "RR", "SPO2", "SPO2", "Height", "Wight", "BMI", "Input", "Output", "Balance", "RBS", "FBS"]}
                 tableData={this.returnarrays()}
+                handleOnRowClick={this.handleOnRowClick}
               />
+              <Dialog
+                fullScreen={fullScreen}
+                open={this.state.detaildialog}
+                onClose={this.handleClose}
+                aria-labelledby="responsive-dialog-title"
+                classes={{ paper: classes.dialog }}
+              >
+                <DialogTitle id="responsive-dialog-title">{"Vital Sign Detail"}</DialogTitle>
+                <DialogContent row>
+                  <Typography variant="overline" gutterBottom>
+                    <b>Temperature:</b> {this.props.vitalsigndetail.Temperature}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>Respiratory Rate:</b> {this.props.vitalsigndetail.RespiratoryRate}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>SPO2OnRA:</b> {this.props.vitalsigndetail.SPO2OnRA}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>SPO22LMM:</b> {this.props.vitalsigndetail.SPO22LMM}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>SaO2:</b> {this.props.vitalsigndetail.SaO2}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>Height:</b> {this.props.vitalsigndetail.Height}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>Weight:</b> {this.props.vitalsigndetail.Weight}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>PulseRate:</b> {this.props.vitalsigndetail.PulseRate}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>BP(S/D):</b> {this.props.vitalsigndetail.BPS} / {this.props.vitalsigndetail.BPD}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>RBS:</b> {this.props.vitalsigndetail.RBS}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>FBS:</b> {this.props.vitalsigndetail.FBS}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>POXInRoomAir:</b> {this.props.vitalsigndetail.POXInRoomAir}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>POXPerLiter:</b> {this.props.vitalsigndetail.POXPerLiter}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>MUAC:</b> {this.props.vitalsigndetail.MUAC}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>HeadCircumference:</b> {this.props.vitalsigndetail.HeadCircumference}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>WaistCircumference:</b> {this.props.vitalsigndetail.WaistCircumference}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>Smoking:</b> {this.props.vitalsigndetail.Smoking}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>Note:</b> {this.props.vitalsigndetail.Note}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>Input:</b> {this.props.vitalsigndetail.Input}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>Output:</b> {this.props.vitalsigndetail.Output}
+                  </Typography>
+                  <Typography variant="overline" gutterBottom>
+                    <b>DateTime:</b> {Moment(this.props.vitalsigndetail.DateTime).format('d MMM')}
+                  </Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.detaildialoguClose} color="primary" autoFocus>
+                    Close
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </CardBody>
           </Card>
         </GridItem>
@@ -431,12 +532,14 @@ export class vitalSigns extends Component {
 vitalSigns.propTypes = {
   fetchVitalSigen: propTypes.func.isRequired,
   saveVitalSigen: propTypes.func.isRequired,
+  fetchVitalSigenDetail: propTypes.func.isRequired,
   vitalSigns: propTypes.array.isRequired,
   isLoading: propTypes.bool.isRequired,
   hasError: propTypes.bool.isRequired,
   confirmStatus: propTypes.bool.isRequired
 }
 const mapStateToProps = (state) => ({
+  vitalsigndetail: state.vitalSign.vitalsigndetail,
   vitalSigns: state.vitalSign.vitalsigns,
   isLoading: state.vitalSign.isLoading,
   hasError: state.vitalSign.hasError,
@@ -446,7 +549,8 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = dispatch => ({
   fetchVitalSigen: (url) => dispatch(fetchVitalSigen(url)),
-  saveVitalSigen: (url,data) => dispatch(saveVitalSigen(url,data))
+  saveVitalSigen: (url,data) => dispatch(saveVitalSigen(url,data)),
+  fetchVitalSigenDetail: (url) => dispatch(fetchVitalSigenDetail(url))
 });
 
 export default compose(withStyles(styles),withMobileDialog(),connect(mapStateToProps,mapDispatchToProps))(vitalSigns)

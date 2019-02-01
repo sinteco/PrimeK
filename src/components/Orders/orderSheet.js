@@ -4,15 +4,23 @@ import { compose } from 'redux';
 import withStyles from "@material-ui/core/styles/withStyles";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
-import Table from "components/Table/Table.jsx";
+import Table from "components/Table/CustomTableWithPopUp.js";
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Moment from 'moment';
 import { fetchPatientNotes } from '../../redux/actions/patientNoteAction';
+import { fetchPatientNoteDetail } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from "material-ui-flat-pagination";
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import Typography from '@material-ui/core/Typography';
 
 const styles = {
     cardCategoryWhite: {
@@ -49,8 +57,10 @@ class orderSheet extends Component {
         super(props);
         this.state = {
             offset: 0,
-            page: 1
+            page: 1,
+            detaildialog: false
         }
+        this.detaildialoguClose = this.detaildialoguClose.bind(this);
     }
     returnarrays(){
         var a = new Array();
@@ -68,6 +78,18 @@ class orderSheet extends Component {
         const patientNotesURL = '/PatientNotes/GetOrderSheetOfPatient/' + id + "?page="+ (this.state.offset+20)/10;
         this.props.fetchPatientNotes(patientNotesURL);
       }
+    handleOnRowClick = (id) => {
+        const URL = '/PatientNotes/GetPatientNoteDetail/' + id;
+        this.props.fetchPatientNoteDetail(URL);
+        this.setState({
+            detaildialog: true
+        })
+    }
+    detaildialoguClose() {
+        this.setState({
+            detaildialog: false
+        })
+    }
     componentWillMount(){
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
         const patientNotesURL = '/PatientNotes/GetOrderSheetOfPatient/' + id + "?page="+ this.state.page;
@@ -75,6 +97,7 @@ class orderSheet extends Component {
     }
     render() {
         const { classes } = this.props;
+        const { fullScreen } = this.props;
         return (
             <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
@@ -91,6 +114,7 @@ class orderSheet extends Component {
                         tableHeaderColor="primary"
                         tableHead={["Patient", "DateTime", "Category", "Note","Doctor"]}
                         tableData={this.returnarrays()}
+                        handleOnRowClick={this.handleOnRowClick}
                         />
                         <Pagination
                                 limit={10}
@@ -98,6 +122,28 @@ class orderSheet extends Component {
                                 total={this.props.totalCount}
                                 onClick={(e, offset) => this.handleClick(offset)}
                                 />
+                        <Dialog
+                            fullScreen={fullScreen}
+                            open={this.state.detaildialog}
+                            onClose={this.handleClose}
+                            aria-labelledby="responsive-dialog-title"
+                            classes={{ paper: classes.dialog }}
+                        >
+                            <DialogTitle id="responsive-dialog-title">{"Sick Leave Detail"}</DialogTitle>
+                            <DialogContent row>
+                                <Typography variant="overline" gutterBottom>
+                                    <b>DateTime:</b> {Moment(this.props.patientnoteDetail.DateTime).format('d MMM YYYY')}
+                                </Typography>
+                                <Typography variant="overline" gutterBottom>
+                                    <b>Note:</b> {this.props.patientnoteDetail.Note}
+                                </Typography>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={this.detaildialoguClose} color="primary" autoFocus>
+                                    Close
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </CardBody>
                     </Card>
                 </GridItem>
@@ -107,12 +153,15 @@ class orderSheet extends Component {
 }
 
 orderSheet.propTypes = {
+    fetchPatientNoteDetail: propTypes.func.isRequired,
     fetchVitalSigen: propTypes.func.isRequired,
     patientNotes: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
-    hasError: propTypes.bool.isRequired
+    hasError: propTypes.bool.isRequired,
+    patientnoteDetail: propTypes.array.isRequired
   }
 const mapStateToProps = (state) => ({
+    patientnoteDetail: state.patientNote.patientnoteDetail,
     patientNotes: state.patientNote.patientnotes,
     isLoading: state.patientNote.isLoading,
     hasError: state.patientNote.hasError,
@@ -120,7 +169,8 @@ const mapStateToProps = (state) => ({
     selectedPatient: state.assignments.selectedPatient
   });
   const mapDispatchToProps = dispatch => ({
-    fetchPatientNotes: (url) => dispatch(fetchPatientNotes(url))
+       fetchPatientNotes: (url) => dispatch(fetchPatientNotes(url)),
+       fetchPatientNoteDetail: (url) => dispatch(fetchPatientNoteDetail(url))
   });
 
-export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(orderSheet);
+export default compose(withStyles(styles), withMobileDialog(), connect(mapStateToProps, mapDispatchToProps))(orderSheet);

@@ -1,10 +1,11 @@
-import { PATIENT_NOTE_LOAD, PATIENT_NOTE_LOAD_SUCCESS,PATIENT_NOTE_LOAD_FAIL } from "../actions/types";
+import { PATIENT_NOTE_LOAD, PATIENT_NOTE_LOAD_SUCCESS, PATIENT_NOTE_LOAD_FAIL, PATIENT_NOTE_DETAIL_LOAD_FAIL, PATIENT_NOTE_DETAIL_LOAD, PATIENT_NOTE_DETAIL_LOAD_SUCCESS } from "../actions/types";
 
 const initialState = {
     patientnotes:[],
     totalcount:{},
     isLoading: true,
-    hasError: false
+    hasError: false,
+    patientnoteDetail: []
 }
 
 export default function(state = initialState, action){
@@ -24,6 +25,25 @@ export default function(state = initialState, action){
             totalcount: action.payload.data.paging.totalCount,
           }
         case PATIENT_NOTE_LOAD_FAIL:
+          return { 
+            ...state,
+            isLoading: false,
+            hasError: true
+          }
+      case PATIENT_NOTE_DETAIL_LOAD:
+          return { 
+            ...state,
+            isLoading: true,
+            hasError: false
+          }
+      case PATIENT_NOTE_DETAIL_LOAD_SUCCESS:
+          return { 
+            ...state,
+            patientnoteDetail: action.payload.data,
+            isLoading: false,
+            hasError: false,
+          }
+        case PATIENT_NOTE_DETAIL_LOAD_FAIL:
           return { 
             ...state,
             isLoading: false,
