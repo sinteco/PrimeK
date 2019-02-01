@@ -451,70 +451,133 @@ export class vitalSigns extends Component {
                 classes={{ paper: classes.dialog }}
               >
                 <DialogTitle id="responsive-dialog-title">{"Vital Sign Detail"}</DialogTitle>
-                <DialogContent row>
-                  <Typography variant="overline" gutterBottom>
-                    <b>Temperature:</b> {this.props.vitalsigndetail.Temperature}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>Respiratory Rate:</b> {this.props.vitalsigndetail.RespiratoryRate}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>SPO2OnRA:</b> {this.props.vitalsigndetail.SPO2OnRA}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>SPO22LMM:</b> {this.props.vitalsigndetail.SPO22LMM}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>SaO2:</b> {this.props.vitalsigndetail.SaO2}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>Height:</b> {this.props.vitalsigndetail.Height}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>Weight:</b> {this.props.vitalsigndetail.Weight}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>PulseRate:</b> {this.props.vitalsigndetail.PulseRate}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>BP(S/D):</b> {this.props.vitalsigndetail.BPS} / {this.props.vitalsigndetail.BPD}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>RBS:</b> {this.props.vitalsigndetail.RBS}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>FBS:</b> {this.props.vitalsigndetail.FBS}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>POXInRoomAir:</b> {this.props.vitalsigndetail.POXInRoomAir}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>POXPerLiter:</b> {this.props.vitalsigndetail.POXPerLiter}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>MUAC:</b> {this.props.vitalsigndetail.MUAC}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>HeadCircumference:</b> {this.props.vitalsigndetail.HeadCircumference}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>WaistCircumference:</b> {this.props.vitalsigndetail.WaistCircumference}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>Smoking:</b> {this.props.vitalsigndetail.Smoking}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>Note:</b> {this.props.vitalsigndetail.Note}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>Input:</b> {this.props.vitalsigndetail.Input}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>Output:</b> {this.props.vitalsigndetail.Output}
-                  </Typography>
-                  <Typography variant="overline" gutterBottom>
-                    <b>DateTime:</b> {Moment(this.props.vitalsigndetail.DateTime).format('d MMM')}
-                  </Typography>
+                <DialogContent>
+                <table>
+                  <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <Typography variant="overline" gutterBottom>
+                        <b>Temperature:</b> {this.props.vitalsigndetail.Temperature}
+                      </Typography>
+                    </td>
+                    <td>
+                      <Typography variant="overline" gutterBottom>
+                        <b>Respiratory Rate:</b> {this.props.vitalsigndetail.RespiratoryRate}
+                      </Typography>
+                    </td>
+                    <td>
+                      <Typography variant="overline" gutterBottom>
+                        <b>SPO2OnRA:</b> {this.props.vitalsigndetail.SPO2OnRA}
+                      </Typography>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <Typography variant="overline" gutterBottom>
+                        <b>SPO22LMM:</b> {this.props.vitalsigndetail.SPO22LMM}
+                      </Typography>
+                    </td>
+                    <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>SaO2:</b> {this.props.vitalsigndetail.SaO2}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>Height:</b> {this.props.vitalsigndetail.Height}
+                        </Typography>
+                      </td>
+                  </tr>
+                    <tr>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>Weight:</b> {this.props.vitalsigndetail.Weight}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>Pulse Rate:</b> {this.props.vitalsigndetail.PulseRate}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>BP(S/D):</b> {this.props.vitalsigndetail.BPS} / {this.props.vitalsigndetail.BPD}
+                        </Typography>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>RBS:</b> {this.props.vitalsigndetail.RBS}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>FBS:</b> {this.props.vitalsigndetail.FBS}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>POXInRoomAir:</b> {this.props.vitalsigndetail.POXInRoomAir}
+                        </Typography>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>POXPerLiter:</b> {this.props.vitalsigndetail.POXPerLiter}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>MUAC:</b> {this.props.vitalsigndetail.MUAC}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>Head Circumference:</b> {this.props.vitalsigndetail.HeadCircumference}
+                        </Typography>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>Waist Circumference:</b> {this.props.vitalsigndetail.WaistCircumference}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>Smoking:</b> {this.props.vitalsigndetail.Smoking}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>Note:</b> {this.props.vitalsigndetail.Note}
+                        </Typography>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>Input:</b> {this.props.vitalsigndetail.Input}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>Output:</b> {this.props.vitalsigndetail.Output}
+                        </Typography>
+                      </td>
+                      <td>
+                        <Typography variant="overline" gutterBottom>
+                          <b>DateTime:</b> {Moment(this.props.vitalsigndetail.DateTime).format('d MMM')}
+                        </Typography>
+                      </td>
+                    </tr>
+                </table>
                 </DialogContent>
                 <DialogActions>
                   <Button onClick={this.detaildialoguClose} color="primary" autoFocus>

@@ -126,28 +126,28 @@ class sickLeave extends Component {
                                 total={this.props.totalCount}
                                 onClick={(e, offset) => this.handleClick(offset)}
                                 />
-                            <Dialog
-                                fullScreen={fullScreen}
-                                open={this.state.detaildialog}
-                                onClose={this.handleClose}
-                                aria-labelledby="responsive-dialog-title"
-                                classes={{ paper: classes.dialog }}
-                            >
-                                <DialogTitle id="responsive-dialog-title">{"Sick Leave Detail"}</DialogTitle>
-                                <DialogContent row>
-                                    <Typography variant="overline" gutterBottom>
-                                        <b>DateTime:</b> {Moment(this.props.patientnoteDetail.DateTime).format('d MMM YYYY')}
-                                    </Typography>
-                                    <Typography variant="overline" gutterBottom>
-                                        <b>Note:</b> {this.props.patientnoteDetail.Note}
-                                    </Typography>
-                                </DialogContent>
-                                <DialogActions>
-                                    <Button onClick={this.detaildialoguClose} color="primary" autoFocus>
-                                        Close
-                                    </Button>
-                                </DialogActions>
-                            </Dialog>
+                        <Dialog
+                            fullScreen={fullScreen}
+                            open={this.state.detaildialog}
+                            onClose={this.handleClose}
+                            aria-labelledby="responsive-dialog-title"
+                            classes={{ paper: classes.dialog }}
+                        >
+                            <DialogTitle id="responsive-dialog-title">{"Sick Leave Detail"}</DialogTitle>
+                            <DialogContent row>
+                                <Typography variant="overline" gutterBottom>
+                                    <b>DateTime:</b> {Moment(this.props.patientnoteDetail.DateTime).format('d MMM YYYY')}
+                                </Typography>
+                                <Typography variant="overline" gutterBottom>
+                                    <b>Note:</b> {this.props.patientnoteDetail.Note}
+                                </Typography>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={this.detaildialoguClose} color="primary" autoFocus>
+                                    Close
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </CardBody>
                     </Card>
                 </GridItem>

@@ -129,7 +129,7 @@ class orderSheet extends Component {
                             aria-labelledby="responsive-dialog-title"
                             classes={{ paper: classes.dialog }}
                         >
-                            <DialogTitle id="responsive-dialog-title">{"Sick Leave Detail"}</DialogTitle>
+                            <DialogTitle id="responsive-dialog-title">{"Order Sheet Detail"}</DialogTitle>
                             <DialogContent row>
                                 <Typography variant="overline" gutterBottom>
                                     <b>DateTime:</b> {Moment(this.props.patientnoteDetail.DateTime).format('d MMM YYYY')}
