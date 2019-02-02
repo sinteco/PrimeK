@@ -65,7 +65,7 @@ class RadOrder extends Component {
     returnarrays(){
         var a = new Array();
         this.props.radOrders.map((radOrder)=>{
-            a.push([[radOrder.Id], [Moment(radOrder.Date).format('d MMM')], [radOrder.Type], [radOrder.SubType], [radOrder.Conclusion], [radOrder.OrderBy]])
+            a.push([[radOrder.Id], [Moment(radOrder.Date).format('d MMM')], [radOrder.Type], [radOrder.SubType], [radOrder.OrderBy]])
         });
         return a;    
     }
@@ -116,7 +116,7 @@ class RadOrder extends Component {
                     {this.props.isLoading?<CircularProgress className={classes.progress} />:""}
                         <Table
                             tableHeaderColor="primary"
-                            tableHead={["Id", "Date", "Type", "Sub Type", "Conclusion","Orderedby"]}
+                            tableHead={["Id", "Date", "Type", "Sub Type","Orderedby"]}
                             tableData={this.returnarrays()}
                             handleOnRowClick={this.handleOnRowClick}
                         />

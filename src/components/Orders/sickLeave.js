@@ -79,7 +79,7 @@ class sickLeave extends Component {
             page:(this.state.offset+20)/10
          });
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const patientNotesURL = '/PatientNotes/GetPatientNotesOfPatient/' + id + "?page="+ (this.state.offset+20)/10;
+        const patientNotesURL = '/PatientNotes/GetSickLeaveOfPatient/' + id + "?page="+ (this.state.offset+20)/10;
         this.props.fetchPatientNotes(patientNotesURL);
       }
     handleOnRowClick = (id) => {
@@ -96,7 +96,7 @@ class sickLeave extends Component {
     }
     componentWillMount(){
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const URL = '/PatientNotes/GetPatientNotesOfPatient/' + id + "?page="+ this.state.page;
+        const URL = '/PatientNotes/GetSickLeaveOfPatient/' + id + "?page="+ this.state.page;
         this.props.fetchPatientNotes(URL);
     }
     render() {

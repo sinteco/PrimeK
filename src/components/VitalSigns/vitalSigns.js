@@ -10,7 +10,6 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { fetchVitalSigen } from '../../redux/actions/vitalsigneAction';
 import { compose } from 'redux';
 import propTypes from 'prop-types';
 import Moment from 'moment';
@@ -26,8 +25,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { saveVitalSigen } from '../../redux/actions/vitalsigneAction';
-import { fetchVitalSigenDetail } from '../../redux/actions/vitalsigneAction';
+import { saveVitalSigen, fetchVitalSigenDetail, fetchVitalSigen } from '../../redux/actions/vitalsigneAction';
 import qs from 'qs';
 import Typography from '@material-ui/core/Typography';
 
@@ -83,22 +81,17 @@ export class vitalSigns extends Component {
       height: '',
       weight: '',
       headcircumference: '',
-      waistcircumference: '',
       rbs: '',
       fbs: '',
       muac: '',
       smoking: '',
       input: '',
       putput: '',
-      balance: '',
-      wtage: '',
-      wtht: '',
-      bmi: '',
-      bmiage: '',
       muacage: '',
-      hcage: '',
-      bpageht: '',
-      note: ''
+      note: '',
+      POXPerLiter: '',
+      SaO2: '',
+      POXInRoomAir: ''
 
     };
     handleOpen = () => {
@@ -121,23 +114,26 @@ export class vitalSigns extends Component {
         Height: this.state.height,
         Weight: this.state.weight,
         HeadCircumference: this.state.headcircumference,
-        WaistCircumference: this.state.waistcircumference,
+        // WaistCircumference: this.state.waistcircumference,
         RBS: this.state.rbs,
         FBS: this.state.fbs,
         MUAC: this.state.muac,
         Smoking: this.state.smoking,
         Input: this.state.input,
         Output: this.state.Output,
-        Balance: this.state.balance,
-        WtAge: this.state.wtage,
-        WtHt: this.state.wtht,
-        BMI: this.state.bmi,
-        BMIAge: this.state.bmiage,
-        MUACAge: this.state.muacage,
-        HCage: this.state.hcage,
-        BPAgeHt: this.state.bpageht,
+        // Balance: this.state.balance,
+        // WtAge: this.state.wtage,
+        // WtHt: this.state.wtht,
+        // BMI: this.state.bmi,
+        // BMIAge: this.state.bmiage,
+        // MUACAge: this.state.muacage,
+        // HCage: this.state.hcage,
+        // BPAgeHt: this.state.bpageht,
         Note: this.state.note,
-        PatientId: id
+        PatientId: id,
+        SaO2: this.state.SaO2,
+        POXInRoomAir: this.state.POXInRoomAir,
+        POXPerLiter: this.state.POXPerLiter
       }
       if(id===0){
         alert("patient is not selected");
@@ -146,6 +142,9 @@ export class vitalSigns extends Component {
       const savevitalsignURL = '/VitalSigns';
       this.setState({ open: false });
       this.props.saveVitalSigen(savevitalsignURL, qs.stringify(vitalSign));
+      //reload after save
+      const vitalSigneURL = '/VitalSigns/GetVitalSignsOfPatient/' + id;
+      this.props.fetchVitalSigen(vitalSigneURL);
     };
     handleClickOpen = () => {
       this.setState({ open: true });

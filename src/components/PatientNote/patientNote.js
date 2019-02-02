@@ -79,7 +79,9 @@ class patientNote extends Component {
         this.props.fetchPatientNotes(patientNotesURL);
     }
     handleOnRowClick = (id) => {
-        const URL = '/PatientNotes/GetPatientNoteDetail/' + id;
+        const NoteCategory = this.props.patientNotes.filter(note => (note.Id == id ));
+        console.log(NoteCategory[0].NoteCategory);
+        const URL = '/PatientNotes/GetPatientNoteDetail/?id=' + id + '&NoteCategory=' + NoteCategory[0].NoteCategory;
         this.props.fetchPatientNoteDetail(URL);
         this.setState({
             detaildialog: true
@@ -133,6 +135,9 @@ class patientNote extends Component {
                                 <DialogContent row>
                                     <Typography variant="overline" gutterBottom>
                                         <b>DateTime:</b> {Moment(this.props.patientnoteDetail.DateTime).format('d MMM YYYY')}
+                                    </Typography>
+                                    <Typography variant="overline" gutterBottom>
+                                        <b>Category:</b> {this.props.patientnoteDetail.NoteCategory}
                                     </Typography>
                                     <Typography variant="overline" gutterBottom>
                                         <b>Note:</b> {this.props.patientnoteDetail.Note}
