@@ -15,7 +15,7 @@ import dashboardRoutes from "routes/dashboard.jsx";
 import dashboardStyle from "assets/jss/material-dashboard-react/layouts/dashboardStyle.jsx";
 import image from "assets/img/sidebar-4.jpg";
 import logo from "assets/img/reactlogo.png";
-import HistoryAndPhysical from '../../components/PatientNote/historyAndPhysical';
+import HistoryAndPhysical from '../../components/PatientNote/hpNote';
 import ProgressNote from '../../components/PatientNote/progressNote';
 import OrderSheet from '../../components/Orders/orderSheet';
 import MedicationOrder from '../../components/Orders/medicationOrder';
@@ -28,6 +28,7 @@ import NewXrayOrder from '../../components/Orders/newXRayOrder';
 import NewUltrasound from '../../components/Orders/newUltarsoundOrder';
 import NewECG from '../../components/Orders/newECGOrder';
 import NewEcho from '../../components/Orders/newEchoOrder';
+import NewHPOrder from '../../components/PatientNote/historyAndPhysical';
 
 const switchRoutes = (
   <Switch>
@@ -45,6 +46,7 @@ const switchRoutes = (
     <Route path="/NewUltrasound" component={NewUltrasound}/>
     <Route path="/NewECG" component={NewECG}/>
     <Route path="/NewEcho" component={NewEcho}/>
+    <Route path="/NewHPOrder" component={NewHPOrder}/>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;

@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
+import Table from '../Table/CustomTableWithSelector';
 
 export default class appointments extends Component {
   render() {
     return (
       <div>
-        calandar ui
+        <Table
+          tableHeaderColor="primary"
+          tableHead={[" ", " ", "Normal", "Abnormal","Remark"]}
+          tableData={[
+            ["parents"],
+            ["sublings"],
+            ["others"]
+          ]}
+        />
       </div>
     )
   }

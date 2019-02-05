@@ -84,14 +84,15 @@ export class vitalSigns extends Component {
       rbs: '',
       fbs: '',
       muac: '',
-      smoking: '',
+      smoking: false,
       input: '',
       putput: '',
       muacage: '',
       note: '',
       POXPerLiter: '',
       SaO2: '',
-      POXInRoomAir: ''
+      POXInRoomAir: '',
+      waistcircumference: ''
 
     };
     handleOpen = () => {
@@ -114,7 +115,7 @@ export class vitalSigns extends Component {
         Height: this.state.height,
         Weight: this.state.weight,
         HeadCircumference: this.state.headcircumference,
-        // WaistCircumference: this.state.waistcircumference,
+        WaistCircumference: this.state.waistcircumference,
         RBS: this.state.rbs,
         FBS: this.state.fbs,
         MUAC: this.state.muac,
@@ -142,6 +143,9 @@ export class vitalSigns extends Component {
       const savevitalsignURL = '/VitalSigns';
       this.setState({ open: false });
       this.props.saveVitalSigen(savevitalsignURL, qs.stringify(vitalSign));
+      if (this.props.confirmStatus.length!=0){
+        alert("Successfully saved");
+      }
       //reload after save
       const vitalSigneURL = '/VitalSigns/GetVitalSignsOfPatient/' + id;
       this.props.fetchVitalSigen(vitalSigneURL);
@@ -247,7 +251,7 @@ export class vitalSigns extends Component {
                                 />
                                 <TextField
                                   id="standard-name"
-                                  label="SpO2"
+                                  label="SpO2 on ra"
                                   className={classes.textField}
                                   value={this.state.spo2onra}
                                   onChange={this.handleChange('spo2onra')}
@@ -255,7 +259,7 @@ export class vitalSigns extends Component {
                                 />
                                 <TextField
                                   id="standard-name"
-                                  label="SpO2"
+                                  label="SpO2 2l mm"
                                   className={classes.textField}
                                   value={this.state.spo22lmm}
                                   onChange={this.handleChange('spo22lmm')}
@@ -325,8 +329,8 @@ export class vitalSigns extends Component {
                                   value={this.state.smoking}
                                   onChange={this.handleChange('smoking')}
                                   >
-                                  <FormControlLabel value="1" control={<Radio />} label="Smoking" />
-                                  <FormControlLabel value="0" control={<Radio />} label="Non Smoking" />
+                                  <FormControlLabel value="true" control={<Radio />} label="Smoking" />
+                                  <FormControlLabel value="false" control={<Radio />} label="Non Smoking" />
                                 </RadioGroup>
                                 <TextField
                                   id="standard-name"
@@ -346,66 +350,26 @@ export class vitalSigns extends Component {
                                 />
                                 <TextField
                                   id="standard-name"
-                                  label="Balance"
+                                  label="SaO2"
                                   className={classes.textField}
-                                  value={this.state.balance}
-                                  onChange={this.handleChange('balance')}
+                                  value={this.state.SaO2}
+                                  onChange={this.handleChange('SaO2')}
                                   margin="normal"
                                 />
                                 <TextField
                                   id="standard-name"
-                                  label="WT/Age"
+                                  label="POX InRoomAir"
                                   className={classes.textField}
-                                  value={this.state.wtage}
-                                  onChange={this.handleChange('wtage')}
+                                  value={this.state.POXInRoomAir}
+                                  onChange={this.handleChange('POXInRoomAir')}
                                   margin="normal"
                                 />
                                 <TextField
                                   id="standard-name"
-                                  label="WT/Ht"
+                                  label="POX PerLiter"
                                   className={classes.textField}
-                                  value={this.state.wtht}
-                                  onChange={this.handleChange('wtht')}
-                                  margin="normal"
-                                />
-                                <TextField
-                                  id="standard-name"
-                                  label="BIM"
-                                  className={classes.textField}
-                                  value={this.state.bmi}
-                                  onChange={this.handleChange('bmi')}
-                                  margin="normal"
-                                />
-                                <TextField
-                                  id="standard-name"
-                                  label="BIM/Age"
-                                  className={classes.textField}
-                                  value={this.state.bmiage}
-                                  onChange={this.handleChange('bmiage')}
-                                  margin="normal"
-                                />
-                                <TextField
-                                  id="standard-name"
-                                  label="MUAC/Age"
-                                  className={classes.textField}
-                                  value={this.state.muacage}
-                                  onChange={this.handleChange('muacage')}
-                                  margin="normal"
-                                />
-                                <TextField
-                                  id="standard-name"
-                                  label="HC/Age"
-                                  className={classes.textField}
-                                  value={this.state.hcage}
-                                  onChange={this.handleChange('hcage')}
-                                  margin="normal"
-                                />
-                                <TextField
-                                  id="standard-name"
-                                  label="BP for Age and Ht"
-                                  className={classes.textField}
-                                  value={this.state.bpageht}
-                                  onChange={this.handleChange("bpageht")}
+                                  value={this.state.POXPerLiter}
+                                  onChange={this.handleChange('POXPerLiter')}
                                   margin="normal"
                                 />
                                 </FormGroup>

@@ -79,9 +79,9 @@ class patientNote extends Component {
         this.props.fetchPatientNotes(patientNotesURL);
     }
     handleOnRowClick = (id) => {
-        const NoteCategory = this.props.patientNotes.filter(note => (note.Id == id ));
-        console.log(NoteCategory[0].NoteCategory);
-        const URL = '/PatientNotes/GetPatientNoteDetail/?id=' + id + '&NoteCategory=' + NoteCategory[0].NoteCategory;
+        // const NoteCategory = this.props.patientNotes.filter(note => (note.Id == id ));
+        // console.log(NoteCategory[0].NoteCategory);
+        const URL = '/PatientNotes/GetPatientNoteDetail/' + id;
         this.props.fetchPatientNoteDetail(URL);
         this.setState({
             detaildialog: true

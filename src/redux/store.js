@@ -42,7 +42,7 @@ const store = createStore(
     initialState,
     compose(
         applyMiddleware(...middleware, axiosMiddleware(client, axiosMiddlewareOptions)),
-        devTools
+        // devTools
       )
      );
 

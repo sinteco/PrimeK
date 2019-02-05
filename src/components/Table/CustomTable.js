@@ -41,7 +41,7 @@ class CustomTable extends React.Component {
         <TableBody>
           {tableData.map((prop, key) => {
             return (
-              <TableRow key={key}>
+              <TableRow key={key} style={{ cursor: 'pointer'}}>
                 <TableCell className={classes.tableCell} key={key}>
                     <Radio
                         checked={this.props.selected === ""+prop[0]+""}

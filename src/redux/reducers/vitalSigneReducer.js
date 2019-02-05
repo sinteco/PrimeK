@@ -16,7 +16,7 @@ const initialState = {
     totalcount:{},
     isLoading: true,
     hasError: false,
-    confirmStatus: false
+    confirmStatus: []
 }
 
 export default function(state = initialState, action){
