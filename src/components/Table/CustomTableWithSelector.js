@@ -20,8 +20,9 @@ class CustomTable extends React.Component {
             selectedValue0: 'a',
             selectedValue1: 'b',
             selectedValue2: 'c',
-            selectedValue3: 'd',
-            remark: ''
+            remark0: '',
+            remark1: '',
+            remark2: '',
         }
     }
     handleChange = name => event => {
@@ -68,8 +69,8 @@ class CustomTable extends React.Component {
                                     })}
                                     <TableCell>
                                         <Radio
-                                            checked={this.state.selectedValue0 + key === "a" + key}
-                                            onChange={this.handleChange('selectedValue0' + key)}
+                                            checked={this.state['selectedValue' + key ] === "a" + key}
+                                            onChange={this.handleChange('selectedValue' + key)}
                                             value={"a" + key}
                                             name={"radio-button-demo-"+key}
                                             aria-label="A"
@@ -77,8 +78,8 @@ class CustomTable extends React.Component {
                                     </TableCell>
                                     <TableCell>
                                         <Radio
-                                            checked={this.state.selectedValue1 + key === "b" + key}
-                                            onChange={this.handleChange('selectedValue1' + key)}
+                                            checked={this.state['selectedValue' + key ] === "b" + key}
+                                            onChange={this.handleChange('selectedValue' + key)}
                                             value={"b" + key}
                                             name={"radio-button-demo-"+key}
                                             aria-label="B"
@@ -89,7 +90,7 @@ class CustomTable extends React.Component {
                                             id="standard-name"
                                             // label="Remark"
                                             className={classes.textField}
-                                            value={this.state.remark}
+                                            value={this.state['remark' + key]}
                                             onChange={this.handleChange('remark' + key)}
                                             margin="normal"
                                         />
