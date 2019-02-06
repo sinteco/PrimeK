@@ -8,11 +8,9 @@ export default class appointments extends Component {
         <Table
           tableHeaderColor="primary"
           tableHead={[" ", " ", "Normal", "Abnormal","Remark"]}
-          tableData={[
-            ["parents"],
-            ["sublings"],
-            ["others"]
-          ]}
+          tableData={[["parents"],["sublings"],["others"]]}
+          radio={2}
+          textbox={1}
         />
       </div>
     )

@@ -6,6 +6,9 @@ import CardBody from "components/Card/CardBody.jsx";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { compose } from '../../../../../../AppData/Local/Microsoft/TypeScript/3.2/node_modules/redux';
 import TextField from '@material-ui/core/TextField';
+import Table from '../Table/CustomTableWithSelector';
+import FormLabel from '@material-ui/core/FormLabel';
+import CustomTable from '../Diagnosis/CustomDiagnosis';
 
 const style = {
     typo: {
@@ -134,6 +137,99 @@ class historyAndPhysical extends Component {
                             //onChange={handleChange('multiline')}
                             className={classes.textField}
                             margin="normal"
+                        />
+                        <br/>
+                        <br/>
+                        <FormLabel style={{marginBottom: '-4px'}} component="legend">Family History</FormLabel>
+                        <Table
+                            tableHeaderColor="primary"
+                            tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                            tableData={[["parents"], ["sublings"], ["others"]]}
+                            radio={2}
+                            textbox={1}
+                        />
+                        <br />
+                        <br />
+                        <FormLabel style={{ marginBottom: '-4px' }} component="legend">Social History</FormLabel>
+                        <Table
+                            tableHeaderColor="primary"
+                            tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                            tableData={[
+                                ["Habits"],
+                                ["Employment History"],
+                                ["Education"],
+                                ["Social activities"],
+                                ["Environment"],
+                                ["Perinatal History"],
+                                ["Developemnt History"],
+                                ["Nutritional History"],
+                                ["Vaccination History"],
+                                ["Ealy development"],
+                                ["Other"]
+                            ]}
+                            radio={2}
+                            textbox={1}
+                        />
+                        <br />
+                        <br />
+                        <FormLabel style={{ marginBottom: '-4px' }} component="legend">Review of Systems</FormLabel>
+                        <Table
+                            tableHeaderColor="primary"
+                            tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                            tableData={[
+                                ["Head"],
+                                ["Ears"],
+                                ["Eyes"],
+                                ["Nose"],
+                                ["Mouth and throat"],
+                                ["Glands"],
+                                ["Respiratory"],
+                                ["Cardiovascular"],
+                                ["Gastrointestinal"],
+                                ["Genitourinary"],
+                                ["Integumentary"],
+                                ["Allergy"],
+                                ["Locomotion"],
+                                ["CNS"],
+                                ["Other"]
+                            ]}
+                            radio={2}
+                            textbox={1}
+                        />
+                        <br />
+                        <br />
+                        <FormLabel style={{ marginBottom: '-4px' }} component="legend">Physical Exam</FormLabel>
+                        <Table
+                            tableHeaderColor="primary"
+                            tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                            tableData={[
+                                ["General Appearance"],
+                                ["HEENT"],
+                                ["Lymphoglandular"],
+                                ["Respiratory"],
+                                ["CVS"],
+                                ["Gastrointestinal"],
+                                ["Genitourinary"],
+                                ["Integumentary"],
+                                ["Musculoskeletal"],
+                                ["CNS"],
+                                ["Other"]
+                            ]}
+                            radio={2}
+                            textbox={1}
+                        />
+                        <br />
+                        <br />
+                        <FormLabel style={{ marginBottom: '-4px' }} component="legend">Diagnosis</FormLabel>
+                        <CustomTable
+                            tableHeaderColor="primary"
+                            tableHead={["Diagnosis", "Code", "Date", "Visit"]}
+                            tableData={[
+                                ["1", "Dakota Rice", "$36,738", "Niger"],
+                                ["2", "Minerva Hooper", "$23,789", "Curaçao"],
+                                ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
+                                ["6", "Mason Porter", "$78,615", "Chile"]
+                            ]}
                         />
                     </form>
                 </CardBody>
