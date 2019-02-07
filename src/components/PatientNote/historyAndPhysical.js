@@ -4,11 +4,13 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import withStyles from "@material-ui/core/styles/withStyles";
-import { compose } from '../../../../../../AppData/Local/Microsoft/TypeScript/3.2/node_modules/redux';
+import { compose } from 'redux';
 import TextField from '@material-ui/core/TextField';
 import Table from '../Table/CustomTableWithSelector';
 import FormLabel from '@material-ui/core/FormLabel';
 import CustomTable from '../Diagnosis/CustomDiagnosis';
+import { fetchPatientDiagnosis } from '../../redux/actions/diagnosisAction';
+import propTypes from 'prop-types';
 
 const style = {
     typo: {
@@ -48,7 +50,28 @@ const style = {
   };
 
 class historyAndPhysical extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            diagnosis: []
+        }
+    }
+    addDiagnosis = (selected) => {
+        this.setState({
+            diagnosis: [...this.state.diagnosis, ["2", "Minerva Hooper", "$23,789", "Curaçao"]]
+        })
+    }
+    componentDidMount() {
+        this.setState({
+            diagnosis: [...this.state.diagnosis, ["1", "Dakota Rice", "$36,738", "Niger"]]
+        })
+        const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
+        const url = '/Diagnosis/GetDiagnosisOfPatient/' + id;
+        this.props.fetchPatientDiagnosis(url);
+    }
+    
     render() {
+        {console.log(this.props.patientDiagnosis)}
         const { classes } = this.props;
         return (
             <Card>
@@ -220,16 +243,18 @@ class historyAndPhysical extends Component {
                         />
                         <br />
                         <br />
-                        <FormLabel style={{ marginBottom: '-4px' }} component="legend">Diagnosis</FormLabel>
+                        <FormLabel component="legend">Diagnosis</FormLabel>
                         <CustomTable
                             tableHeaderColor="primary"
                             tableHead={["Diagnosis", "Code", "Date", "Visit"]}
-                            tableData={[
-                                ["1", "Dakota Rice", "$36,738", "Niger"],
-                                ["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                                ["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                                ["6", "Mason Porter", "$78,615", "Chile"]
-                            ]}
+                            diagnosis={this.state.diagnosis}
+                            addDiagnosis={this.addDiagnosis}
+                            //tableData={[
+                                //["1", "Dakota Rice", "$36,738", "Niger"],
+                                //["2", "Minerva Hooper", "$23,789", "Curaçao"],
+                                //["3", "Sage Rodriguez", "$56,142", "Netherlands"],
+                                //["6", "Mason Porter", "$78,615", "Chile"]
+                            //]}
                         />
                     </form>
                 </CardBody>
@@ -238,10 +263,22 @@ class historyAndPhysical extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-
-    };
+historyAndPhysical.propTypes = {
+    fetchPatientDiagnosis: propTypes.func.isRequired,
+    patientDiagnosis: propTypes.array.isRequired,
+    isLoading: propTypes.bool.isRequired,
+    hasError: propTypes.bool.isRequired
 }
 
-export default compose(withStyles(style),connect(mapStateToProps,null))(historyAndPhysical);
+const mapStateToProps = (state) => ({
+    patientDiagnosis: state.diagnosisOrder.patientDiagnosis,
+    isLoading: state.diagnosisOrder.isLoading,
+    hasError: state.diagnosisOrder.hasError,
+    selectedPatient: state.assignments.selectedPatient
+});
+
+const mapDispatchToProps = dispatch => ({
+    fetchPatientDiagnosis: (url) => dispatch(fetchPatientDiagnosis(url))
+});
+
+export default compose(withStyles(style),connect(mapStateToProps,mapDispatchToProps))(historyAndPhysical);

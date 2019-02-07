@@ -362,7 +362,7 @@ class hpNote extends Component {
                                 <DialogActions>
                                     <Button onClick={this.detaildialoguClose} color="primary" autoFocus>
                                         Close
-                                </Button>
+                                    </Button>
                                 </DialogActions>
                             </Dialog>
                         </CardBody>

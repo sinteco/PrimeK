@@ -10,6 +10,7 @@ import radOrderReducer from './radOrderReducer';
 import procedureReducer from './procedureOrderReducer';
 import consultationReducer from './consultationOrderReducer';
 import investigationResuder from './InvestigationOrderReducer';
+import diagnosisReducer from './diagnosisReducer';
 
 export default combineReducers({
     assignments: assignmentReducer,
@@ -22,5 +23,6 @@ export default combineReducers({
     radOrder: radOrderReducer,
     procedureOrder: procedureReducer,
     consultationOrder: consultationReducer,
-    investigationOrder: investigationResuder
+    investigationOrder: investigationResuder,
+    diagnosisOrder: diagnosisReducer
 });
