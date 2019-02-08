@@ -9,17 +9,12 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Moment from 'moment';
-import { fetchRadOrders } from '../../redux/actions/radOrderAction';
+import { fetchProgressNote } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from "material-ui-flat-pagination";
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import Typography from '@material-ui/core/Typography';
 
 const styles = {
     cardCategoryWhite: {
@@ -63,8 +58,8 @@ class progressNote extends Component {
     }
     returnarrays() {
         var a = new Array();
-        this.props.radOrders.map((radOrder) => {
-            a.push([[radOrder.Id], [Moment(radOrder.Date).format('d MMM')], [radOrder.Type], [radOrder.SubType], [radOrder.OrderBy]])
+        this.props.progressNotes.map((progressNote) => {
+            a.push([[progressNote.Id], [Moment(progressNote.Date).format('d MMM')], [progressNote.SubType], [progressNote.OrderBy]])
         });
         return a;
     }
@@ -74,8 +69,8 @@ class progressNote extends Component {
             page: (this.state.offset + 20) / 10
         });
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const radOrdersURL = '/RadOrders/GetRadOrdersOfPatient/' + id + "?page=" + (this.state.offset + 20) / 10;
-        this.props.fetchRadOrders(radOrdersURL);
+        const URL = '/PatientNotes/GetProgressNoteOfPatient/' + id + "?page=" + (this.state.offset + 20) / 10;
+        this.props.fetchRadOrders(URL);
     }
     handleOnRowClick = (id) => {
         const URL = '/RadOrders/GetRadOrderDetail/' + id;
@@ -91,8 +86,8 @@ class progressNote extends Component {
     }
     componentWillMount() {
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const radOrdersURL = '/RadOrders/GetRadOrdersOfPatient/' + id + "?page=" + this.state.page;
-        this.props.fetchRadOrders(radOrdersURL);
+        const URL = '/PatientNotes/GetProgressNoteOfPatient/' + id + "?page=" + this.state.page;
+        this.props.fetchProgressNote(URL);
     }
     render() {
         const { classes } = this.props;
@@ -138,25 +133,22 @@ class progressNote extends Component {
 }
 
 progressNote.propTypes = {
-    fetchRadOrderDetail: propTypes.isRequired,
-    fetchRadOrders: propTypes.func.isRequired,
-    radOrders: propTypes.array.isRequired,
+    fetchProgressNote: propTypes.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired,
-    radOrderDetail: propTypes.array.isRequired
+    progressNotes: propTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => ({
-    radOrders: state.radOrder.radOrders,
+    progressNotes: state.patientNote.progressNotes,
     isLoading: state.radOrder.isLoading,
     hasError: state.radOrder.hasError,
     totalCount: state.radOrder.totalCount,
     selectedPatient: state.assignments.selectedPatient,
-    radOrderDetail: state.radOrder.radOrderDetail
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchRadOrders: (url) => dispatch(fetchRadOrders(url))
+    fetchProgressNote: (url) => dispatch(fetchProgressNote(url))
 });
 
 export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(progressNote);
