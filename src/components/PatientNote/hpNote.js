@@ -107,16 +107,16 @@ class hpNote extends Component {
                 <GridItem xs={12} sm={12} md={12}>
                     <Card>
                         <CardHeader color="primary">
-                            <h4 className={classes.cardTitleWhite}>Patient Note</h4>
+                            <h4 className={classes.cardTitleWhite}>History And Physical Note</h4>
                             <p className={classes.cardCategoryWhite}>
                                 {/* Here is a subtitle for this table */}
                             </p>
-                            <Button 
-                                    variant="contained"
-                                    color="primary"
-                                    component={Link}
-                                    to="NewHPOrder"
-                                    className={classes.button}
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                component={Link}
+                                to="NewHPOrder"
+                                className={classes.button}
                             > new HPNote </Button>
                         </CardHeader>
                         <CardBody>

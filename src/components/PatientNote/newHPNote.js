@@ -49,7 +49,7 @@ const style = {
     }
   };
 
-class historyAndPhysical extends Component {
+class newHPNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -78,7 +78,7 @@ class historyAndPhysical extends Component {
                 <CardHeader color="primary">
                     <h4 className={classes.cardTitleWhite}>History And Physical Note</h4>
                     <p className={classes.cardCategoryWhite}>
-                    Created using Roboto Font Family
+                    {/* Created using Roboto Font Family */}
                     </p>
                 </CardHeader>
                 <CardBody>
@@ -249,12 +249,6 @@ class historyAndPhysical extends Component {
                             tableHead={["Diagnosis", "Code", "Date", "Visit"]}
                             diagnosis={this.state.diagnosis}
                             addDiagnosis={this.addDiagnosis}
-                            //tableData={[
-                                //["1", "Dakota Rice", "$36,738", "Niger"],
-                                //["2", "Minerva Hooper", "$23,789", "Curaçao"],
-                                //["3", "Sage Rodriguez", "$56,142", "Netherlands"],
-                                //["6", "Mason Porter", "$78,615", "Chile"]
-                            //]}
                         />
                     </form>
                 </CardBody>
@@ -263,7 +257,7 @@ class historyAndPhysical extends Component {
     }
 }
 
-historyAndPhysical.propTypes = {
+newHPNote.propTypes = {
     fetchPatientDiagnosis: propTypes.func.isRequired,
     patientDiagnosis: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
@@ -281,4 +275,4 @@ const mapDispatchToProps = dispatch => ({
     fetchPatientDiagnosis: (url) => dispatch(fetchPatientDiagnosis(url))
 });
 
-export default compose(withStyles(style),connect(mapStateToProps,mapDispatchToProps))(historyAndPhysical);
+export default compose(withStyles(style), connect(mapStateToProps, mapDispatchToProps))(newHPNote);

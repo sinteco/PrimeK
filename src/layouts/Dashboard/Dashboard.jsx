@@ -28,7 +28,8 @@ import NewXrayOrder from '../../components/Orders/newXRayOrder';
 import NewUltrasound from '../../components/Orders/newUltarsoundOrder';
 import NewECG from '../../components/Orders/newECGOrder';
 import NewEcho from '../../components/Orders/newEchoOrder';
-import NewHPOrder from '../../components/PatientNote/historyAndPhysical';
+import NewHPOrder from '../../components/PatientNote/newHPNote';
+import NewProgressNote from '../../components/PatientNote/newProgressNote';
 
 const switchRoutes = (
   <Switch>
@@ -47,6 +48,7 @@ const switchRoutes = (
     <Route path="/NewECG" component={NewECG}/>
     <Route path="/NewEcho" component={NewEcho}/>
     <Route path="/NewHPOrder" component={NewHPOrder}/>
+    <Route path="/NewProgressNote" component={NewProgressNote}/>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;
