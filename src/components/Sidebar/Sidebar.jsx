@@ -236,7 +236,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Medical Certeficate</Typography>} />
                   </ListItem>
-                  <ListItem button className={classes.nested}>
+                  <ListItem button className={classes.nested} component={Link} to="/RefferalNote">
                     <ListItemIcon className={classes.itemIcon}>
                       <StarBorder />
                     </ListItemIcon>

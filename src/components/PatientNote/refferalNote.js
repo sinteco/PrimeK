@@ -46,20 +46,18 @@ const styles = {
     }
 };
 
-class progressNote extends Component {
+class refferalNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
             offset: 0,
-            page: 1,
-            detaildialog: false
+            page: 1
         }
-        this.detaildialoguClose = this.detaildialoguClose.bind(this);
     }
     returnarrays() {
         var a = new Array();
         this.props.progressNotes.map((progressNote) => {
-            a.push([[progressNote.Id], [Moment(progressNote.Date).format('d MMM')], [progressNote.SubType], [progressNote.OrderBy]])
+            a.push([[progressNote.Id], [Moment(progressNote.Date).format('d MMM')], [progressNote.NoteCategory], [progressNote.Note]])
         });
         return a;
     }
@@ -69,24 +67,20 @@ class progressNote extends Component {
             page: (this.state.offset + 20) / 10
         });
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const URL = '/PatientNotes/GetProgressNoteOfPatient/' + id + "?page=" + (this.state.offset + 20) / 10;
+        const URL = '/PatientNotes/GetRefferalNoteOfPatient/' + id + "?page=" + (this.state.offset + 20) / 10;
         this.props.fetchRadOrders(URL);
     }
     handleOnRowClick = (id) => {
-        const URL = '/RadOrders/GetRadOrderDetail/' + id;
-        this.props.fetchRadOrderDetail(URL);
-        this.setState({
-            detaildialog: true
-        })
-    }
-    detaildialoguClose() {
-        this.setState({
-            detaildialog: false
-        })
+        // const URL = '/RadOrders/GetRadOrderDetail/' + id;
+        // this.props.fetchRadOrderDetail(URL);
+        // this.setState({
+        //     detaildialog: true
+        // })
+        this.props.history.push("/newRefferal")
     }
     componentWillMount() {
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const URL = '/PatientNotes/GetProgressNoteOfPatient/' + id + "?page=" + this.state.page;
+        const URL = '/PatientNotes/GetRefferalNoteOfPatient/' + id + "?page=" + this.state.page;
         this.props.fetchProgressNote(URL);
     }
     render() {
@@ -96,17 +90,17 @@ class progressNote extends Component {
                 <GridItem xs={12} sm={12} md={12}>
                     <Card>
                         <CardHeader color="primary">
-                            <h4 className={classes.cardTitleWhite}>Progress Note</h4>
+                            <h4 className={classes.cardTitleWhite}>Refferal Note</h4>
                             <p className={classes.cardCategoryWhite}>
                                 {/* Here is a subtitle for this table */}<br />
                                 <Button
                                     variant="contained"
                                     color="primary"
                                     component={Link}
-                                    to="NewProgressNote"
+                                    to="newRefferalNote"
                                     className={classes.button}
                                 >
-                                    New Progress Note
+                                    New Refferal Note
                                 </Button>
                             </p>
                         </CardHeader>
@@ -132,7 +126,7 @@ class progressNote extends Component {
     }
 }
 
-progressNote.propTypes = {
+refferalNote.propTypes = {
     fetchProgressNote: propTypes.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired,
@@ -151,4 +145,4 @@ const mapDispatchToProps = dispatch => ({
     fetchProgressNote: (url) => dispatch(fetchProgressNote(url))
 });
 
-export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(progressNote);
+export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(refferalNote);

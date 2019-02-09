@@ -30,6 +30,8 @@ import NewECG from '../../components/Orders/newECGOrder';
 import NewEcho from '../../components/Orders/newEchoOrder';
 import NewHPOrder from '../../components/PatientNote/newHPNote';
 import NewProgressNote from '../../components/PatientNote/newProgressNote';
+import NewRefferalNote from '../../components/PatientNote/newRefferalNote';
+import RefferalNote from '../../components/PatientNote/refferalNote';
 
 const switchRoutes = (
   <Switch>
@@ -49,6 +51,8 @@ const switchRoutes = (
     <Route path="/NewEcho" component={NewEcho}/>
     <Route path="/NewHPOrder" component={NewHPOrder}/>
     <Route path="/NewProgressNote" component={NewProgressNote}/>
+    <Route path="/NewRefferalNote" component={NewRefferalNote}/>
+    <Route path="/RefferalNote" component={RefferalNote}/>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;
