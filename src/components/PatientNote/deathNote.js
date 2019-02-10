@@ -53,20 +53,26 @@ const styles = {
     }
 };
 
-class refferalNote extends Component {
+class deathNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
             offset: 0,
             page: 1,
 
-            refferto: '',
-            history: '',
-            pysicalexamfinding: '',
-            labratoryfinding: '',
-            diagnosisandtreatment: '',
-            reasonforrefferal: '',
-            pysicianname: '',
+            dateofadmission: '',
+            dateofdeath: '',
+            timeofdeath: '',
+            pysicalexam: '',
+            labratoryandimagingstudies: '',
+            hospitalcourse: '',
+            immediatecauthofdeath: '',
+            postmortemfindings: '',
+            finaldiagnosis: '',
+            physicianconfirmingdeath: '',
+            treatingphysician: '',
+            hospitalmedicaldirector: '',
+            hospitaladministrator: '',
             disabledInput: true,
 
             open: false,
@@ -85,7 +91,7 @@ class refferalNote extends Component {
             page: (this.state.offset + 20) / 10
         });
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const URL = '/PatientNotes/GetRefferalNoteOfPatient/' + id + "?page=" + (this.state.offset + 20) / 10;
+        const URL = '/PatientNotes/GetDeathNoteOfPatient/' + id + "?page=" + (this.state.offset + 20) / 10;
         this.props.fetchRadOrders(URL);
     }
     handleOnRowClick = (id) => {
@@ -95,33 +101,57 @@ class refferalNote extends Component {
             [this.props.patientnoteDetail.map(
                 (note)=>
                     {
-                        if(note.NoteSubcategory=="Diagnosis and Treatment")
+                        if(note.NoteSubcategory=="Brief Medical History and Physical Exam")
                         {
-                            this.setState({diagnosisandtreatment: note.Value})
+                            this.setState({pysicalexam: note.Value})
                         }
-                        if(note.NoteSubcategory=="History")
+                        if(note.NoteSubcategory=="Date of Admission")
                         {
-                            this.setState({history: note.Value})
+                            this.setState({dateofadmission: note.Value})
                         }
-                        if(note.NoteSubcategory=="Pertinent Laboratory/Imaging study Findings")
+                        if(note.NoteSubcategory=="Date of Death")
                         {
-                            this.setState({labratoryfinding: note.Value})
+                            this.setState({dateofdeath: note.Value})
                         }
-                        if(note.NoteSubcategory=="Pertinent Physical Exam Finding")
+                        if(note.NoteSubcategory=="Final Diagnosis")
                         {
-                            this.setState({pysicalexamfinding: note.Value})
+                            this.setState({finaldiagnosis: note.Value})
                         }
-                        if(note.NoteSubcategory=="Reason for Referral")
+                        if(note.NoteSubcategory=="Hospital Administrator")
                         {
-                            this.setState({reasonforrefferal: note.Value})
+                            this.setState({hospitaladministrator: note.Value})
                         }
-                        if(note.NoteSubcategory=="Referred to")
+                        if(note.NoteSubcategory=="Hospital Course")
                         {
-                            this.setState({refferto: note.Value})
+                            this.setState({hospitalcourse: note.Value})
                         }
-                        if(note.NoteSubcategory=="Referring Physician Name")
+                        if(note.NoteSubcategory=="Hospital Medical Director")
                         {
-                            this.setState({pysicianname: note.Value})
+                            this.setState({hospitalmedicaldirector: note.Value})
+                        }
+                        if(note.NoteSubcategory=="Immediate Cause of Death")
+                        {
+                            this.setState({immediatecauthofdeath: note.Value})
+                        }
+                        if(note.NoteSubcategory=="Pertinent Laboratory and Imageing Studies")
+                        {
+                            this.setState({labratoryandimagingstudies: note.Value})
+                        }
+                        if(note.NoteSubcategory=="Physician Confirming Death")
+                        {
+                            this.setState({physicianconfirmingdeath: note.Value})
+                        }
+                        if(note.NoteSubcategory=="Post Mortem Findings")
+                        {
+                            this.setState({postmortemfindings: note.Value})
+                        }
+                        if(note.NoteSubcategory=="Time of Death")
+                        {
+                            this.setState({timeofdeath: note.Value})
+                        }
+                        if(note.NoteSubcategory=="Treating Physician")
+                        {
+                            this.setState({treatingphysician: note.Value})
                         }
                     }),this.handleClickOpen()]    
             : <CircularProgress className={this.props.classes.progress} />
@@ -139,7 +169,7 @@ class refferalNote extends Component {
     };
     componentWillMount() {
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const URL = '/PatientNotes/GetRefferalNoteOfPatient/' + id + "?page=" + this.state.page;
+        const URL = '/PatientNotes/GetDeathNoteOfPatient/' + id + "?page=" + this.state.page;
         this.props.fetchProgressNote(URL);
     }
     render() {
@@ -150,7 +180,7 @@ class refferalNote extends Component {
                 <GridItem xs={12} sm={12} md={12}>
                     <Card>
                         <CardHeader color="primary">
-                            <h4 className={classes.cardTitleWhite}>Refferal Note</h4>
+                            <h4 className={classes.cardTitleWhite}>Death Note</h4>
                             <p className={classes.cardCategoryWhite}>
                                 {/* Here is a subtitle for this table */}<br />
                                 <Button
@@ -160,7 +190,7 @@ class refferalNote extends Component {
                                     to="newRefferalNote"
                                     className={classes.button}
                                 >
-                                    New Refferal Note
+                                    New Death Note
                                 </Button>
                             </p>
                         </CardHeader>
@@ -184,43 +214,43 @@ class refferalNote extends Component {
                                 onClose={this.handleClose}
                                 aria-labelledby="responsive-dialog-title"
                                 >
-                                <DialogTitle id="responsive-dialog-title">{" Refferal Note Detail"}</DialogTitle>
+                                <DialogTitle id="responsive-dialog-title">{" Death Note Detail"}</DialogTitle>
                                 <DialogContent>
                                     <DialogContentText>
                                     <form>
                                         <TextField
                                             disabled={this.state.disabledInput}
                                             id="standard-multiline-flexible"
-                                            label="Reffer To"
+                                            label="Date Of Admission"
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.state.refferto}
-                                            onChange={this.handleChange('refferto')}
+                                            value={this.state.dateofadmission}
+                                            onChange={this.handleChange('dateofadmission')}
                                             className={classes.textField}
                                             margin="normal"
                                         />
                                         <TextField
                                             disabled={this.state.disabledInput}
                                             id="standard-multiline-flexible"
-                                            label="History"
+                                            label="Date Of Death"
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.state.history}
-                                            onChange={this.handleChange('history')}
+                                            value={this.state.dateofdeath}
+                                            onChange={this.handleChange('dateofdeath')}
                                             className={classes.textField}
                                             margin="normal"
                                         />
                                         <TextField
                                             disabled={this.state.disabledInput}
                                             id="standard-multiline-flexible"
-                                            label="Pertinent Physical Exam Finding"
+                                            label="Time Of Death"
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.state.pysicalexamfinding}
-                                            onChange={this.handleChange('pysicalexamfinding')}
+                                            value={this.state.timeofdeath}
+                                            onChange={this.handleChange('timeofdeath')}
                                             className={classes.textField}
                                             margin="normal"
                                         />
@@ -228,48 +258,132 @@ class refferalNote extends Component {
                                         <TextField
                                             disabled={this.state.disabledInput}
                                             id="standard-multiline-flexible"
-                                            label="Pertinent Labratory/Imaging study Findings"
+                                            label="Brief Medical History and Physical Exam"
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.state.labratoryfinding}
-                                            onChange={this.handleChange('labratoryfinding')}
+                                            value={this.state.pysicalexam}
+                                            onChange={this.handleChange('pysicalexam')}
                                             className={classes.textField}
                                             margin="normal"
                                         />
                                         <TextField
                                             disabled={this.state.disabledInput}
                                             id="standard-multiline-flexible"
-                                            label="Diagnosis And Treatment"
+                                            label="Pertinent Laboratory and Imageing Studies"
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.state.diagnosisandtreatment}
-                                            onChange={this.handleChange('diagnosisandtreatment')}
+                                            value={this.state.labratoryandimagingstudies}
+                                            onChange={this.handleChange('labratoryandimagingstudies')}
                                             className={classes.textField}
                                             margin="normal"
                                         />
                                         <TextField
                                             disabled={this.state.disabledInput}
                                             id="standard-multiline-flexible"
-                                            label="Reason for Refferal"
+                                            label="Hospital Course"
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.state.reasonforrefferal}
-                                            onChange={this.handleChange('reasonforrefferal')}
+                                            value={this.state.hospitalcourse}
+                                            onChange={this.handleChange('hospitalcourse')}
                                             className={classes.textField}
                                             margin="normal"
                                         />
                                         <TextField
                                             disabled={this.state.disabledInput}
                                             id="standard-multiline-flexible"
-                                            label="Refering Physician Name"
+                                            label="Immediate Cause of Death"
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.state.pysicianname}
-                                            onChange={this.handleChange('pysicianname')}
+                                            value={this.state.immediatecauthofdeath}
+                                            onChange={this.handleChange('immediatecauthofdeath')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            disabled={this.state.disabledInput}
+                                            id="standard-multiline-flexible"
+                                            label="Immediate Cause of Death"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.state.immediatecauthofdeath}
+                                            onChange={this.handleChange('immediatecauthofdeath')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            disabled={this.state.disabledInput}
+                                            id="standard-multiline-flexible"
+                                            label="Post Mortem Findings"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.state.postmortemfindings}
+                                            onChange={this.handleChange('postmortemfindings')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            disabled={this.state.disabledInput}
+                                            id="standard-multiline-flexible"
+                                            label="Final Diagnosis"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.state.finaldiagnosis}
+                                            onChange={this.handleChange('finaldiagnosis')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            disabled={this.state.disabledInput}
+                                            id="standard-multiline-flexible"
+                                            label="Physician Confirming Death"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.state.physicianconfirmingdeath}
+                                            onChange={this.handleChange('physicianconfirmingdeath')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            disabled={this.state.disabledInput}
+                                            id="standard-multiline-flexible"
+                                            label="Treating Physician"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.state.treatingphysician}
+                                            onChange={this.handleChange('treatingphysician')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            disabled={this.state.disabledInput}
+                                            id="standard-multiline-flexible"
+                                            label="Hospital Course"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.state.hospitalcourse}
+                                            onChange={this.handleChange('hospitalcourse')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            disabled={this.state.disabledInput}
+                                            id="standard-multiline-flexible"
+                                            label="Hospital Administrator"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.state.hospitaladministrator}
+                                            onChange={this.handleChange('hospitaladministrator')}
                                             className={classes.textField}
                                             margin="normal"
                                         />
@@ -290,7 +404,7 @@ class refferalNote extends Component {
     }
 }
 
-refferalNote.propTypes = {
+deathNote.propTypes = {
     fetchProgressNote: propTypes.isRequired,
     fetchPatientNoteDetail: propTypes.isRequired,
     isLoading: propTypes.bool.isRequired,
@@ -314,4 +428,4 @@ const mapDispatchToProps = dispatch => ({
     fetchPatientNoteDetail: (url) => dispatch(fetchPatientNoteDetail(url))
 });
 
-export default compose(withStyles(styles),withMobileDialog(), connect(mapStateToProps, mapDispatchToProps))(refferalNote);
+export default compose(withStyles(styles),withMobileDialog(), connect(mapStateToProps, mapDispatchToProps))(deathNote);

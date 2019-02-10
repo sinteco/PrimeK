@@ -9,12 +9,13 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Moment from 'moment';
-import { fetchProgressNote } from '../../redux/actions/patientNoteAction';
+import { fetchProgressNote,fetchPatientNoteDetail } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from "material-ui-flat-pagination";
 import Button from '@material-ui/core/Button';
 import { Link } from "react-router-dom";
+import withMobileDialog from '@material-ui/core/withMobileDialog';
 
 const styles = {
     cardCategoryWhite: {
@@ -54,12 +55,11 @@ class progressNote extends Component {
             page: 1,
             detaildialog: false
         }
-        this.detaildialoguClose = this.detaildialoguClose.bind(this);
     }
     returnarrays() {
         var a = new Array();
         this.props.progressNotes.map((progressNote) => {
-            a.push([[progressNote.Id], [Moment(progressNote.Date).format('d MMM')], [progressNote.SubType], [progressNote.OrderBy]])
+            a.push([[progressNote.Id], [progressNote.PatientId], [Moment(progressNote.DateTime).format('d MMM')], [progressNote.SubType], [progressNote.OrderBy]])
         });
         return a;
     }
@@ -73,11 +73,7 @@ class progressNote extends Component {
         this.props.fetchRadOrders(URL);
     }
     handleOnRowClick = (id) => {
-        const URL = '/RadOrders/GetRadOrderDetail/' + id;
-        this.props.fetchRadOrderDetail(URL);
-        this.setState({
-            detaildialog: true
-        })
+        //
     }
     detaildialoguClose() {
         this.setState({
@@ -114,7 +110,7 @@ class progressNote extends Component {
                             {this.props.isLoading ? <CircularProgress className={classes.progress} /> : ""}
                             <Table
                                 tableHeaderColor="primary"
-                                tableHead={["Patient", "Datetime", "Category", "Note"]}
+                                tableHead={["Id", "Patient", "Datetime", "Category", "Note"]}
                                 tableData={this.returnarrays()}
                                 handleOnRowClick={this.handleOnRowClick}
                             />
@@ -134,9 +130,11 @@ class progressNote extends Component {
 
 progressNote.propTypes = {
     fetchProgressNote: propTypes.isRequired,
+    fetchPatientNoteDetail: propTypes.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired,
-    progressNotes: propTypes.array.isRequired
+    progressNotes: propTypes.array.isRequired,
+    patientnoteDetail: propTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -145,10 +143,12 @@ const mapStateToProps = (state) => ({
     hasError: state.patientNote.hasError,
     totalCount: state.patientNote.totalCount,
     selectedPatient: state.assignments.selectedPatient,
+    patientnoteDetail: state.patientNote.patientnoteDetail
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchProgressNote: (url) => dispatch(fetchProgressNote(url))
+    fetchProgressNote: (url) => dispatch(fetchProgressNote(url)),
+    fetchPatientNoteDetail: (url) => dispatch(fetchPatientNoteDetail(url))
 });
 
-export default compose(withStyles(styles), connect(mapStateToProps, mapDispatchToProps))(progressNote);
+export default compose(withStyles(styles),withMobileDialog(), connect(mapStateToProps, mapDispatchToProps))(progressNote);

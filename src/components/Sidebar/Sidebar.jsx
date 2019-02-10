@@ -186,7 +186,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Progress Note</Typography>} />
                   </ListItem>
-                  <ListItem button className={classes.nested}>
+                  <ListItem button className={classes.nested} component={Link} to="/ConsultationNote">
                     <ListItemIcon className={classes.itemIcon}>
                       <StarBorder />
                     </ListItemIcon>
@@ -196,7 +196,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Conseltation Note</Typography>} />
                   </ListItem>
-                  <ListItem button className={classes.nested}>
+                  <ListItem button className={classes.nested} component={Link} to="/ProcedureNote">
                     <ListItemIcon className={classes.itemIcon}>
                       <StarBorder />
                     </ListItemIcon>
@@ -206,7 +206,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Procedure Note</Typography>} />
                   </ListItem>
-                  <ListItem button className={classes.nested}>
+                  <ListItem button className={classes.nested} component={Link} to="/DeathNote">
                     <ListItemIcon className={classes.itemIcon}>
                       <StarBorder />
                     </ListItemIcon>
@@ -216,7 +216,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Death Note</Typography>} />
                   </ListItem>
-                  <ListItem button className={classes.nested}>
+                  <ListItem button className={classes.nested} component={Link} to="/IncidentNote">
                     <ListItemIcon className={classes.itemIcon}>
                       <StarBorder />
                     </ListItemIcon>

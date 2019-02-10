@@ -32,6 +32,10 @@ import NewHPOrder from '../../components/PatientNote/newHPNote';
 import NewProgressNote from '../../components/PatientNote/newProgressNote';
 import NewRefferalNote from '../../components/PatientNote/newRefferalNote';
 import RefferalNote from '../../components/PatientNote/refferalNote';
+import ConsultationNote from '../../components/PatientNote/consultationNote';
+import ProcedureNote from '../../components/PatientNote/procedureNote';
+import DeathNote from '../../components/PatientNote/deathNote';
+import IncidentNote from '../../components/PatientNote/incidentNote';
 
 const switchRoutes = (
   <Switch>
@@ -53,6 +57,10 @@ const switchRoutes = (
     <Route path="/NewProgressNote" component={NewProgressNote}/>
     <Route path="/NewRefferalNote" component={NewRefferalNote}/>
     <Route path="/RefferalNote" component={RefferalNote}/>
+    <Route path="/ConsultationNote" component={ConsultationNote}/>
+    <Route path="/ProcedureNote" component={ProcedureNote}/>
+    <Route path="/DeathNote" component={DeathNote}/>
+    <Route path="/IncidentNote" component={IncidentNote}/>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;

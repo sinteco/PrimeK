@@ -53,20 +53,14 @@ const styles = {
     }
 };
 
-class refferalNote extends Component {
+class incidentNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
             offset: 0,
             page: 1,
 
-            refferto: '',
-            history: '',
-            pysicalexamfinding: '',
-            labratoryfinding: '',
-            diagnosisandtreatment: '',
-            reasonforrefferal: '',
-            pysicianname: '',
+            note: '',
             disabledInput: true,
 
             open: false,
@@ -85,7 +79,7 @@ class refferalNote extends Component {
             page: (this.state.offset + 20) / 10
         });
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const URL = '/PatientNotes/GetRefferalNoteOfPatient/' + id + "?page=" + (this.state.offset + 20) / 10;
+        const URL = '/PatientNotes/GetIncidentNoteOfPatient/' + id + "?page=" + (this.state.offset + 20) / 10;
         this.props.fetchRadOrders(URL);
     }
     handleOnRowClick = (id) => {
@@ -95,33 +89,9 @@ class refferalNote extends Component {
             [this.props.patientnoteDetail.map(
                 (note)=>
                     {
-                        if(note.NoteSubcategory=="Diagnosis and Treatment")
+                        if(note.NoteSubcategory=="Note")
                         {
-                            this.setState({diagnosisandtreatment: note.Value})
-                        }
-                        if(note.NoteSubcategory=="History")
-                        {
-                            this.setState({history: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Pertinent Laboratory/Imaging study Findings")
-                        {
-                            this.setState({labratoryfinding: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Pertinent Physical Exam Finding")
-                        {
-                            this.setState({pysicalexamfinding: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Reason for Referral")
-                        {
-                            this.setState({reasonforrefferal: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Referred to")
-                        {
-                            this.setState({refferto: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Referring Physician Name")
-                        {
-                            this.setState({pysicianname: note.Value})
+                            this.setState({note: note.Value})
                         }
                     }),this.handleClickOpen()]    
             : <CircularProgress className={this.props.classes.progress} />
@@ -139,7 +109,7 @@ class refferalNote extends Component {
     };
     componentWillMount() {
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const URL = '/PatientNotes/GetRefferalNoteOfPatient/' + id + "?page=" + this.state.page;
+        const URL = '/PatientNotes/GetIncidentNoteOfPatient/' + id + "?page=" + this.state.page;
         this.props.fetchProgressNote(URL);
     }
     render() {
@@ -150,17 +120,17 @@ class refferalNote extends Component {
                 <GridItem xs={12} sm={12} md={12}>
                     <Card>
                         <CardHeader color="primary">
-                            <h4 className={classes.cardTitleWhite}>Refferal Note</h4>
+                            <h4 className={classes.cardTitleWhite}>Incident Note</h4>
                             <p className={classes.cardCategoryWhite}>
                                 {/* Here is a subtitle for this table */}<br />
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    component={Link}
-                                    to="newRefferalNote"
+                                    // component={Link}
+                                    // to="newRefferalNote"
                                     className={classes.button}
                                 >
-                                    New Refferal Note
+                                    New Incident Note
                                 </Button>
                             </p>
                         </CardHeader>
@@ -184,92 +154,19 @@ class refferalNote extends Component {
                                 onClose={this.handleClose}
                                 aria-labelledby="responsive-dialog-title"
                                 >
-                                <DialogTitle id="responsive-dialog-title">{" Refferal Note Detail"}</DialogTitle>
+                                <DialogTitle id="responsive-dialog-title">{" Incident Note Detail"}</DialogTitle>
                                 <DialogContent>
                                     <DialogContentText>
                                     <form>
                                         <TextField
                                             disabled={this.state.disabledInput}
                                             id="standard-multiline-flexible"
-                                            label="Reffer To"
+                                            label="Note"
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.state.refferto}
-                                            onChange={this.handleChange('refferto')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="History"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.history}
-                                            onChange={this.handleChange('history')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Pertinent Physical Exam Finding"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.pysicalexamfinding}
-                                            onChange={this.handleChange('pysicalexamfinding')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <selectTable />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Pertinent Labratory/Imaging study Findings"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.labratoryfinding}
-                                            onChange={this.handleChange('labratoryfinding')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Diagnosis And Treatment"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.diagnosisandtreatment}
-                                            onChange={this.handleChange('diagnosisandtreatment')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Reason for Refferal"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.reasonforrefferal}
-                                            onChange={this.handleChange('reasonforrefferal')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Refering Physician Name"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.pysicianname}
-                                            onChange={this.handleChange('pysicianname')}
+                                            value={this.state.note}
+                                            onChange={this.handleChange('note')}
                                             className={classes.textField}
                                             margin="normal"
                                         />
@@ -290,7 +187,7 @@ class refferalNote extends Component {
     }
 }
 
-refferalNote.propTypes = {
+incidentNote.propTypes = {
     fetchProgressNote: propTypes.isRequired,
     fetchPatientNoteDetail: propTypes.isRequired,
     isLoading: propTypes.bool.isRequired,
@@ -314,4 +211,4 @@ const mapDispatchToProps = dispatch => ({
     fetchPatientNoteDetail: (url) => dispatch(fetchPatientNoteDetail(url))
 });
 
-export default compose(withStyles(styles),withMobileDialog(), connect(mapStateToProps, mapDispatchToProps))(refferalNote);
+export default compose(withStyles(styles),withMobileDialog(), connect(mapStateToProps, mapDispatchToProps))(incidentNote);
