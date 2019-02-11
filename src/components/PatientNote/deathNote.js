@@ -187,7 +187,7 @@ class deathNote extends Component {
                                     variant="contained"
                                     color="primary"
                                     component={Link}
-                                    to="newRefferalNote"
+                                    to="newDeathNote"
                                     className={classes.button}
                                 >
                                     New Death Note

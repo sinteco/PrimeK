@@ -126,8 +126,8 @@ class incidentNote extends Component {
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    // component={Link}
-                                    // to="newRefferalNote"
+                                    component={Link}
+                                    to="newIncidentNote"
                                     className={classes.button}
                                 >
                                     New Incident Note

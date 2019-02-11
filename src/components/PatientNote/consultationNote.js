@@ -150,8 +150,8 @@ class conseltationNote extends Component {
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    // component={Link}
-                                    // to="newRefferalNote"
+                                    component={Link}
+                                    to="NewConsultationNote"
                                     className={classes.button}
                                 >
                                     New Consultation Note

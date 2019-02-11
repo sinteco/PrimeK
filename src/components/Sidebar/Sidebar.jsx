@@ -166,6 +166,16 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
               </ListItem>
               <Collapse in={pnmenuopen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
+                      <ListItem button className={classes.nested} component={Link} to="/historyAndPhysical">
+                        <ListItemIcon className={classes.itemIcon}>
+                          <StarBorder />
+                        </ListItemIcon>
+                        <ListItemText
+                          disableTypography
+                          className={classes.itemText + whiteFontClasses}
+                          inset
+                          primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Diabetis History And Physical</Typography>} />
+                      </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/historyAndPhysical">
                     <ListItemIcon className={classes.itemIcon}>
                       <StarBorder />
@@ -194,7 +204,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      disableTypography
                      className={classes.itemText + whiteFontClasses}
                      inset
-                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Conseltation Note</Typography>} />
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Consultation Note</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/ProcedureNote">
                     <ListItemIcon className={classes.itemIcon}>
@@ -226,7 +236,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Incident Note</Typography>} />
                   </ListItem>
-                  <ListItem button className={classes.nested}>
+                  <ListItem button className={classes.nested} component={Link} to="/SickLeave">
                     <ListItemIcon className={classes.itemIcon}>
                       <StarBorder />
                     </ListItemIcon>

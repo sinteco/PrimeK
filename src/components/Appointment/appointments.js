@@ -5,13 +5,13 @@ export default class appointments extends Component {
   render() {
     return (
       <div>
-        <Table
+        {/* <Table
           tableHeaderColor="primary"
           tableHead={[" ", " ", "Normal", "Abnormal","Remark"]}
           tableData={[["parents"],["sublings"],["others"]]}
           radio={2}
           textbox={1}
-        />
+        /> */}
       </div>
     )
   }
