@@ -57,10 +57,12 @@ class newIncidentNote extends Component {
         }
     }
     handleChange = (key, name) => event => {
-        let forms = Object.assign({}, this.state.forms);
-        forms.name = name;
-        forms.value = event.target.value;
-        this.setState({ forms: forms },function() {
+        let cpy = Object.assign({}, this.state.forms, 
+            {
+                name : name,
+                value : event.target.value
+            });
+        this.setState({ forms: cpy },function() {
             console.log(this.state.forms);
         });
     };
