@@ -8,6 +8,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { compose } from 'redux';
 import { fetchNoteSubCategory } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import DateFnsUtils from '@date-io/date-fns';
+import Moment from 'moment';
+import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
 
 const style = {
     typo: {
@@ -52,24 +57,23 @@ class newIncidentNote extends Component {
         super(props);
         this.state = {
             forms: [],
-            note: '',
             disabledInput: false
         }
     }
     handleChange = (key, name) => event => {
-        let cpy = Object.assign({}, this.state.forms, 
-            {
-                name : name,
-                value : event.target.value
-            });
-        this.setState({ forms: cpy },function() {
+        let forms = [...this.state.forms];
+        forms[key] = event.target.value;
+        this.setState({ forms },function() {
             console.log(this.state.forms);
         });
     };
+    handleDatechange = (event, date) => {
+        console.log(date);
+    }
     componentDidMount = () => {
         const url = 'PatientNotes/GetNoteSubCategory/death Note';
         this.props.fetchNoteSubCategory(url);
-    }
+    };
     
     render() {
         { console.log(this.props.noteSubCategory); }
@@ -77,31 +81,50 @@ class newIncidentNote extends Component {
         return (
             <Card>
                 <CardHeader color="primary">
-                    <h4 className={classes.cardTitleWhite}>new Note</h4>
+                    <h4 className={classes.cardTitleWhite}>New Custom Note</h4>
                     <p className={classes.cardCategoryWhite}>
                         {/* Created using Roboto Font Family */}
                     </p>
                 </CardHeader>
                 <CardBody>
                     <form>
+                        {this.props.isLoading ? <CircularProgress className={classes.progress} /> : ""}
                         {
                             this.props.noteSubCategory.map(
-                                (item, key)=>
-                                    <TextField
-                                        disabled={this.state.disabledInput}
-                                        id="standard-multiline-flexible"
-                                        label={item.Name}
-                                        multiline
-                                        rowsMax="4"
-                                        fullWidth
-                                        value={this.state.forms[key]}
-                                        onChange={this.handleChange(key,item.Name)}
-                                        className={classes.textField}
-                                        margin="normal"
-                                        />
-                                    
+                                (item, key) => item.InputType == ""?
+                                        <TextField
+                                                disabled={this.state.disabledInput}
+                                                id="standard-multiline-flexible"
+                                                label={item.Name}
+                                                multiline
+                                                rowsMax="4"
+                                                fullWidth
+                                                value={item.name}
+                                                onChange={this.handleChange(key, item.Name)}
+                                                className={classes.textField}
+                                                margin="normal"
+                                        /> : <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                <DatePicker
+                                                        margin="normal"
+                                                        label={item.Name}
+                                                        // formatDate={(date) => Moment(date).format('YYYY-MM-DD')}
+                                                        value={new Date(item.name)}
+                                                        onChange={(date)=>{
+                                                            let forms = [...this.state.forms];
+                                                            forms[key] = date;
+                                                            this.setState({ forms }, function () {
+                                                                console.log(this.state.forms);
+                                                            }); 
+                                                        }}
+                                                    />
+                                            </MuiPickersUtilsProvider>
                             )
                         }
+                        <br/>
+                        <br/>
+                        <Button variant="contained" color="primary" onClick={()=>console.log(this.state.forms)} color="primary">
+                            Save
+                        </Button>
                         
                     </form>
                 </CardBody>
