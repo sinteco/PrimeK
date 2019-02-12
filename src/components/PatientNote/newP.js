@@ -108,7 +108,7 @@ class newIncidentNote extends Component {
                                                         margin="normal"
                                                         label={item.Name}
                                                         // formatDate={(date) => Moment(date).format('YYYY-MM-DD')}
-                                                        value={new Date(item.name)}
+                                                        // value={new Date(item.name)}
                                                         onChange={(date)=>{
                                                             let forms = [...this.state.forms];
                                                             forms[key] = date;

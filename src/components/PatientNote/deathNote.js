@@ -60,19 +60,6 @@ class deathNote extends Component {
             offset: 0,
             page: 1,
 
-            dateofadmission: '',
-            dateofdeath: '',
-            timeofdeath: '',
-            pysicalexam: '',
-            labratoryandimagingstudies: '',
-            hospitalcourse: '',
-            immediatecauthofdeath: '',
-            postmortemfindings: '',
-            finaldiagnosis: '',
-            physicianconfirmingdeath: '',
-            treatingphysician: '',
-            hospitalmedicaldirector: '',
-            hospitaladministrator: '',
             disabledInput: true,
 
             open: false,
@@ -98,62 +85,7 @@ class deathNote extends Component {
         const URL = '/PatientNotes/GetPatientNoteDetails/' + id;
         this.props.fetchPatientNoteDetail(URL);
         return this.props.patientnoteDetail ? 
-            [this.props.patientnoteDetail.map(
-                (note)=>
-                    {
-                        if(note.NoteSubcategory=="Brief Medical History and Physical Exam")
-                        {
-                            this.setState({pysicalexam: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Date of Admission")
-                        {
-                            this.setState({dateofadmission: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Date of Death")
-                        {
-                            this.setState({dateofdeath: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Final Diagnosis")
-                        {
-                            this.setState({finaldiagnosis: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Hospital Administrator")
-                        {
-                            this.setState({hospitaladministrator: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Hospital Course")
-                        {
-                            this.setState({hospitalcourse: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Hospital Medical Director")
-                        {
-                            this.setState({hospitalmedicaldirector: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Immediate Cause of Death")
-                        {
-                            this.setState({immediatecauthofdeath: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Pertinent Laboratory and Imageing Studies")
-                        {
-                            this.setState({labratoryandimagingstudies: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Physician Confirming Death")
-                        {
-                            this.setState({physicianconfirmingdeath: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Post Mortem Findings")
-                        {
-                            this.setState({postmortemfindings: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Time of Death")
-                        {
-                            this.setState({timeofdeath: note.Value})
-                        }
-                        if(note.NoteSubcategory=="Treating Physician")
-                        {
-                            this.setState({treatingphysician: note.Value})
-                        }
-                    }),this.handleClickOpen()]    
+            this.handleClickOpen()    
             : <CircularProgress className={this.props.classes.progress} />
         
     }
@@ -218,175 +150,24 @@ class deathNote extends Component {
                                 <DialogContent>
                                     <DialogContentText>
                                     <form>
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Date Of Admission"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.dateofadmission}
-                                            onChange={this.handleChange('dateofadmission')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Date Of Death"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.dateofdeath}
-                                            onChange={this.handleChange('dateofdeath')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Time Of Death"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.timeofdeath}
-                                            onChange={this.handleChange('timeofdeath')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <selectTable />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Brief Medical History and Physical Exam"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.pysicalexam}
-                                            onChange={this.handleChange('pysicalexam')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Pertinent Laboratory and Imageing Studies"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.labratoryandimagingstudies}
-                                            onChange={this.handleChange('labratoryandimagingstudies')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Hospital Course"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.hospitalcourse}
-                                            onChange={this.handleChange('hospitalcourse')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Immediate Cause of Death"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.immediatecauthofdeath}
-                                            onChange={this.handleChange('immediatecauthofdeath')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Immediate Cause of Death"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.immediatecauthofdeath}
-                                            onChange={this.handleChange('immediatecauthofdeath')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Post Mortem Findings"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.postmortemfindings}
-                                            onChange={this.handleChange('postmortemfindings')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Final Diagnosis"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.finaldiagnosis}
-                                            onChange={this.handleChange('finaldiagnosis')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Physician Confirming Death"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.physicianconfirmingdeath}
-                                            onChange={this.handleChange('physicianconfirmingdeath')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Treating Physician"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.treatingphysician}
-                                            onChange={this.handleChange('treatingphysician')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Hospital Course"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.hospitalcourse}
-                                            onChange={this.handleChange('hospitalcourse')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            disabled={this.state.disabledInput}
-                                            id="standard-multiline-flexible"
-                                            label="Hospital Administrator"
-                                            multiline
-                                            rowsMax="4"
-                                            fullWidth
-                                            value={this.state.hospitaladministrator}
-                                            onChange={this.handleChange('hospitaladministrator')}
-                                            className={classes.textField}
-                                            margin="normal"
-                                        />
+                                        {
+                                            this.props.patientnoteDetail.map(
+                                                (note, k)=>
+                                                    <TextField
+                                                            disabled={this.state.disabledInput}
+                                                            id="standard-multiline-flexible"
+                                                            label={note.NoteSubcategory}
+                                                            multiline
+                                                            rowsMax="4"
+                                                            fullWidth
+                                                            value={note.Value}
+                                                            // onChange={this.handleChange('dateofadmission')}
+                                                            className={classes.textField}
+                                                            margin="normal"
+                                                        />
+                                                )
+                                        }
+                                        
                                     </form>
                                     </DialogContentText>
                                 </DialogContent>
