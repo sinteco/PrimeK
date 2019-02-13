@@ -9,7 +9,7 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Moment from 'moment';
-import { fetchProgressNote, fetchPatientNoteDetail } from '../../redux/actions/patientNoteAction';
+import { fetchProgressNote, fetchPatientNoteDetail, fetchNoteSubCategory, savePatientNote } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from "material-ui-flat-pagination";
@@ -22,6 +22,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import TextField from '@material-ui/core/TextField';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
+import qs from 'qs';
 
 const styles = {
     cardCategoryWhite: {
@@ -53,7 +56,7 @@ const styles = {
     }
 };
 
-const category = "Death Note";
+const category = "Recruitment Medical Exam";
 
 class pNote extends Component {
     constructor(props) {
@@ -61,12 +64,19 @@ class pNote extends Component {
         this.state = {
             offset: 0,
             page: 1,
-
+            newdialogopen: false,
             disabledInput: true,
-
+            forms: [],
             open: false,
         }
     }
+    handleChange = (key, name) => event => {
+        let forms = [...this.state.forms];
+        forms[key] = event.target.value;
+        this.setState({ forms }, function () {
+            console.log(this.state.forms);
+        });
+    };
     returnarrays() {
         var a = new Array();
         this.props.progressNotes.map((progressNote) => {
@@ -92,13 +102,41 @@ class pNote extends Component {
 
     }
     handleClickOpen = () => {
-        this.setState({ open: true });
+        this.setState({ open: true, disabledInput: true });
     };
+    newdialogClickOpen = () => {
+        const url = 'PatientNotes/GetNoteSubCategory/' + category;
+        this.props.fetchNoteSubCategory(url);
+        this.setState({ disabledInput: false, newdialogopen: true });
+    };
+    savePatientNote = () => {
+        const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
+        const inputdata = {
+            PatientId: id,
+            NoteCategory: category,
+            note: " ",
+            DateTime: new Date(),
+            Value: this.state.forms,
+            Remark: null
+        }
+        if (id === 0) {
+            alert("patient is not selected");
+            return
+        }
+        const URL = '/PatientNotes';
+        this.setState({ newdialogopen: false });
+        console.log(inputdata);
+        this.props.savePatientNote(URL, qs.stringify(inputdata));
+
+        if (!this.props.isLoading && !this.props.hasError) {
+            alert("saved Successfully");
+            //reload after save
+            const reloadURL = '/PatientNotes/GetNotesOfPatient/' + id + "?page=" + this.state.page + "&category=" + category;
+            this.props.fetchProgressNote(reloadURL);
+        }
+    }
     handleClose = () => {
-        this.setState({ open: false });
-    };
-    handleChange = name => event => {
-        this.setState({ [name]: event.target.value });
+        this.setState({ open: false, newdialogopen: false });
     };
     componentWillMount() {
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
@@ -119,8 +157,7 @@ class pNote extends Component {
                                 <Button
                                     variant="contained"
                                     color="primary"
-                                    component={Link}
-                                    to="newDeathNote"
+                                    onClick={this.newdialogClickOpen}
                                     className={classes.button}
                                 >
                                     New {category}
@@ -147,7 +184,7 @@ class pNote extends Component {
                                 onClose={this.handleClose}
                                 aria-labelledby="responsive-dialog-title"
                             >
-                                <DialogTitle id="responsive-dialog-title">{" Death Note Detail"}</DialogTitle>
+                                <DialogTitle id="responsive-dialog-title">{category + " Detail"}</DialogTitle>
                                 <DialogContent>
                                     <DialogContentText>
                                         <form>
@@ -178,6 +215,60 @@ class pNote extends Component {
                                     </Button>
                                 </DialogActions>
                             </Dialog>
+                            <Dialog
+                                fullScreen={fullScreen}
+                                open={this.state.newdialogopen}
+                                onClose={this.handleClose}
+                                aria-labelledby="responsive-dialog-title"
+                            >
+                                <DialogTitle id="responsive-dialog-title">{"New " + category}</DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText>
+                                        <form>
+                                            {this.props.isLoading ? <CircularProgress className={classes.progress} /> : ""}
+                                            {
+                                                this.props.noteSubCategory.map(
+                                                    (item, key) => item.InputType == "" ?
+                                                        <TextField
+                                                            disabled={this.state.disabledInput}
+                                                            id="standard-multiline-flexible"
+                                                            label={item.Name}
+                                                            multiline
+                                                            rowsMax="4"
+                                                            fullWidth
+                                                            value={item.name}
+                                                            onChange={this.handleChange(key, item.Name)}
+                                                            className={classes.textField}
+                                                            margin="normal"
+                                                        /> : <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                            <DatePicker
+                                                                margin="normal"
+                                                                label={item.Name}
+                                                                // formatDate={(date) => Moment(date).format('YYYY-MM-DD')}
+                                                                value={this.state.forms[key]}
+                                                                onChange={(date) => {
+                                                                    let forms = [...this.state.forms];
+                                                                    forms[key] = date;
+                                                                    this.setState({ forms }, function () {
+                                                                        console.log(this.state.forms);
+                                                                    });
+                                                                }}
+                                                            />
+                                                        </MuiPickersUtilsProvider>
+                                                )
+                                            }
+                                        </form>
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={this.handleClose} color="primary">
+                                        Close
+                                    </Button>
+                                    <Button onClick={this.savePatientNote} color="primary">
+                                        Save
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
                         </CardBody>
                     </Card>
                 </GridItem>
@@ -187,13 +278,17 @@ class pNote extends Component {
 }
 
 pNote.propTypes = {
+    savePatientNote: propTypes.isRequired,
+    fetchNoteSubCategory: propTypes.isRequired,
     fetchProgressNote: propTypes.isRequired,
     fetchPatientNoteDetail: propTypes.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired,
     progressNotes: propTypes.array.isRequired,
     fullScreen: propTypes.bool.isRequired,
-    patientnoteDetail: propTypes.array.isRequired
+    patientnoteDetail: propTypes.array.isRequired,
+    noteSubCategory: propTypes.array.isRequired,
+    confirmStatus: propTypes.string.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -202,12 +297,16 @@ const mapStateToProps = (state) => ({
     hasError: state.patientNote.hasError,
     totalCount: state.patientNote.totalCount,
     selectedPatient: state.assignments.selectedPatient,
-    patientnoteDetail: state.patientNote.patientnoteDetail
+    patientnoteDetail: state.patientNote.patientnoteDetail,
+    noteSubCategory: state.patientNote.noteSubCategory,
+    confirmStatus: state.patientNote.confirmStatus
 });
 
 const mapDispatchToProps = dispatch => ({
     fetchProgressNote: (url) => dispatch(fetchProgressNote(url)),
-    fetchPatientNoteDetail: (url) => dispatch(fetchPatientNoteDetail(url))
+    fetchPatientNoteDetail: (url) => dispatch(fetchPatientNoteDetail(url)),
+    fetchNoteSubCategory: (url) => dispatch(fetchNoteSubCategory(url)),
+    savePatientNote: (url, data) => dispatch(savePatientNote(url, data)),
 });
 
 export default compose(withStyles(styles), withMobileDialog(), connect(mapStateToProps, mapDispatchToProps))(pNote);

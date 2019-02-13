@@ -266,6 +266,26 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Case Summary</Typography>} />
                   </ListItem>
+                  <ListItem button className={classes.nested} component={Link} to="/RecruitmentMedicalExam">
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Recruitment Medical Exam</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested} component={Link} to="/TattooNote">
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Tattoo Note</Typography>} />
+                  </ListItem>
                 </List>
               </Collapse>
             </List>

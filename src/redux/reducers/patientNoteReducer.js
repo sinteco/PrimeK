@@ -1,4 +1,4 @@
-import { PATIENT_NOTE_LOAD, PATIENT_NOTE_LOAD_SUCCESS, PATIENT_NOTE_LOAD_FAIL, PATIENT_NOTE_DETAIL_LOAD_FAIL, PATIENT_NOTE_DETAIL_LOAD, PATIENT_NOTE_DETAIL_LOAD_SUCCESS, LOAD_PROCEDURE_ORDER_FAIL, LOAD_PROGRESS_NOTE_SUCCESS, LOAD_PROGRESS_NOTE_FAIL, LOAD_PROGRESS_NOTE, LOAD_NOTE_SUB_CATEGORY, LOAD_NOTE_SUB_CATEGORY_FAIL, LOAD_NOTE_SUB_CATEGORY_SUCCESS } from "../actions/types";
+import { PATIENT_NOTE_LOAD, PATIENT_NOTE_LOAD_SUCCESS, PATIENT_NOTE_LOAD_FAIL, PATIENT_NOTE_DETAIL_LOAD_FAIL, PATIENT_NOTE_DETAIL_LOAD, PATIENT_NOTE_DETAIL_LOAD_SUCCESS, LOAD_PROCEDURE_ORDER_FAIL, LOAD_PROGRESS_NOTE_SUCCESS, LOAD_PROGRESS_NOTE_FAIL, LOAD_PROGRESS_NOTE, LOAD_NOTE_SUB_CATEGORY, LOAD_NOTE_SUB_CATEGORY_FAIL, LOAD_NOTE_SUB_CATEGORY_SUCCESS, SAVE_PATIENT_NOTE_FAIL, SAVE_PATIENT_NOTE, SAVE_PATIENT_NOTE_SUCCESS } from "../actions/types";
 
 const initialState = {
     patientnotes:[],
@@ -7,7 +7,8 @@ const initialState = {
     hasError: false,
     patientnoteDetail: [],
     progressNotes: [],
-    noteSubCategory: []
+    noteSubCategory: [],
+    confirmStatus: []
 }
 
 export default function(state = initialState, action){
@@ -85,6 +86,25 @@ export default function(state = initialState, action){
           hasError: false
         }
       case LOAD_NOTE_SUB_CATEGORY_FAIL:
+        return {
+          ...state,
+          isLoading: false,
+          hasError: true
+        }
+      case SAVE_PATIENT_NOTE:
+        return {
+          ...state,
+          isLoading: true,
+          hasError: false
+        }
+      case SAVE_PATIENT_NOTE_SUCCESS:
+        return {
+          ...state,
+          confirmStatus: action.payload.data,
+          isLoading: false,
+          hasError: false
+        }
+      case SAVE_PATIENT_NOTE_FAIL:
         return {
           ...state,
           isLoading: false,

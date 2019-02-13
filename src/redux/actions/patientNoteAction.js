@@ -1,4 +1,4 @@
-import { PATIENT_NOTE_LOAD, PATIENT_NOTE_DETAIL_LOAD, LOAD_PROGRESS_NOTE, LOAD_NOTE_SUB_CATEGORY} from "./types";
+import { PATIENT_NOTE_LOAD, PATIENT_NOTE_DETAIL_LOAD, LOAD_PROGRESS_NOTE, LOAD_NOTE_SUB_CATEGORY, SAVE_PATIENT_NOTE} from "./types";
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export type Action =
@@ -43,6 +43,16 @@ export const fetchNoteSubCategory = (URL): Action => ({
     payload: {
         request: {
             url: URL
+        }
+    }
+});
+export const savePatientNote = (URL, data): Action => ({
+    type: SAVE_PATIENT_NOTE,
+    payload: {
+        request: {
+            method: 'POST',
+            url: URL,
+            data: data
         }
     }
 });
