@@ -30,16 +30,16 @@ import NewECG from '../../components/Orders/newECGOrder';
 import NewEcho from '../../components/Orders/newEchoOrder';
 import NewHPOrder from '../../components/PatientNote/newHPNote';
 import NewProgressNote from '../../components/PatientNote/newProgressNote';
-import NewRefferalNote from '../../components/PatientNote/newRefferalNote';
 import RefferalNote from '../../components/PatientNote/refferalNote';
 import ConsultationNote from '../../components/PatientNote/consultationNote';
 import ProcedureNote from '../../components/PatientNote/procedureNote';
 import DeathNote from '../../components/PatientNote/deathNote';
 import IncidentNote from '../../components/PatientNote/incidentNote';
-import NewConsultationNote from '../../components/PatientNote/newConsultationNote';
-import NewIncidentNote from '../../components/PatientNote/newIncidentNote';
 import RecruitmentMedicalExam from '../../components/PatientNote/recruitmentMedicalExam';
-import TattooNote from '../../components/PatientNote/tattooNote';
+import TattooNote from '../../components/PatientNote/operationNote';
+import OperationNote from '../../components/PatientNote/operationNote';
+import DHPNote from '../../components/PatientNote/dhpNote';
+import newDHPNote from '../../components/PatientNote/newDHPNote';
 
 const switchRoutes = (
   <Switch>
@@ -59,7 +59,6 @@ const switchRoutes = (
     <Route path="/NewEcho" component={NewEcho}/>
     <Route path="/NewHPOrder" component={NewHPOrder}/>
     <Route path="/NewProgressNote" component={NewProgressNote}/>
-    <Route path="/NewRefferalNote" component={NewRefferalNote}/>
     <Route path="/RefferalNote" component={RefferalNote}/>
     <Route path="/ConsultationNote" component={ConsultationNote}/>
     <Route path="/ProcedureNote" component={ProcedureNote}/>
@@ -67,6 +66,9 @@ const switchRoutes = (
     <Route path="/IncidentNote" component={IncidentNote}/>
     <Route path='/RecruitmentMedicalExam' component={RecruitmentMedicalExam}/>
     <Route path='/TattooNote' component={TattooNote} />
+    <Route path='/OperationNote' component={OperationNote}/>
+    <Route path='/DHPNote' component={DHPNote}/>
+    <Route path='/newDHPNote' component={newDHPNote}/>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;

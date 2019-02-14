@@ -56,7 +56,7 @@ const styles = {
     }
 };
 
-const category = "Tattoo Note";
+const category = "Operation Note";
 
 class pNote extends Component {
     constructor(props) {
@@ -228,7 +228,7 @@ class pNote extends Component {
                                             {this.props.isLoading ? <CircularProgress className={classes.progress} /> : ""}
                                             {
                                                 this.props.noteSubCategory.map(
-                                                    (item, key) => item.InputType == "" ?
+                                                    (item, key) => item.InputType == "String" ?
                                                         <TextField
                                                             disabled={this.state.disabledInput}
                                                             id="standard-multiline-flexible"

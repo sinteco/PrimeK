@@ -166,7 +166,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
               </ListItem>
               <Collapse in={pnmenuopen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                      <ListItem button className={classes.nested} component={Link} to="/historyAndPhysical">
+                      <ListItem button className={classes.nested} component={Link} to="/DHPNote">
                         <ListItemIcon className={classes.itemIcon}>
                           <StarBorder />
                         </ListItemIcon>
@@ -285,6 +285,16 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      className={classes.itemText + whiteFontClasses}
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Tattoo Note</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested} component={Link} to="/OperationNote">
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Operation Note</Typography>} />
                   </ListItem>
                 </List>
               </Collapse>

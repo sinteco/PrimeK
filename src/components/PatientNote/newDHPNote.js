@@ -10,109 +10,52 @@ import Table from '../Table/CustomTableWithSelector';
 import FormLabel from '@material-ui/core/FormLabel';
 import CustomTable from '../Diagnosis/CustomDiagnosis';
 import { fetchPatientDiagnosis } from '../../redux/actions/diagnosisAction';
-import { fetchNoteSubCategory } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
 
 const style = {
     typo: {
-      paddingLeft: "25%",
-      marginBottom: "40px",
-      position: "relative"
+        paddingLeft: "25%",
+        marginBottom: "40px",
+        position: "relative"
     },
     note: {
-      fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-      bottom: "10px",
-      color: "#c0c1c2",
-      display: "block",
-      fontWeight: "400",
-      fontSize: "13px",
-      lineHeight: "13px",
-      left: "0",
-      marginLeft: "20px",
-      position: "absolute",
-      width: "260px"
+        fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+        bottom: "10px",
+        color: "#c0c1c2",
+        display: "block",
+        fontWeight: "400",
+        fontSize: "13px",
+        lineHeight: "13px",
+        left: "0",
+        marginLeft: "20px",
+        position: "absolute",
+        width: "260px"
     },
     cardCategoryWhite: {
-      color: "rgba(255,255,255,.62)",
-      margin: "0",
-      fontSize: "14px",
-      marginTop: "0",
-      marginBottom: "0"
+        color: "rgba(255,255,255,.62)",
+        margin: "0",
+        fontSize: "14px",
+        marginTop: "0",
+        marginBottom: "0"
     },
     cardTitleWhite: {
-      color: "#FFFFFF",
-      marginTop: "0px",
-      minHeight: "auto",
-      fontWeight: "300",
-      fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-      marginBottom: "3px",
-      textDecoration: "none"
+        color: "#FFFFFF",
+        marginTop: "0px",
+        minHeight: "auto",
+        fontWeight: "300",
+        fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+        marginBottom: "3px",
+        textDecoration: "none"
     }
-  };
+};
 
-    let MedicalHistory = [];
-    let SocialHistory = [];
-    let FamilyHistory = [];
-    let ReviewofSystems = [];
-    let PhysicalExam = [];
-
-class newHPNote extends Component {
+class newDHPNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            diagnosis: [],
-            chifcompliant: '',
-            historyofpresentillness: '',
+            diagnosis: []
         }
-    }
-    handleChange = name => event => {
-        this.setState({
-            [name]: event.target.value,
-        });
-    };
-    returMedicalHistory() {
-        var a = new Array();
-        this.props.noteSubCategory.map((noteSub) => {
-            a.push([[noteSub.Name]])
-        });
-        return a;
-    }
-    returnSocialHistory(){
-        const medicalHistoryURL = 'PatientNotes/GetNoteSubCategory/Personal History';
-        this.props.fetchNoteSubCategory(medicalHistoryURL);
-        var a = new Array();
-        this.props.noteSubCategory.map((noteSub) => {
-            a.push([[noteSub.Name]])
-        });
-        return a;
-    }
-    returnFamilyHistory(){
-        const medicalHistoryURL = 'PatientNotes/GetNoteSubCategory/Family History';
-        this.props.fetchNoteSubCategory(medicalHistoryURL);
-        var a = new Array();
-        this.props.noteSubCategory.map((noteSub) => {
-            a.push([[noteSub.Name]])
-        });
-        return a;
-    }
-    returnReviewofSystems(){
-        const medicalHistoryURL = 'PatientNotes/GetNoteSubCategory/Review of Systems';
-        this.props.fetchNoteSubCategory(medicalHistoryURL);
-        var a = new Array();
-        this.props.noteSubCategory.map((noteSub) => {
-            a.push([[noteSub.Name]])
-        });
-        return a;
-    }
-    returnPhysicalExam(){
-        const medicalHistoryURL = 'PatientNotes/GetNoteSubCategory/PhysicalExam';
-        this.props.fetchNoteSubCategory(medicalHistoryURL);
-        var a = new Array();
-        this.props.noteSubCategory.map((noteSub) => {
-            a.push([[noteSub.Name]])
-        });
-        return a;
     }
     addDiagnosis = (selected) => {
         this.setState({
@@ -126,23 +69,17 @@ class newHPNote extends Component {
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
         const url = '/Diagnosis/GetDiagnosisOfPatient/' + id;
         this.props.fetchPatientDiagnosis(url);
-        
-        const medicalHistoryURL = 'PatientNotes/GetNoteSubCategory/Medical History';
-        this.props.fetchNoteSubCategory(medicalHistoryURL);
-        MedicalHistory = this.returMedicalHistory();
-
     }
-    
+
     render() {
-        {console.log(MedicalHistory);}
-        {console.log(this.props.noteSubCategory);}
+        { console.log(this.props.patientDiagnosis) }
         const { classes } = this.props;
         return (
             <Card>
                 <CardHeader color="primary">
-                    <h4 className={classes.cardTitleWhite}>History And Physical Note</h4>
+                    <h4 className={classes.cardTitleWhite}>Diabetis History And Physical Note</h4>
                     <p className={classes.cardCategoryWhite}>
-                    {/* Created using Roboto Font Family */}
+                        {/* Created using Roboto Font Family */}
                     </p>
                 </CardHeader>
                 <CardBody>
@@ -153,8 +90,8 @@ class newHPNote extends Component {
                             multiline
                             rowsMax="4"
                             fullWidth
-                            value={this.state.chifcompliant}
-                            onChange={this.handleChange('chifcompliant')}
+                            //value={values.multiline}
+                            //onChange={handleChange('multiline')}
                             className={classes.textField}
                             margin="normal"
                         />
@@ -164,8 +101,8 @@ class newHPNote extends Component {
                             multiline
                             rowsMax="4"
                             fullWidth
-                            value={this.state.historyofpresentillness}
-                            onChange={this.handleChange('historyofpresentillness')}
+                            //value={values.multiline}
+                            //onChange={handleChange('multiline')}
                             className={classes.textField}
                             margin="normal"
                         />
@@ -176,8 +113,8 @@ class newHPNote extends Component {
                             multiline
                             rowsMax="4"
                             fullWidth
-                            value={this.state.currentmedications}
-                            onChange={this.handleChange('currentmedications')}
+                            //value={values.multiline}
+                            //onChange={handleChange('multiline')}
                             className={classes.textField}
                             margin="normal"
                         />
@@ -187,8 +124,8 @@ class newHPNote extends Component {
                             multiline
                             rowsMax="4"
                             fullWidth
-                            value={this.state.allergies}
-                            onChange={this.handleChange('allergies')}
+                            //value={values.multiline}
+                            //onChange={handleChange('multiline')}
                             className={classes.textField}
                             margin="normal"
                         />
@@ -198,8 +135,8 @@ class newHPNote extends Component {
                             multiline
                             rowsMax="4"
                             fullWidth
-                            value={this.state.assessment}
-                            onChange={this.handleChange('assessment')}
+                            //value={values.multiline}
+                            //onChange={handleChange('multiline')}
                             className={classes.textField}
                             margin="normal"
                         />
@@ -209,8 +146,8 @@ class newHPNote extends Component {
                             multiline
                             rowsMax="4"
                             fullWidth
-                            value={this.state.plan}
-                            onChange={this.handleChange('plan')}
+                            //value={values.multiline}
+                            //onChange={handleChange('multiline')}
                             className={classes.textField}
                             margin="normal"
                         />
@@ -220,19 +157,19 @@ class newHPNote extends Component {
                             multiline
                             rowsMax="4"
                             fullWidth
-                            value={this.state.treatment}
-                            onChange={this.handleChange('treatment')}
+                            //value={values.multiline}
+                            //onChange={handleChange('multiline')}
                             className={classes.textField}
                             margin="normal"
                         />
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
                         <Collapsible trigger="Family History >>" className={classes.collapsible}>
                             {
                                 <Table
                                     tableHeaderColor="primary"
                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={MedicalHistory}
+                                    tableData={[["parents"], ["sublings"], ["others"]]}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -244,7 +181,19 @@ class newHPNote extends Component {
                                 <Table
                                     tableHeaderColor="primary"
                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={SocialHistory}
+                                    tableData={[
+                                        ["Habits"],
+                                        ["Employment History"],
+                                        ["Education"],
+                                        ["Social activities"],
+                                        ["Environment"],
+                                        ["Perinatal History"],
+                                        ["Developemnt History"],
+                                        ["Nutritional History"],
+                                        ["Vaccination History"],
+                                        ["Ealy development"],
+                                        ["Other"]
+                                    ]}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -256,7 +205,23 @@ class newHPNote extends Component {
                                 <Table
                                     tableHeaderColor="primary"
                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={ReviewofSystems}
+                                    tableData={[
+                                        ["Head"],
+                                        ["Ears"],
+                                        ["Eyes"],
+                                        ["Nose"],
+                                        ["Mouth and throat"],
+                                        ["Glands"],
+                                        ["Respiratory"],
+                                        ["Cardiovascular"],
+                                        ["Gastrointestinal"],
+                                        ["Genitourinary"],
+                                        ["Integumentary"],
+                                        ["Allergy"],
+                                        ["Locomotion"],
+                                        ["CNS"],
+                                        ["Other"]
+                                    ]}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -268,7 +233,19 @@ class newHPNote extends Component {
                                 <Table
                                     tableHeaderColor="primary"
                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={PhysicalExam}
+                                    tableData={[
+                                        ["General Appearance"],
+                                        ["HEENT"],
+                                        ["Lymphoglandular"],
+                                        ["Respiratory"],
+                                        ["CVS"],
+                                        ["Gastrointestinal"],
+                                        ["Genitourinary"],
+                                        ["Integumentary"],
+                                        ["Musculoskeletal"],
+                                        ["CNS"],
+                                        ["Other"]
+                                    ]}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -289,26 +266,22 @@ class newHPNote extends Component {
     }
 }
 
-newHPNote.propTypes = {
-    fetchNoteSubCategory: propTypes.func.isRequired,
+newDHPNote.propTypes = {
     fetchPatientDiagnosis: propTypes.func.isRequired,
     patientDiagnosis: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
-    hasError: propTypes.bool.isRequired,
-    noteSubCategory: propTypes.array.isRequired
+    hasError: propTypes.bool.isRequired
 }
 
 const mapStateToProps = (state) => ({
     patientDiagnosis: state.diagnosisOrder.patientDiagnosis,
     isLoading: state.diagnosisOrder.isLoading,
     hasError: state.diagnosisOrder.hasError,
-    selectedPatient: state.assignments.selectedPatient,
-    noteSubCategory: state.patientNote.noteSubCategory,
+    selectedPatient: state.assignments.selectedPatient
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchPatientDiagnosis: (url) => dispatch(fetchPatientDiagnosis(url)),
-    fetchNoteSubCategory: (url) => dispatch(fetchNoteSubCategory(url))
+    fetchPatientDiagnosis: (url) => dispatch(fetchPatientDiagnosis(url))
 });
 
-export default compose(withStyles(style), connect(mapStateToProps, mapDispatchToProps))(newHPNote);
+export default compose(withStyles(style), connect(mapStateToProps, mapDispatchToProps))(newDHPNote);
