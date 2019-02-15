@@ -12,14 +12,16 @@ import tableStyle from "assets/jss/material-dashboard-react/components/tableStyl
 import TextField from '@material-ui/core/TextField';
 import Radio from '@material-ui/core/Radio';
 import Button from '@material-ui/core/Button';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
 
 
 class CustomTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedValue: ['a','b','c'],
-            remark: ['','',''],
+            selectedValue: ['a', 'b', 'c'],
+            remark: ['', '', ''],
         }
         this.allNormal = this.allNormal.bind(this);
         this.allUbnormal = this.allUbnormal.bind(this);
@@ -32,30 +34,30 @@ class CustomTable extends React.Component {
     allNormal() {
         this.setState({
             selectedValue: []
-        }, function(){
-            let item  = [];
+        }, function () {
+            let item = [];
             this.props.tableData.map((prop, key) => {
-                item.push('n'+key);
+                item.push('n' + key);
             });
-            this.setState({selectedValue: [...this.state.selectedValue, ...item]});
+            this.setState({ selectedValue: [...this.state.selectedValue, ...item] });
         });
     }
     allUbnormal() {
-        this.setState({ 
+        this.setState({
             selectedValue: []
-        }, function(){
-            let item  = [];
+        }, function () {
+            let item = [];
             this.props.tableData.map((prop, key) => {
-                item.push('u'+key);
+                item.push('u' + key);
             });
-            this.setState({selectedValue: [...this.state.selectedValue, ...item]});
+            this.setState({ selectedValue: [...this.state.selectedValue, ...item] });
         });
     }
     render() {
-        const { classes, tableHead, tableData, tableHeaderColor, textBox, radio } = this.props;
+        const { classes, tableHead, tableData, tableHeaderColor } = this.props;
         return (
             <div className={classes.tableResponsive}>
-                <Button 
+                <Button
                     variant="contained"
                     color="primary"
                     className={classes.button}
@@ -63,7 +65,7 @@ class CustomTable extends React.Component {
                 >
                     All Normal
                 </Button>
-                <Button 
+                <Button
                     variant="contained"
                     color="primary"
                     className={classes.button}
@@ -71,7 +73,7 @@ class CustomTable extends React.Component {
                 >
                     All Ubnormal
                 </Button>
-                <Table className={classes.table}>
+                <Table className={classes.table} padding="checkbox">
                     {tableHead !== undefined ? (
                         <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
                             <TableRow>
@@ -91,16 +93,16 @@ class CustomTable extends React.Component {
                     <TableBody>
                         {tableData.map((prop, key) => {
                             return (
-                                <TableRow key={key} style={{ cursor: 'pointer' }}>
+                                <TableRow key={key}>
                                     <TableCell>{"i"}</TableCell>
                                     {prop.map((prop0, key) => {
                                         return (
-                                            <TableCell 
+                                            <TableCell
                                                 onClick={() => this.props.handleOnRowClick(prop[0])}
                                                 className={classes.tableCell}
                                                 key={key}
                                             >
-                                            {prop0}
+                                                {prop0}
                                             </TableCell>
                                         );
                                     })}
@@ -109,7 +111,7 @@ class CustomTable extends React.Component {
                                             checked={this.state.selectedValue[key] === "n" + key}
                                             onChange={this.handleChange('selectedValue', key)}
                                             value={"n" + key}
-                                            name={"radio-button-demo-"+key}
+                                            name={"radio-button-demo-" + key}
                                             aria-label="Normal"
                                         />
                                     </TableCell>
@@ -118,27 +120,30 @@ class CustomTable extends React.Component {
                                             checked={this.state.selectedValue[key] === "u" + key}
                                             onChange={this.handleChange('selectedValue', key)}
                                             value={"u" + key}
-                                            name={"radio-button-demo-"+key}
+                                            name={"radio-button-demo-" + key}
                                             aria-label="Ubnormal"
                                         />
                                     </TableCell>
-                                    {console.log(" hay " + radio)}
-                                    {
-                                        [...Array(textBox)].map((textb, k) => {
-                                            return (
-                                                    <TableCell>
-                                                        <TextField
-                                                            id="standard-name"
-                                                            // label="Remark"
-                                                            className={classes.textField}
-                                                            value={this.state.remark[key]}
-                                                            onChange={this.handleChange('remark', key)}
-                                                            margin="normal"
-                                                        />
-                                                    </TableCell>
-                                            );
-                                        })
-                                    }
+                                    <TableCell>
+                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                            <DatePicker
+                                                margin="normal"
+                                                label="Date"
+                                                // value={selectedDate}
+                                                // onChange={this.handleDateChange}
+                                            />
+                                        </MuiPickersUtilsProvider>
+                                    </TableCell>
+                                    <TableCell>
+                                        <TextField
+                                            id="standard-name"
+                                            // label="Remark"
+                                            className={classes.textField}
+                                            value={this.state.remark[key]}
+                                            onChange={this.handleChange('remark', key)}
+                                            margin="normal"
+                                        />
+                                    </TableCell>
                                 </TableRow>
                             );
                         })}

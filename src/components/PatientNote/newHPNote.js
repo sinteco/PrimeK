@@ -134,8 +134,6 @@ class newHPNote extends Component {
     }
     
     render() {
-        {console.log(MedicalHistory);}
-        {console.log(this.props.noteSubCategory);}
         const { classes } = this.props;
         return (
             <Card>
@@ -169,7 +167,19 @@ class newHPNote extends Component {
                             className={classes.textField}
                             margin="normal"
                         />
-                        <selectTable />
+                        <br />
+                        <br />
+                        <Collapsible trigger="Past Medical History >>" className={classes.collapsible}>
+                            {
+                                <Table
+                                    tableHeaderColor="primary"
+                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                                    tableData={MedicalHistory}
+                                    radio={2}
+                                    textbox={1}
+                                />
+                            }
+                        </Collapsible>
                         <TextField
                             id="standard-multiline-flexible"
                             label="Current Medications"
@@ -192,6 +202,55 @@ class newHPNote extends Component {
                             className={classes.textField}
                             margin="normal"
                         />
+                        <br/>
+                        <br/>
+                        <Collapsible trigger="Family History >>" className={classes.collapsible}>
+                            {
+                                <Table
+                                    tableHeaderColor="primary"
+                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                                    tableData={MedicalHistory}
+                                    radio={2}
+                                    textbox={1}
+                                />
+                            }
+                        </Collapsible>
+                        <br />
+                        <Collapsible trigger="Social History >>" className={classes.collapsible}>
+                            {
+                                <Table
+                                    tableHeaderColor="primary"
+                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                                    tableData={SocialHistory}
+                                    radio={0}
+                                    textbox={1}
+                                />
+                            }
+                        </Collapsible>
+                        <br />
+                        <Collapsible trigger="Review of Systems >>" className={classes.collapsible}>
+                            {
+                                <Table
+                                    tableHeaderColor="primary"
+                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                                    tableData={ReviewofSystems}
+                                    radio={2}
+                                    textbox={1}
+                                />
+                            }
+                        </Collapsible>
+                        <br />
+                        <Collapsible trigger="Physical Exam >>" className={classes.collapsible}>
+                            {
+                                <Table
+                                    tableHeaderColor="primary"
+                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                                    tableData={PhysicalExam}
+                                    radio={2}
+                                    textbox={1}
+                                />
+                            }
+                        </Collapsible>
                         <TextField
                             id="standard-multiline-flexible"
                             label="Assessment"
@@ -227,54 +286,6 @@ class newHPNote extends Component {
                         />
                         <br/>
                         <br/>
-                        <Collapsible trigger="Family History >>" className={classes.collapsible}>
-                            {
-                                <Table
-                                    tableHeaderColor="primary"
-                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={MedicalHistory}
-                                    radio={2}
-                                    textbox={1}
-                                />
-                            }
-                        </Collapsible>
-                        <br />
-                        <Collapsible trigger="Social History >>" className={classes.collapsible}>
-                            {
-                                <Table
-                                    tableHeaderColor="primary"
-                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={SocialHistory}
-                                    radio={2}
-                                    textbox={1}
-                                />
-                            }
-                        </Collapsible>
-                        <br />
-                        <Collapsible trigger="Review of Systems >>" className={classes.collapsible}>
-                            {
-                                <Table
-                                    tableHeaderColor="primary"
-                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={ReviewofSystems}
-                                    radio={2}
-                                    textbox={1}
-                                />
-                            }
-                        </Collapsible>
-                        <br />
-                        <Collapsible trigger="Physical Exam >>" className={classes.collapsible}>
-                            {
-                                <Table
-                                    tableHeaderColor="primary"
-                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={PhysicalExam}
-                                    radio={2}
-                                    textbox={1}
-                                />
-                            }
-                        </Collapsible>
-                        <br />
                         <FormLabel component="legend">Diagnosis</FormLabel>
                         <CustomTable
                             tableHeaderColor="primary"

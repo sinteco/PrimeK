@@ -18,8 +18,8 @@ class CustomTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedValue: ['a','b','c'],
-            remark: ['','',''],
+            selectedValue: ['a', 'b', 'c'],
+            remark: ['', '', ''],
         }
         this.allNormal = this.allNormal.bind(this);
         this.allUbnormal = this.allUbnormal.bind(this);
@@ -32,45 +32,29 @@ class CustomTable extends React.Component {
     allNormal() {
         this.setState({
             selectedValue: []
-        }, function(){
-            let item  = [];
+        }, function () {
+            let item = [];
             this.props.tableData.map((prop, key) => {
-                item.push('n'+key);
+                item.push('n' + key);
             });
-            this.setState({selectedValue: [...this.state.selectedValue, ...item]});
+            this.setState({ selectedValue: [...this.state.selectedValue, ...item] });
         });
     }
     allUbnormal() {
-        this.setState({ 
+        this.setState({
             selectedValue: []
-        }, function(){
-            let item  = [];
+        }, function () {
+            let item = [];
             this.props.tableData.map((prop, key) => {
-                item.push('u'+key);
+                item.push('u' + key);
             });
-            this.setState({selectedValue: [...this.state.selectedValue, ...item]});
+            this.setState({ selectedValue: [...this.state.selectedValue, ...item] });
         });
     }
     render() {
-        const { classes, tableHead, tableData, tableHeaderColor, textBox, radio } = this.props;
+        const { classes, tableHead, tableData, tableHeaderColor } = this.props;
         return (
             <div className={classes.tableResponsive}>
-                <Button 
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={this.allNormal}
-                >
-                    All Normal
-                </Button>
-                <Button 
-                    variant="contained"
-                    color="primary"
-                    className={classes.button}
-                    onClick={this.allUbnormal}
-                >
-                    All Ubnormal
-                </Button>
                 <Table className={classes.table}>
                     {tableHead !== undefined ? (
                         <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
@@ -95,50 +79,45 @@ class CustomTable extends React.Component {
                                     <TableCell>{"i"}</TableCell>
                                     {prop.map((prop0, key) => {
                                         return (
-                                            <TableCell 
+                                            <TableCell
                                                 onClick={() => this.props.handleOnRowClick(prop[0])}
                                                 className={classes.tableCell}
                                                 key={key}
                                             >
-                                            {prop0}
+                                                {prop0}
                                             </TableCell>
                                         );
                                     })}
                                     <TableCell>
-                                        <Radio
-                                            checked={this.state.selectedValue[key] === "n" + key}
-                                            onChange={this.handleChange('selectedValue', key)}
-                                            value={"n" + key}
-                                            name={"radio-button-demo-"+key}
-                                            aria-label="Normal"
+                                        <TextField
+                                            id="standard-name"
+                                            // label="Remark"
+                                            className={classes.textField}
+                                            value={this.state.remark[key]}
+                                            onChange={this.handleChange('remark', key)}
+                                            margin="normal"
                                         />
                                     </TableCell>
                                     <TableCell>
-                                        <Radio
-                                            checked={this.state.selectedValue[key] === "u" + key}
-                                            onChange={this.handleChange('selectedValue', key)}
-                                            value={"u" + key}
-                                            name={"radio-button-demo-"+key}
-                                            aria-label="Ubnormal"
+                                        <TextField
+                                            id="standard-name"
+                                            // label="Remark"
+                                            className={classes.textField}
+                                            value={this.state.remark[key]}
+                                            onChange={this.handleChange('remark', key)}
+                                            margin="normal"
                                         />
                                     </TableCell>
-                                    {console.log(" hay " + radio)}
-                                    {
-                                        [...Array(textBox)].map((textb, k) => {
-                                            return (
-                                                    <TableCell>
-                                                        <TextField
-                                                            id="standard-name"
-                                                            // label="Remark"
-                                                            className={classes.textField}
-                                                            value={this.state.remark[key]}
-                                                            onChange={this.handleChange('remark', key)}
-                                                            margin="normal"
-                                                        />
-                                                    </TableCell>
-                                            );
-                                        })
-                                    }
+                                    <TableCell>
+                                        <TextField
+                                            id="standard-name"
+                                            // label="Remark"
+                                            className={classes.textField}
+                                            value={this.state.remark[key]}
+                                            onChange={this.handleChange('remark', key)}
+                                            margin="normal"
+                                        />
+                                    </TableCell>
                                 </TableRow>
                             );
                         })}

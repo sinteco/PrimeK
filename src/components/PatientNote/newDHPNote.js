@@ -7,6 +7,8 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import { compose } from 'redux';
 import TextField from '@material-ui/core/TextField';
 import Table from '../Table/CustomTableWithSelector';
+import TableWithDatePicker from '../Table/CustomTableWithSelector&Date';
+import CustomTableWithTextBox from '../Table/CustomTableWithTextBox';
 import FormLabel from '@material-ui/core/FormLabel';
 import CustomTable from '../Diagnosis/CustomDiagnosis';
 import { fetchPatientDiagnosis } from '../../redux/actions/diagnosisAction';
@@ -97,7 +99,7 @@ class newDHPNote extends Component {
                         />
                         <TextField
                             id="standard-multiline-flexible"
-                            label="History Of Present illness"
+                            label="HPI"
                             multiline
                             rowsMax="4"
                             fullWidth
@@ -109,7 +111,7 @@ class newDHPNote extends Component {
                         <selectTable />
                         <TextField
                             id="standard-multiline-flexible"
-                            label="Current Medications"
+                            label="HMBG  Values"
                             multiline
                             rowsMax="4"
                             fullWidth
@@ -120,7 +122,7 @@ class newDHPNote extends Component {
                         />
                         <TextField
                             id="standard-multiline-flexible"
-                            label="Allergies"
+                            label="BP Home Monitoring Values"
                             multiline
                             rowsMax="4"
                             fullWidth
@@ -131,7 +133,7 @@ class newDHPNote extends Component {
                         />
                         <TextField
                             id="standard-multiline-flexible"
-                            label="Assessment"
+                            label="Allergies:"
                             multiline
                             rowsMax="4"
                             fullWidth
@@ -142,18 +144,7 @@ class newDHPNote extends Component {
                         />
                         <TextField
                             id="standard-multiline-flexible"
-                            label="Plan"
-                            multiline
-                            rowsMax="4"
-                            fullWidth
-                            //value={values.multiline}
-                            //onChange={handleChange('multiline')}
-                            className={classes.textField}
-                            margin="normal"
-                        />
-                        <TextField
-                            id="standard-multiline-flexible"
-                            label="Treatment"
+                            label="Medications:"
                             multiline
                             rowsMax="4"
                             fullWidth
@@ -164,34 +155,41 @@ class newDHPNote extends Component {
                         />
                         <br />
                         <br />
-                        <Collapsible trigger="Family History >>" className={classes.collapsible}>
+                        <Collapsible trigger="Habits >>" className={classes.collapsible}>
                             {
-                                <Table
+                                <CustomTableWithTextBox
                                     tableHeaderColor="primary"
-                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={[["parents"], ["sublings"], ["others"]]}
+                                    tableHead={[" ", "Problem", "Remark", "Quantity", "Frequency"]}
+                                    tableData={[["Cigarattes"], ["Alchol"], ["Chat"]]}
                                     radio={2}
                                     textbox={1}
                                 />
                             }
                         </Collapsible>
                         <br />
-                        <Collapsible trigger="Social History >>" className={classes.collapsible}>
+                        <Collapsible trigger="Problem List with year of diagnosis >>" className={classes.collapsible}>
                             {
                                 <Table
                                     tableHeaderColor="primary"
-                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                                    tableHead={[" ", "Problem", "Yes", "No", "Diagnosis Year", "Remark"]}
                                     tableData={[
-                                        ["Habits"],
-                                        ["Employment History"],
-                                        ["Education"],
-                                        ["Social activities"],
-                                        ["Environment"],
-                                        ["Perinatal History"],
-                                        ["Developemnt History"],
-                                        ["Nutritional History"],
-                                        ["Vaccination History"],
-                                        ["Ealy development"],
+                                        ["Diabetes"],
+                                        ["Other"]
+                                    ]}
+                                    radio={2}
+                                    textBox={2}
+                                />
+                            }
+                        </Collapsible>
+                        <br />
+                        <Collapsible trigger="Other Medical Problem >>" className={classes.collapsible}>
+                            {
+                                <Table
+                                    tableHeaderColor="primary"
+                                    tableHead={[" ", "Problem", "Yes", "No", "Remark"]}
+                                    tableData={[
+                                        ["CAD"],
+                                        ["PVD"],
                                         ["Other"]
                                     ]}
                                     radio={2}
@@ -200,50 +198,30 @@ class newDHPNote extends Component {
                             }
                         </Collapsible>
                         <br />
-                        <Collapsible trigger="Review of Systems >>" className={classes.collapsible}>
+                        <Collapsible trigger="Past Surgical Procedures >>" className={classes.collapsible}>
                             {
-                                <Table
+                                <TableWithDatePicker
                                     tableHeaderColor="primary"
-                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={[
-                                        ["Head"],
-                                        ["Ears"],
-                                        ["Eyes"],
-                                        ["Nose"],
-                                        ["Mouth and throat"],
-                                        ["Glands"],
-                                        ["Respiratory"],
-                                        ["Cardiovascular"],
-                                        ["Gastrointestinal"],
-                                        ["Genitourinary"],
-                                        ["Integumentary"],
-                                        ["Allergy"],
-                                        ["Locomotion"],
-                                        ["CNS"],
-                                        ["Other"]
-                                    ]}
-                                    radio={2}
-                                    textbox={1}
-                                />
-                            }
-                        </Collapsible>
-                        <br />
-                        <Collapsible trigger="Physical Exam >>" className={classes.collapsible}>
-                            {
-                                <Table
-                                    tableHeaderColor="primary"
-                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                                    tableHead={[" ", "Problem", "Yes", "No", "Date", "Remark"]}
                                     tableData={[
                                         ["General Appearance"],
                                         ["HEENT"],
-                                        ["Lymphoglandular"],
-                                        ["Respiratory"],
-                                        ["CVS"],
-                                        ["Gastrointestinal"],
-                                        ["Genitourinary"],
-                                        ["Integumentary"],
-                                        ["Musculoskeletal"],
-                                        ["CNS"],
+                                        ["Other"]
+                                    ]}
+                                    radio={2}
+                                    textbox={1}
+                                />
+                            }
+                        </Collapsible>
+                        <br/>
+                        <Collapsible trigger="Vaccinations >>" className={classes.collapsible}>
+                            {
+                                <TableWithDatePicker
+                                    tableHeaderColor="primary"
+                                    tableHead={[" ", "vaccine", "Yes", "No", "Date", "Remark"]}
+                                    tableData={[
+                                        ["General Appearance"],
+                                        ["HEENT"],
                                         ["Other"]
                                     ]}
                                     radio={2}
@@ -252,13 +230,91 @@ class newDHPNote extends Component {
                             }
                         </Collapsible>
                         <br />
-                        <FormLabel component="legend">Diagnosis</FormLabel>
-                        <CustomTable
-                            tableHeaderColor="primary"
-                            tableHead={["Diagnosis", "Code", "Date", "Visit"]}
-                            diagnosis={this.state.diagnosis}
-                            addDiagnosis={this.addDiagnosis}
+                        <Collapsible trigger="Patient Education >>" className={classes.collapsible}>
+                            {
+                                <TableWithDatePicker
+                                    tableHeaderColor="primary"
+                                    tableHead={[" ", "education", "Yes", "No", "Date", "Remark"]}
+                                    tableData={[
+                                        ["General Appearance"],
+                                        ["HEENT"],
+                                        ["Other"]
+                                    ]}
+                                    radio={2}
+                                    textbox={1}
+                                />
+                            }
+                        </Collapsible>
+                        <br />
+                        <Collapsible trigger="Exams >>" className={classes.collapsible}>
+                            {
+                                <TableWithDatePicker
+                                    tableHeaderColor="primary"
+                                    tableHead={[" ", "exam", "Yes", "No", "Date", "Remark"]}
+                                    tableData={[
+                                        ["General Appearance"],
+                                        ["HEENT"],
+                                        ["Other"]
+                                    ]}
+                                    radio={2}
+                                    textbox={1}
+                                />
+                            }
+                        </Collapsible>
+                        <br />
+                        <Collapsible trigger="ROS >>" className={classes.collapsible}>
+                            {
+                                <TableWithDatePicker
+                                    tableHeaderColor="primary"
+                                    tableHead={[" ", "system", "Yes", "No", "Date", "Remark"]}
+                                    tableData={[
+                                        ["General Appearance"],
+                                        ["HEENT"],
+                                        ["Other"]
+                                    ]}
+                                    radio={2}
+                                    textbox={1}
+                                />
+                            }
+                        </Collapsible>
+                        <TextField
+                            id="standard-multiline-flexible"
+                            label="Dite"
+                            multiline
+                            rowsMax="4"
+                            fullWidth
+                            //value={values.multiline}
+                            //onChange={handleChange('multiline')}
+                            className={classes.textField}
+                            margin="normal"
                         />
+                        <TextField
+                            id="standard-multiline-flexible"
+                            label="Excercise F.I.T.T. Frequency Intensity Type Time"
+                            multiline
+                            rowsMax="4"
+                            fullWidth
+                            //value={values.multiline}
+                            //onChange={handleChange('multiline')}
+                            className={classes.textField}
+                            margin="normal"
+                        />
+                        <br />
+                        <Collapsible trigger="Physical Exam >>" className={classes.collapsible}>
+                            {
+                                <TableWithDatePicker
+                                    tableHeaderColor="primary"
+                                    tableHead={[" ", "system", "Yes", "No", "Date", "Remark"]}
+                                    tableData={[
+                                        ["General Appearance"],
+                                        ["HEENT"],
+                                        ["Other"]
+                                    ]}
+                                    radio={2}
+                                    textbox={1}
+                                />
+                            }
+                        </Collapsible>
                     </form>
                 </CardBody>
             </Card>
