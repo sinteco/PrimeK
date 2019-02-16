@@ -56,7 +56,7 @@ const styles = {
     }
 };
 
-const category = "Progress Note";
+const category = "Discharge Note";
 
 class pNote extends Component {
     constructor(props) {
@@ -93,11 +93,11 @@ class pNote extends Component {
         this.props.fetchRadOrders(URL);
     }
     handleOnRowClick = (id) => {
-         const URL = '/PatientNotes/GetPatientNoteDetail/' + id;
-         this.props.fetchPatientNoteDetail(URL);
+        const URL = '/PatientNotes/GetPatientNoteDetail/' + id;
+        this.props.fetchPatientNoteDetail(URL);
         //var progressNote = this.props.progressNotes.filter(item => item.Id == id);
         // console.log(progressNote[0].Note);
-        this.setState({ 
+        this.setState({
             disabledInput: true
         });
         this.handleClickOpen();
@@ -109,9 +109,9 @@ class pNote extends Component {
         const url = 'PatientNotes/GetNoteTemplate/' + category;
         this.props.fetchNoteSubCategory(url);
 
-        this.setState({note: this.props.noteSubCategory['Template']});
-        
-        return (this.state.note != '' && this.setState({disabledInput: false,newdialogopen: true}))
+        this.setState({ note: this.props.noteSubCategory['Template'] });
+
+        return (this.state.note != '' && this.setState({ disabledInput: false, newdialogopen: true }))
     };
     savePatientNote = () => {
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;

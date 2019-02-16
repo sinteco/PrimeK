@@ -36,13 +36,16 @@ import ProcedureNote from '../../components/PatientNote/procedureNote';
 import DeathNote from '../../components/PatientNote/deathNote';
 import IncidentNote from '../../components/PatientNote/incidentNote';
 import RecruitmentMedicalExam from '../../components/PatientNote/recruitmentMedicalExam';
-import TattooNote from '../../components/PatientNote/operationNote';
+import TattooNote from '../../components/PatientNote/tattooNote';
 import OperationNote from '../../components/PatientNote/operationNote';
 import DHPNote from '../../components/PatientNote/dhpNote';
 import newDHPNote from '../../components/PatientNote/newDHPNote';
+import medicalCertificate from '../../components/PatientNote/medicalCertificate';
+import DischargeSummary from '../../components/PatientNote/dischargeSummary';
 
 const switchRoutes = (
   <Switch>
+    <Route path='/DischargeSummary' component={DischargeSummary} />
     <Route path="/historyAndPhysical" component={HistoryAndPhysical}/>
     <Route path="/progressNote" component={ProgressNote}/>
     <Route path="/OrderSheet" component={OrderSheet}/>
@@ -69,6 +72,7 @@ const switchRoutes = (
     <Route path='/OperationNote' component={OperationNote}/>
     <Route path='/DHPNote' component={DHPNote}/>
     <Route path='/newDHPNote' component={newDHPNote}/>
+    <Route path='/medicalCertificate' component={medicalCertificate}/>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;

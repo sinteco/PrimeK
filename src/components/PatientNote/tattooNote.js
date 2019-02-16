@@ -56,7 +56,7 @@ const styles = {
     }
 };
 
-const category = "Progress Note";
+const category = "Tattoo Note";
 
 class pNote extends Component {
     constructor(props) {
@@ -68,18 +68,19 @@ class pNote extends Component {
             disabledInput: true,
             forms: [],
             open: false,
-            note: ''
         }
     }
-    handleChange = name => event => {
-        this.setState({
-            [name]: event.target.value,
+    handleChange = (key, name) => event => {
+        let forms = [...this.state.forms];
+        forms[key] = event.target.value;
+        this.setState({ forms }, function () {
+            console.log(this.state.forms);
         });
     };
     returnarrays() {
         var a = new Array();
         this.props.progressNotes.map((progressNote) => {
-            a.push([[progressNote.Id], [progressNote.PatientId], [Moment(progressNote.DateTime).format('d MMM')], [progressNote.NoteCategory]])
+            a.push([[progressNote.Id], [progressNote.PatientId], [Moment(progressNote.DateTime).format('d MMM')], [progressNote.NoteCategory], [progressNote.Note]])
         });
         return a;
     }
@@ -93,32 +94,27 @@ class pNote extends Component {
         this.props.fetchRadOrders(URL);
     }
     handleOnRowClick = (id) => {
-         const URL = '/PatientNotes/GetPatientNoteDetail/' + id;
-         this.props.fetchPatientNoteDetail(URL);
-        //var progressNote = this.props.progressNotes.filter(item => item.Id == id);
-        // console.log(progressNote[0].Note);
-        this.setState({ 
-            disabledInput: true
-        });
-        this.handleClickOpen();
+        const URL = '/PatientNotes/GetPatientNoteDetails/' + id;
+        this.props.fetchPatientNoteDetail(URL);
+        return this.props.patientnoteDetail ?
+            this.handleClickOpen()
+            : <CircularProgress className={this.props.classes.progress} />
+
     }
     handleClickOpen = () => {
         this.setState({ open: true, disabledInput: true });
     };
     newdialogClickOpen = () => {
-        const url = 'PatientNotes/GetNoteTemplate/' + category;
+        const url = 'PatientNotes/GetNoteSubCategory/' + category;
         this.props.fetchNoteSubCategory(url);
-
-        this.setState({note: this.props.noteSubCategory['Template']});
-        
-        return (this.state.note != '' && this.setState({disabledInput: false,newdialogopen: true}))
+        this.setState({ disabledInput: false, newdialogopen: true });
     };
     savePatientNote = () => {
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
         const inputdata = {
             PatientId: id,
             NoteCategory: category,
-            note: '',
+            note: " ",
             DateTime: new Date(),
             Value: this.state.forms,
             Remark: null
@@ -150,7 +146,6 @@ class pNote extends Component {
     render() {
         const { classes } = this.props;
         const { fullScreen } = this.props;
-        { console.log(this.props.noteSubCategory) }
         return (
             <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
@@ -173,7 +168,7 @@ class pNote extends Component {
                             {this.props.isLoading ? <CircularProgress className={classes.progress} /> : ""}
                             <Table
                                 tableHeaderColor="primary"
-                                tableHead={["Id", "Patient", "Datetime", "Category"]}
+                                tableHead={["Id", "Patient", "Datetime", "Category", "Note"]}
                                 tableData={this.returnarrays()}
                                 handleOnRowClick={this.handleOnRowClick}
                             />
@@ -188,30 +183,29 @@ class pNote extends Component {
                                 open={this.state.open}
                                 onClose={this.handleClose}
                                 aria-labelledby="responsive-dialog-title"
-                                PaperProps={{
-                                    style: {
-                                        width: '80%',
-                                        height: '90%',
-                                    },
-                                }}
                             >
                                 <DialogTitle id="responsive-dialog-title">{category + " Detail"}</DialogTitle>
                                 <DialogContent>
                                     <DialogContentText>
                                         <form>
-                                            {this.props.isLoading ? <CircularProgress className={classes.progress} /> : ""}
-                                            <TextField
-                                                disabled={this.state.disabledInput}
-                                                id="standard-multiline-flexible"
-                                                // label={'Template'}
-                                                multiline
-                                                // rowsMax="4"
-                                                fullWidth
-                                                value={this.props.patientnoteDetail['Note']}
-                                                onChange={this.handleChange('note')}
-                                                className={classes.textField}
-                                                margin="normal"
-                                            />
+                                            {
+                                                this.props.patientnoteDetail.map(
+                                                    (note, k) =>
+                                                        <TextField
+                                                            disabled={this.state.disabledInput}
+                                                            id="standard-multiline-flexible"
+                                                            label={note.NoteSubcategory}
+                                                            multiline
+                                                            rowsMax="4"
+                                                            fullWidth
+                                                            value={note.Value}
+                                                            // onChange={this.handleChange('dateofadmission')}
+                                                            className={classes.textField}
+                                                            margin="normal"
+                                                        />
+                                                )
+                                            }
+
                                         </form>
                                     </DialogContentText>
                                 </DialogContent>
@@ -226,30 +220,43 @@ class pNote extends Component {
                                 open={this.state.newdialogopen}
                                 onClose={this.handleClose}
                                 aria-labelledby="responsive-dialog-title"
-                                PaperProps={{
-                                    style: {
-                                        width: '80%',
-                                        height: '90%',
-                                    },
-                                }}
                             >
                                 <DialogTitle id="responsive-dialog-title">{"New " + category}</DialogTitle>
                                 <DialogContent>
                                     <DialogContentText>
                                         <form>
                                             {this.props.isLoading ? <CircularProgress className={classes.progress} /> : ""}
-                                            <TextField
-                                                disabled={this.state.disabledInput}
-                                                id="standard-multiline-flexible"
-                                                // label={'Template'}
-                                                multiline
-                                                // rowsMax="4"
-                                                fullWidth
-                                                value={this.state.note}
-                                                onChange={this.handleChange('note')}
-                                                className={classes.textField}
-                                                margin="normal"
-                                            />
+                                            {
+                                                this.props.noteSubCategory.map(
+                                                    (item, key) => item.InputType == "String" ?
+                                                        <TextField
+                                                            disabled={this.state.disabledInput}
+                                                            id="standard-multiline-flexible"
+                                                            label={item.Name}
+                                                            multiline
+                                                            rowsMax="4"
+                                                            fullWidth
+                                                            value={item.name}
+                                                            onChange={this.handleChange(key, item.Name)}
+                                                            className={classes.textField}
+                                                            margin="normal"
+                                                        /> : <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                            <DatePicker
+                                                                margin="normal"
+                                                                label={item.Name}
+                                                                // formatDate={(date) => Moment(date).format('YYYY-MM-DD')}
+                                                                value={this.state.forms[key]}
+                                                                onChange={(date) => {
+                                                                    let forms = [...this.state.forms];
+                                                                    forms[key] = date;
+                                                                    this.setState({ forms }, function () {
+                                                                        console.log(this.state.forms);
+                                                                    });
+                                                                }}
+                                                            />
+                                                        </MuiPickersUtilsProvider>
+                                                )
+                                            }
                                         </form>
                                     </DialogContentText>
                                 </DialogContent>

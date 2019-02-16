@@ -68,16 +68,6 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
               </ListItem>
               <Collapse in={omenuopen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  <ListItem button className={classes.nested} component={Link} to="/SickLeave">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
-                    </ListItemIcon>
-                    <ListItemText
-                     disableTypography
-                     className={classes.itemText + whiteFontClasses}
-                     inset
-                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Sick Leave</Typography>} />
-                  </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/OrderSheet">
                     <ListItemIcon className={classes.itemIcon}>
                       <StarBorder />
@@ -236,7 +226,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Incident Note</Typography>} />
                   </ListItem>
-                  <ListItem button className={classes.nested} component={Link} to="/SickLeave">
+                  <ListItem button className={classes.nested} component={Link} to="/medicalCertificate">
                     <ListItemIcon className={classes.itemIcon}>
                       <StarBorder />
                     </ListItemIcon>
@@ -295,6 +285,16 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      className={classes.itemText + whiteFontClasses}
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Operation Note</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested} component={Link} to="/DischargeSummary">
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Discharge Summary</Typography>} />
                   </ListItem>
                 </List>
               </Collapse>

@@ -18,8 +18,8 @@ import NotificationsPage from "views/Notifications/Notifications.jsx";
 import Assignments from "../components/assignments/assignments";
 import VitalSigns from "../components/VitalSigns/vitalSigns";
 import PatientNote from "../components/PatientNote/patientNote";
-import SickLeave from "../components/Orders/sickLeave";
 import Appointment from "../components/Appointment/appointments";
+import OrderSheet from "../components/Orders/orderSheet";
 
 const dashboardRoutes = [
   {
@@ -44,12 +44,12 @@ const dashboardRoutes = [
     component: VitalSigns,
   },
   {
-    path: "/SickLeave",
+    path: "/OrderSheet",
     sidebarName: "Orders",
     navbarName: "Orders",
     icon: Unarchive,
-    component: SickLeave,
-    omenu: true 
+    component: OrderSheet,
+    omenu: true
   },
   {
     path: "/PatientNote",
