@@ -22,11 +22,18 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import TextField from '@material-ui/core/TextField';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
+import Radio from '@material-ui/core/Radio';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
 import qs from 'qs';
+import FormGroup from '@material-ui/core/FormGroup';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
-const styles = {
+const styles = theme => ({
     cardCategoryWhite: {
         "&,& a,& a:hover,& a:focus": {
             color: "rgba(255,255,255,.62)",
@@ -53,8 +60,17 @@ const styles = {
             fontWeight: "400",
             lineHeight: "1"
         }
-    }
-};
+    },
+    root: {
+    display: 'flex',
+        },
+    formControl: {
+    margin: theme.spacing.unit * 3,
+        },
+    group: {
+    margin: `${theme.spacing.unit}px 0`,
+        },
+});
 
 const category = "Recruitment Medical Exam";
 
@@ -68,15 +84,12 @@ class pNote extends Component {
             disabledInput: true,
             forms: [],
             open: false,
+            name: ''
         }
     }
-    handleChange = (key, name) => event => {
-        let forms = [...this.state.forms];
-        forms[key] = event.target.value;
-        this.setState({ forms }, function () {
-            console.log(this.state.forms);
-        });
-    };
+    handleChange = name => event => {
+        this.setState({ [name]: event.target.value });
+      };
     returnarrays() {
         var a = new Array();
         this.props.progressNotes.map((progressNote) => {
@@ -117,7 +130,8 @@ class pNote extends Component {
             note: " ",
             DateTime: new Date(),
             Value: this.state.forms,
-            Remark: null
+            Remark: null,
+            age: ''
         }
         if (id === 0) {
             alert("patient is not selected");
@@ -216,7 +230,8 @@ class pNote extends Component {
                                 </DialogActions>
                             </Dialog>
                             <Dialog
-                                fullScreen={fullScreen}
+                                fullScreen={'xs'}
+                                maxWidth={'xs'}
                                 open={this.state.newdialogopen}
                                 onClose={this.handleClose}
                                 aria-labelledby="responsive-dialog-title"
@@ -225,38 +240,314 @@ class pNote extends Component {
                                 <DialogContent>
                                     <DialogContentText>
                                         <form>
-                                            {this.props.isLoading ? <CircularProgress className={classes.progress} /> : ""}
-                                            {
-                                                this.props.noteSubCategory.map(
-                                                    (item, key) => item.InputType == "" ?
+                                        <FormControl component="fieldset" className={classes.formControl}>
+                                            <FormLabel component="legend">Illness History</FormLabel>
+                                            <FormGroup row>
+                                            <RadioGroup row
+                                                aria-label="Gender"
+                                                name="gender1"
+                                                className={classes.group}
+                                                // value={this.state.value}
+                                                // onChange={this.handleChange}
+                                            >
+                                                <FormLabel>Hypertension</FormLabel>
+                                                <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
+                                                <FormControlLabel labelPlacement="start" value="No" control={<Radio />} label="No" />
+                                            </RadioGroup>
+                                            <RadioGroup row
+                                                aria-label="Gender"
+                                                name="gender1"
+                                                className={classes.group}
+                                                // value={this.state.value}
+                                                // onChange={this.handleChange}
+                                            >   
+                                                <FormLabel>Diabetis Mellitus</FormLabel>
+                                                <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
+                                                <FormControlLabel labelPlacement="start" value="No" control={<Radio />} label="No" />
+                                            </RadioGroup>
+                                            <FormLabel>Seizure Disorder</FormLabel>
+                                            <RadioGroup row
+                                                aria-label="Gender"
+                                                name="gender1"
+                                                className={classes.group}
+                                                // value={this.state.value}
+                                                // onChange={this.handleChange}
+                                            >
+                                                <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
+                                                <FormControlLabel labelPlacement="start" value="No" control={<Radio />} label="No" />
+                                            </RadioGroup>
+                                            <FormLabel>Psycharitic illness</FormLabel>
+                                            <RadioGroup row
+                                                aria-label="Gender"
+                                                name="gender1"
+                                                className={classes.group}
+                                                // value={this.state.value}
+                                                // onChange={this.handleChange}
+                                            >
+                                                <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
+                                                <FormControlLabel labelPlacement="start" value="No" control={<Radio />} label="No" />
+                                            </RadioGroup>
+                                            </FormGroup>
+                                            <FormGroup row>
+                                            <FormLabel>Allergies</FormLabel>
+                                            <RadioGroup row
+                                                aria-label="Gender"
+                                                name="gender1"
+                                                className={classes.group}
+                                                // value={this.state.value}
+                                                // onChange={this.handleChange}
+                                            >
+                                                <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
+                                                <FormControlLabel labelPlacement="start" value="No" control={<Radio />} label="No" />
+                                            </RadioGroup>
+                                            <TextField
+                                                id="standard-name"
+                                                label="Name"
+                                                className={classes.textField}
+                                                // value={this.state.name}
+                                                // onChange={this.handleChange('name')}
+                                                margin="normal"
+                                                style = {{width: 800}}
+                                                />
+                                            </FormGroup>
+                                            <FormGroup row>
+                                            <FormLabel component="legend">Vital Sign</FormLabel>
+                                                <TextField
+                                                    id="standard-name"
+                                                    label="BP(S)"
+                                                    className={classes.textField}
+                                                    // value={this.state.name}
+                                                    // onChange={this.handleChange('name')}
+                                                    margin="normal"
+                                                    style = {{width: 100}}
+                                                    />
+                                                <TextField
+                                                    id="standard-name"
+                                                    label="BP(D)"
+                                                    className={classes.textField}
+                                                    // value={this.state.name}
+                                                    // onChange={this.handleChange('name')}
+                                                    margin="normal"
+                                                    style = {{width: 100}}
+                                                    />
+                                                <TextField
+                                                    id="standard-name"
+                                                    label="PR"
+                                                    className={classes.textField}
+                                                    // value={this.state.name}
+                                                    // onChange={this.handleChange('name')}
+                                                    margin="normal"
+                                                    style = {{width: 100}}
+                                                    />
+                                                <TextField
+                                                    id="standard-name"
+                                                    label="Wt"
+                                                    className={classes.textField}
+                                                    // value={this.state.name}
+                                                    // onChange={this.handleChange('name')}
+                                                    margin="normal"
+                                                    style = {{width: 100}}
+                                                    />
+                                                <TextField
+                                                    id="standard-name"
+                                                    label="Ht"
+                                                    className={classes.textField}
+                                                    // value={this.state.name}
+                                                    // onChange={this.handleChange('name')}
+                                                    margin="normal"
+                                                    style = {{width: 100}}
+                                                    />
+                                                <TextField
+                                                    id="standard-name"
+                                                    label="BMI"
+                                                    className={classes.textField}
+                                                    // value={this.state.name}
+                                                    // onChange={this.handleChange('name')}
+                                                    margin="normal"
+                                                    style = {{width: 100}}
+                                                    />
+                                                <FormLabel>Blood Group</FormLabel>
+                                                <Select
+                                                    // value={this.state.age}
+                                                    // onChange={this.handleChange}
+                                                    inputProps={{
+                                                        name: 'age',
+                                                        id: 'age-simple',
+                                                    }}
+                                                >
+                                                    <MenuItem value="">
+                                                    <em>None</em>
+                                                    </MenuItem>
+                                                    <MenuItem value={10}>A+</MenuItem>
+                                                    <MenuItem value={20}>A-</MenuItem>
+                                                    <MenuItem value={30}>B+</MenuItem>
+                                                    <MenuItem value={30}>B-</MenuItem>
+                                                    <MenuItem value={30}>O+</MenuItem>
+                                                    <MenuItem value={30}>O-</MenuItem>
+                                                    <MenuItem value={30}>AB+</MenuItem>
+                                                    <MenuItem value={30}>AB-</MenuItem>
+                                                </Select>
+                                            </FormGroup>
+                                            <FormGroup >
+                                                <FormLabel component="legend">System Review</FormLabel>
+                                                <FormGroup row>
+                                                    <FormLabel>Visual Acquity Rt</FormLabel>
+                                                        <Select
+                                                            // value={this.state.age}
+                                                            // onChange={this.handleChange}
+                                                            inputProps={{
+                                                                name: 'age',
+                                                                id: 'age-simple',
+                                                            }}
+                                                        >
+                                                            <MenuItem value="">
+                                                            <em>None</em>
+                                                            </MenuItem>
+                                                            <MenuItem value={10}>Normal</MenuItem>
+                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                        </Select>
                                                         <TextField
-                                                            disabled={this.state.disabledInput}
-                                                            id="standard-multiline-flexible"
-                                                            label={item.Name}
-                                                            multiline
-                                                            rowsMax="4"
-                                                            fullWidth
-                                                            value={item.name}
-                                                            onChange={this.handleChange(key, item.Name)}
+                                                            id="standard-name"
+                                                            // label="BMI"
                                                             className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
                                                             margin="normal"
-                                                        /> : <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                                            <DatePicker
-                                                                margin="normal"
-                                                                label={item.Name}
-                                                                // formatDate={(date) => Moment(date).format('YYYY-MM-DD')}
-                                                                value={this.state.forms[key]}
-                                                                onChange={(date) => {
-                                                                    let forms = [...this.state.forms];
-                                                                    forms[key] = date;
-                                                                    this.setState({ forms }, function () {
-                                                                        console.log(this.state.forms);
-                                                                    });
-                                                                }}
+                                                            style = {{width: 100}}
                                                             />
-                                                        </MuiPickersUtilsProvider>
-                                                )
-                                            }
+                                                </FormGroup>
+                                                <FormGroup row>
+                                                    <FormLabel>Visual Acquity Lt</FormLabel>
+                                                        <Select
+                                                            // value={this.state.age}
+                                                            // onChange={this.handleChange}
+                                                            inputProps={{
+                                                                name: 'age',
+                                                                id: 'age-simple',
+                                                            }}
+                                                        >
+                                                            <MenuItem value="">
+                                                            <em>None</em>
+                                                            </MenuItem>
+                                                            <MenuItem value={10}>Normal</MenuItem>
+                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                        </Select>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            // label="BMI"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            style = {{width: 100}}
+                                                            />
+                                                </FormGroup>
+                                                <FormGroup row>
+                                                    <FormLabel>Hearing Lt</FormLabel>
+                                                        <Select
+                                                            // value={this.state.age}
+                                                            // onChange={this.handleChange}
+                                                            inputProps={{
+                                                                name: 'age',
+                                                                id: 'age-simple',
+                                                            }}
+                                                        >
+                                                            <MenuItem value="">
+                                                            <em>None</em>
+                                                            </MenuItem>
+                                                            <MenuItem value={10}>Normal</MenuItem>
+                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                        </Select>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            // label="BMI"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            style = {{width: 100}}
+                                                            />
+                                                </FormGroup>
+                                                <FormGroup row>
+                                                    <FormLabel>Hearing Rt</FormLabel>
+                                                        <Select
+                                                            // value={this.state.age}
+                                                            // onChange={this.handleChange}
+                                                            inputProps={{
+                                                                name: 'age',
+                                                                id: 'age-simple',
+                                                            }}
+                                                        >
+                                                            <MenuItem value="">
+                                                            <em>None</em>
+                                                            </MenuItem>
+                                                            <MenuItem value={10}>Normal</MenuItem>
+                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                        </Select>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            // label="BMI"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            style = {{width: 100}}
+                                                            />
+                                                </FormGroup>
+                                                <FormGroup row>
+                                                    <FormLabel>Teeth</FormLabel>
+                                                        <Select
+                                                            value={this.state.age}
+                                                            onChange={this.handleChange('age')}
+                                                            inputProps={{
+                                                                name: 'age',
+                                                                id: 'age-simple',
+                                                            }}
+                                                        >
+                                                            <MenuItem value="">
+                                                            <em>None</em>
+                                                            </MenuItem>
+                                                            <MenuItem value={10}>Normal</MenuItem>
+                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                        </Select>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            // label="BMI"
+                                                            className={classes.textField}
+                                                            value={this.state.name}
+                                                            onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            style = {{width: 100}}
+                                                            />
+                                                </FormGroup>
+                                                <FormGroup row>
+                                                    <FormLabel>CardioVascular</FormLabel>
+                                                        <Select
+                                                            value={this.state.age}
+                                                            onChange={this.handleChange('age')}
+                                                            inputProps={{
+                                                                name: 'age',
+                                                                id: 'age-simple',
+                                                            }}
+                                                        >
+                                                            <MenuItem value="">
+                                                            <em>None</em>
+                                                            </MenuItem>
+                                                            <MenuItem value={10}>Normal</MenuItem>
+                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                        </Select>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            // label="BMI"
+                                                            className={classes.textField}
+                                                            value={this.state.name}
+                                                            onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            style = {{width: 100}}
+                                                            />
+                                                </FormGroup>
+                                            </FormGroup>
+                                        </FormControl>
                                         </form>
                                     </DialogContentText>
                                 </DialogContent>
