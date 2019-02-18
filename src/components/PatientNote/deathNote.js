@@ -241,20 +241,20 @@ class pNote extends Component {
                                                             className={classes.textField}
                                                             margin="normal"
                                                         /> : <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                                            <DatePicker
-                                                                margin="normal"
-                                                                label={item.Name}
-                                                                // formatDate={(date) => Moment(date).format('YYYY-MM-DD')}
-                                                                value={this.state.forms[key]}
-                                                                onChange={(date) => {
-                                                                    let forms = [...this.state.forms];
-                                                                    forms[key] = date;
-                                                                    this.setState({ forms }, function () {
-                                                                        console.log(this.state.forms);
-                                                                    });
-                                                                }}
-                                                            />
-                                                        </MuiPickersUtilsProvider>
+                                                                <DatePicker
+                                                                    margin="normal"
+                                                                    label={item.Name}
+                                                                    // formatDate={(date) => Moment(date).format('YYYY-MM-DD')}
+                                                                    value={this.state.forms[key]}
+                                                                    onChange={(date) => {
+                                                                        let forms = [...this.state.forms];
+                                                                        forms[key] = date;
+                                                                        this.setState({ forms }, function () {
+                                                                            console.log(this.state.forms);
+                                                                        });
+                                                                    }}
+                                                                />
+                                                            </MuiPickersUtilsProvider>
                                                 )
                                             }
                                         </form>

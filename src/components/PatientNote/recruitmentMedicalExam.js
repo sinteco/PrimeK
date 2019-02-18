@@ -84,7 +84,25 @@ class pNote extends Component {
             disabledInput: true,
             forms: [],
             open: false,
-            name: ''
+            Hypertension: '',
+            diabeticmellitus: '',
+            Seizuredisorder: '',
+            asthma: '',
+            Psychariticillness:'',
+            Allergies: '',
+            Other: '',
+            bps: '',
+            bpd: '',
+            pr: '',
+            wt: '',
+            ht: '',
+            bmi: '',
+            bloodgroup: '',
+            visualacquityrt:'',
+            visualacquitylt: '',
+            hearinglt: '',
+            hearingrt: '',
+            
         }
     }
     handleChange = name => event => {
@@ -230,8 +248,8 @@ class pNote extends Component {
                                 </DialogActions>
                             </Dialog>
                             <Dialog
-                                fullScreen={'xs'}
-                                maxWidth={'xs'}
+                                fullScreen={fullScreen}
+                                maxWidth={'lg'}
                                 open={this.state.newdialogopen}
                                 onClose={this.handleClose}
                                 aria-labelledby="responsive-dialog-title"
@@ -243,10 +261,11 @@ class pNote extends Component {
                                         <FormControl component="fieldset" className={classes.formControl}>
                                             <FormLabel component="legend">Illness History</FormLabel>
                                             <FormGroup row>
-                                            <RadioGroup row
+                                            <RadioGroup
                                                 aria-label="Gender"
                                                 name="gender1"
                                                 className={classes.group}
+                                                style={{padding: '0 10px 10px 10px'}}
                                                 // value={this.state.value}
                                                 // onChange={this.handleChange}
                                             >
@@ -254,10 +273,14 @@ class pNote extends Component {
                                                 <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
                                                 <FormControlLabel labelPlacement="start" value="No" control={<Radio />} label="No" />
                                             </RadioGroup>
-                                            <RadioGroup row
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <RadioGroup
                                                 aria-label="Gender"
                                                 name="gender1"
                                                 className={classes.group}
+                                                style={{padding: '0 10px 10px 10px'}}
                                                 // value={this.state.value}
                                                 // onChange={this.handleChange}
                                             >   
@@ -265,49 +288,57 @@ class pNote extends Component {
                                                 <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
                                                 <FormControlLabel labelPlacement="start" value="No" control={<Radio />} label="No" />
                                             </RadioGroup>
-                                            <FormLabel>Seizure Disorder</FormLabel>
-                                            <RadioGroup row
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <RadioGroup
                                                 aria-label="Gender"
                                                 name="gender1"
                                                 className={classes.group}
+                                                style={{padding: '0 10px 10px 10px'}}
                                                 // value={this.state.value}
                                                 // onChange={this.handleChange}
-                                            >
+                                            >   <FormLabel>Seizure Disorder</FormLabel>
                                                 <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
                                                 <FormControlLabel labelPlacement="start" value="No" control={<Radio />} label="No" />
                                             </RadioGroup>
-                                            <FormLabel>Psycharitic illness</FormLabel>
-                                            <RadioGroup row
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <RadioGroup
                                                 aria-label="Gender"
                                                 name="gender1"
                                                 className={classes.group}
+                                                style={{padding: '0 10px 10px 10px'}}
                                                 // value={this.state.value}
                                                 // onChange={this.handleChange}
-                                            >
+                                            >   <FormLabel>Psycharitic illness</FormLabel>
                                                 <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
                                                 <FormControlLabel labelPlacement="start" value="No" control={<Radio />} label="No" />
                                             </RadioGroup>
-                                            </FormGroup>
-                                            <FormGroup row>
-                                            <FormLabel>Allergies</FormLabel>
-                                            <RadioGroup row
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <RadioGroup
                                                 aria-label="Gender"
                                                 name="gender1"
                                                 className={classes.group}
+                                                style={{padding: '0 10px 10px 10px'}}
                                                 // value={this.state.value}
                                                 // onChange={this.handleChange}
                                             >
+                                                <FormLabel>Allergies</FormLabel>
                                                 <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
                                                 <FormControlLabel labelPlacement="start" value="No" control={<Radio />} label="No" />
                                             </RadioGroup>
                                             <TextField
                                                 id="standard-name"
-                                                label="Name"
+                                                label="Other"
                                                 className={classes.textField}
                                                 // value={this.state.name}
                                                 // onChange={this.handleChange('name')}
                                                 margin="normal"
-                                                style = {{width: 800}}
+                                                style={{padding: '0 10px 10px 10px'}}
                                                 />
                                             </FormGroup>
                                             <FormGroup row>
@@ -364,48 +395,82 @@ class pNote extends Component {
                                                     // value={this.state.name}
                                                     // onChange={this.handleChange('name')}
                                                     margin="normal"
-                                                    style = {{width: 100}}
+                                                    style = {{ width: 100 }}
                                                     />
-                                                <FormLabel>Blood Group</FormLabel>
-                                                <Select
-                                                    // value={this.state.age}
-                                                    // onChange={this.handleChange}
-                                                    inputProps={{
-                                                        name: 'age',
-                                                        id: 'age-simple',
-                                                    }}
-                                                >
-                                                    <MenuItem value="">
-                                                    <em>None</em>
-                                                    </MenuItem>
-                                                    <MenuItem value={10}>A+</MenuItem>
-                                                    <MenuItem value={20}>A-</MenuItem>
-                                                    <MenuItem value={30}>B+</MenuItem>
-                                                    <MenuItem value={30}>B-</MenuItem>
-                                                    <MenuItem value={30}>O+</MenuItem>
-                                                    <MenuItem value={30}>O-</MenuItem>
-                                                    <MenuItem value={30}>AB+</MenuItem>
-                                                    <MenuItem value={30}>AB-</MenuItem>
-                                                </Select>
+                                                <FormControl style = {{ width: 105, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
+                                                    <InputLabel htmlFor="blood group">Blood Group</InputLabel>
+                                                    <Select
+                                                        // value={this.state.age}
+                                                        // onChange={this.handleChange}
+                                                    >
+                                                        <MenuItem value=""><em>None</em></MenuItem>
+                                                        <MenuItem value={10}>A+</MenuItem>
+                                                        <MenuItem value={20}>A-</MenuItem>
+                                                        <MenuItem value={30}>B+</MenuItem>
+                                                        <MenuItem value={30}>B-</MenuItem>
+                                                        <MenuItem value={30}>O+</MenuItem>
+                                                        <MenuItem value={30}>O-</MenuItem>
+                                                        <MenuItem value={30}>AB+</MenuItem>
+                                                        <MenuItem value={30}>AB-</MenuItem>
+                                                    </Select>
+                                                </FormControl>
                                             </FormGroup>
-                                            <FormGroup >
+                                            <FormGroup>
                                                 <FormLabel component="legend">System Review</FormLabel>
                                                 <FormGroup row>
-                                                    <FormLabel>Visual Acquity Rt</FormLabel>
-                                                        <Select
+                                                    <FormGroup row>
+                                                        <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="visual acquity rt">Visual Acquity Rt</InputLabel>
+                                                            <Select
                                                             // value={this.state.age}
                                                             // onChange={this.handleChange}
-                                                            inputProps={{
-                                                                name: 'age',
-                                                                id: 'age-simple',
-                                                            }}
-                                                        >
-                                                            <MenuItem value="">
-                                                            <em>None</em>
-                                                            </MenuItem>
-                                                            <MenuItem value={10}>Normal</MenuItem>
-                                                            <MenuItem value={20}>Abnormal</MenuItem>
-                                                        </Select>
+                                                            >
+                                                                <MenuItem value={10}>Normal</MenuItem>
+                                                                <MenuItem value={20}>Abnormal</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            // label="BMI"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            style={{ width: 100 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="visual acquity rt">Visual Acquity Lt</InputLabel>
+                                                            <Select
+                                                            // value={this.state.age}
+                                                            // onChange={this.handleChange}
+                                                            >
+                                                                <MenuItem value={10}>Normal</MenuItem>
+                                                                <MenuItem value={20}>Abnormal</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            // label="BMI"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            style={{ width: 100 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="visual acquity rt">Hearing Lt</InputLabel>
+                                                            <Select
+                                                            // value={this.state.age}
+                                                            // onChange={this.handleChange}
+                                                            >
+                                                                <MenuItem value={10}>Normal</MenuItem>
+                                                                <MenuItem value={20}>Abnormal</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
                                                         <TextField
                                                             id="standard-name"
                                                             // label="BMI"
@@ -416,137 +481,575 @@ class pNote extends Component {
                                                             style = {{width: 100}}
                                                             />
                                                 </FormGroup>
-                                                <FormGroup row>
-                                                    <FormLabel>Visual Acquity Lt</FormLabel>
-                                                        <Select
-                                                            // value={this.state.age}
-                                                            // onChange={this.handleChange}
-                                                            inputProps={{
-                                                                name: 'age',
-                                                                id: 'age-simple',
-                                                            }}
-                                                        >
-                                                            <MenuItem value="">
-                                                            <em>None</em>
-                                                            </MenuItem>
-                                                            <MenuItem value={10}>Normal</MenuItem>
-                                                            <MenuItem value={20}>Abnormal</MenuItem>
-                                                        </Select>
-                                                        <TextField
-                                                            id="standard-name"
-                                                            // label="BMI"
-                                                            className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
-                                                            margin="normal"
-                                                            style = {{width: 100}}
-                                                            />
                                                 </FormGroup>
                                                 <FormGroup row>
-                                                    <FormLabel>Hearing Lt</FormLabel>
+                                                <FormGroup row>
+                                                    <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                        <InputLabel htmlFor="visual acquity rt">Hearing Rt</InputLabel>
                                                         <Select
-                                                            // value={this.state.age}
-                                                            // onChange={this.handleChange}
-                                                            inputProps={{
-                                                                name: 'age',
-                                                                id: 'age-simple',
-                                                            }}
+                                                        // value={this.state.age}
+                                                        // onChange={this.handleChange}
                                                         >
-                                                            <MenuItem value="">
-                                                            <em>None</em>
-                                                            </MenuItem>
                                                             <MenuItem value={10}>Normal</MenuItem>
                                                             <MenuItem value={20}>Abnormal</MenuItem>
                                                         </Select>
-                                                        <TextField
-                                                            id="standard-name"
-                                                            // label="BMI"
-                                                            className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
-                                                            margin="normal"
-                                                            style = {{width: 100}}
-                                                            />
+                                                    </FormControl>
+                                                    <TextField
+                                                        id="standard-name"
+                                                        // label="BMI"
+                                                        className={classes.textField}
+                                                        // value={this.state.name}
+                                                        // onChange={this.handleChange('name')}
+                                                        margin="normal"
+                                                        style = {{width: 100}}
+                                                        />
                                                 </FormGroup>
                                                 <FormGroup row>
-                                                    <FormLabel>Hearing Rt</FormLabel>
+                                                    <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                        <InputLabel htmlFor="visual acquity rt">Teeth</InputLabel>
                                                         <Select
-                                                            // value={this.state.age}
-                                                            // onChange={this.handleChange}
-                                                            inputProps={{
-                                                                name: 'age',
-                                                                id: 'age-simple',
-                                                            }}
+                                                        // value={this.state.age}
+                                                        // onChange={this.handleChange}
                                                         >
-                                                            <MenuItem value="">
-                                                            <em>None</em>
-                                                            </MenuItem>
                                                             <MenuItem value={10}>Normal</MenuItem>
                                                             <MenuItem value={20}>Abnormal</MenuItem>
                                                         </Select>
-                                                        <TextField
-                                                            id="standard-name"
-                                                            // label="BMI"
-                                                            className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
-                                                            margin="normal"
-                                                            style = {{width: 100}}
-                                                            />
+                                                    </FormControl>
+                                                    <TextField
+                                                        id="standard-name"
+                                                        // label="BMI"
+                                                        className={classes.textField}
+                                                        value={this.state.name}
+                                                        onChange={this.handleChange('name')}
+                                                        margin="normal"
+                                                        style = {{width: 100}}
+                                                        />
                                                 </FormGroup>
                                                 <FormGroup row>
-                                                    <FormLabel>Teeth</FormLabel>
+                                                    <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                        <InputLabel htmlFor="visual acquity rt">CardioVascular</InputLabel>
                                                         <Select
-                                                            value={this.state.age}
-                                                            onChange={this.handleChange('age')}
-                                                            inputProps={{
-                                                                name: 'age',
-                                                                id: 'age-simple',
-                                                            }}
+                                                        // value={this.state.age}
+                                                        // onChange={this.handleChange}
                                                         >
-                                                            <MenuItem value="">
-                                                            <em>None</em>
-                                                            </MenuItem>
                                                             <MenuItem value={10}>Normal</MenuItem>
                                                             <MenuItem value={20}>Abnormal</MenuItem>
                                                         </Select>
-                                                        <TextField
-                                                            id="standard-name"
-                                                            // label="BMI"
-                                                            className={classes.textField}
-                                                            value={this.state.name}
-                                                            onChange={this.handleChange('name')}
-                                                            margin="normal"
-                                                            style = {{width: 100}}
-                                                            />
+                                                    </FormControl>
+                                                    <TextField
+                                                        id="standard-name"
+                                                        // label="BMI"
+                                                        className={classes.textField}
+                                                        value={this.state.name}
+                                                        onChange={this.handleChange('name')}
+                                                        margin="normal"
+                                                        style = {{width: 100}}
+                                                        />
+                                                </FormGroup>
                                                 </FormGroup>
                                                 <FormGroup row>
-                                                    <FormLabel>CardioVascular</FormLabel>
+                                                <FormGroup row>
+                                                    <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                        <InputLabel htmlFor="visual acquity rt">Respiratory</InputLabel>
                                                         <Select
-                                                            value={this.state.age}
-                                                            onChange={this.handleChange('age')}
-                                                            inputProps={{
-                                                                name: 'age',
-                                                                id: 'age-simple',
-                                                            }}
+                                                        // value={this.state.age}
+                                                        // onChange={this.handleChange}
                                                         >
-                                                            <MenuItem value="">
-                                                            <em>None</em>
-                                                            </MenuItem>
                                                             <MenuItem value={10}>Normal</MenuItem>
                                                             <MenuItem value={20}>Abnormal</MenuItem>
                                                         </Select>
-                                                        <TextField
-                                                            id="standard-name"
-                                                            // label="BMI"
-                                                            className={classes.textField}
-                                                            value={this.state.name}
-                                                            onChange={this.handleChange('name')}
-                                                            margin="normal"
-                                                            style = {{width: 100}}
-                                                            />
+                                                    </FormControl>
+                                                    <TextField
+                                                        id="standard-name"
+                                                        // label="BMI"
+                                                        className={classes.textField}
+                                                        value={this.state.name}
+                                                        onChange={this.handleChange('name')}
+                                                        margin="normal"
+                                                        style = {{width: 100}}
+                                                        />
+                                                </FormGroup>
+                                                <FormGroup row>
+                                                    <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                        <InputLabel htmlFor="visual acquity rt">Abdomen</InputLabel>
+                                                        <Select
+                                                        // value={this.state.age}
+                                                        // onChange={this.handleChange}
+                                                        >
+                                                            <MenuItem value={10}>Normal</MenuItem>
+                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                    <TextField
+                                                        id="standard-name"
+                                                        // label="BMI"
+                                                        className={classes.textField}
+                                                        value={this.state.name}
+                                                        onChange={this.handleChange('name')}
+                                                        margin="normal"
+                                                        style = {{width: 100}}
+                                                        />
+                                                </FormGroup>
+                                                <FormGroup row>
+                                                    <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                        <InputLabel htmlFor="visual acquity rt">Musculo Skeletal</InputLabel>
+                                                        <Select
+                                                        // value={this.state.age}
+                                                        // onChange={this.handleChange}
+                                                        >
+                                                            <MenuItem value={10}>Normal</MenuItem>
+                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                    <TextField
+                                                        id="standard-name"
+                                                        // label="BMI"
+                                                        className={classes.textField}
+                                                        value={this.state.name}
+                                                        onChange={this.handleChange('name')}
+                                                        margin="normal"
+                                                        style = {{width: 100}}
+                                                        />
+                                                </FormGroup>
+                                                </FormGroup>
+                                                <FormGroup row>
+                                                <FormGroup row>
+                                                    <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                        <InputLabel htmlFor="visual acquity rt">lntegumentary</InputLabel>
+                                                        <Select
+                                                        // value={this.state.age}
+                                                        // onChange={this.handleChange}
+                                                        >
+                                                            <MenuItem value={10}>Normal</MenuItem>
+                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                    <TextField
+                                                        id="standard-name"
+                                                        // label="BMI"
+                                                        className={classes.textField}
+                                                        value={this.state.name}
+                                                        onChange={this.handleChange('name')}
+                                                        margin="normal"
+                                                        style = {{width: 100}}
+                                                        />
+                                                </FormGroup>
+                                                <FormGroup row>
+                                                    <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                        <InputLabel htmlFor="visual acquity rt">Mental _Neurological</InputLabel>
+                                                        <Select
+                                                        // value={this.state.age}
+                                                        // onChange={this.handleChange}
+                                                        >
+                                                            <MenuItem value={10}>Normal</MenuItem>
+                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                        </Select>
+                                                    </FormControl>
+                                                    <TextField
+                                                        id="standard-name"
+                                                        // label="BMI"
+                                                        className={classes.textField}
+                                                        value={this.state.name}
+                                                        onChange={this.handleChange('name')}
+                                                        margin="normal"
+                                                        style = {{width: 100}}
+                                                        />
+                                                </FormGroup>
                                                 </FormGroup>
                                             </FormGroup>
+                                                <FormGroup>
+                                                    <FormLabel component="legend">Labratory Examination</FormLabel>
+                                                    <FormGroup row>
+                                                    <FormGroup row>
+                                                        <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="sugar">Sugar</InputLabel>
+                                                            <Select
+                                                            // value={this.state.age}
+                                                            // onChange={this.handleChange}
+                                                            >   
+                                                                <MenuItem value=""><em>None</em></MenuItem>
+                                                                <MenuItem value={10}>Posetive</MenuItem>
+                                                                <MenuItem value={20}>Negative</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="WBC"
+                                                            className={classes.textField}
+                                                            value={this.state.name}
+                                                            onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            style={{ width: 100,marginLeft: 20, marginTop: 0, }}
+                                                        />
+                                                        <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
+                                                            {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
+                                                            <Select
+                                                            // value={this.state.age}
+                                                            // onChange={this.handleChange}
+                                                            >
+                                                                <MenuItem value={10}>Normal</MenuItem>
+                                                                <MenuItem value={20}>Abnormal</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                    </FormGroup>
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormGroup row>
+                                                            <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                                <InputLabel htmlFor="sugar">Albumin</InputLabel>
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value=""><em>None</em></MenuItem>
+                                                                    <MenuItem value={10}>Posetive</MenuItem>
+                                                                    <MenuItem value={20}>Negative</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>
+                                                        <FormGroup row>
+                                                            <TextField
+                                                                id="standard-name"
+                                                                label="HGB"
+                                                                className={classes.textField}
+                                                                value={this.state.name}
+                                                                onChange={this.handleChange('name')}
+                                                                margin="normal"
+                                                                style={{ width: 100, marginLeft: 20, marginTop: 0, }}
+                                                            />
+                                                            <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
+                                                                {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value={10}>Normal</MenuItem>
+                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormGroup row>
+                                                            <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                                <InputLabel htmlFor="sugar">Pus Cells</InputLabel>
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value=""><em>None</em></MenuItem>
+                                                                    <MenuItem value={10}>Posetive</MenuItem>
+                                                                    <MenuItem value={20}>Negative</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>
+                                                        <FormGroup row>
+                                                            <TextField
+                                                                id="standard-name"
+                                                                label="ESR"
+                                                                className={classes.textField}
+                                                                value={this.state.name}
+                                                                onChange={this.handleChange('name')}
+                                                                margin="normal"
+                                                                style={{ width: 100, marginLeft: 20, marginTop: 0, }}
+                                                            />
+                                                            <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
+                                                                {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value={10}>Normal</MenuItem>
+                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormGroup row>
+                                                            <FormGroup row>
+                                                                <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                                    <InputLabel htmlFor="sugar">HCG</InputLabel>
+                                                                    <Select
+                                                                    // value={this.state.age}
+                                                                    // onChange={this.handleChange}
+                                                                    >
+                                                                        <MenuItem value=""><em>None</em></MenuItem>
+                                                                        <MenuItem value={10}>Posetive</MenuItem>
+                                                                        <MenuItem value={20}>Negative</MenuItem>
+                                                                    </Select>
+                                                                </FormControl>
+                                                            </FormGroup>
+                                                        </FormGroup>
+                                                        <FormGroup row>
+                                                            <TextField
+                                                                id="standard-name"
+                                                                label="FBS"
+                                                                className={classes.textField}
+                                                                value={this.state.name}
+                                                                onChange={this.handleChange('name')}
+                                                                margin="normal"
+                                                                style={{ width: 100, marginLeft: 20, marginTop: 0, }}
+                                                            />
+                                                            <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
+                                                                {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value={10}>Normal</MenuItem>
+                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormGroup row>
+                                                            <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                                <InputLabel htmlFor="sugar">Stool Oval/Parasites</InputLabel>
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value=""><em>None</em></MenuItem>
+                                                                    <MenuItem value={10}>Posetive</MenuItem>
+                                                                    <MenuItem value={20}>Negative</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>
+                                                        <FormGroup row>
+                                                            <TextField
+                                                                id="standard-name"
+                                                                label="SGPT"
+                                                                className={classes.textField}
+                                                                value={this.state.name}
+                                                                onChange={this.handleChange('name')}
+                                                                margin="normal"
+                                                                style={{ width: 100, marginLeft: 20, marginTop: 0, }}
+                                                            />
+                                                            <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
+                                                                {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value={10}>Normal</MenuItem>
+                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormGroup row>
+                                                            <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                                <InputLabel htmlFor="sugar">Blood Blood/Film</InputLabel>
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value=""><em>None</em></MenuItem>
+                                                                    <MenuItem value={10}>Posetive</MenuItem>
+                                                                    <MenuItem value={20}>Negative</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>
+                                                        <FormGroup row>
+                                                            <TextField
+                                                                id="standard-name"
+                                                                label="SGOT"
+                                                                className={classes.textField}
+                                                                value={this.state.name}
+                                                                onChange={this.handleChange('name')}
+                                                                margin="normal"
+                                                                style={{ width: 100, marginLeft: 20, marginTop: 0, }}
+                                                            />
+                                                            <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
+                                                                {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value={10}>Normal</MenuItem>
+                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>   
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormGroup row>
+                                                            <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                                <InputLabel htmlFor="sugar">VDRL</InputLabel>
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value=""><em>None</em></MenuItem>
+                                                                    <MenuItem value={10}>Posetive</MenuItem>
+                                                                    <MenuItem value={20}>Negative</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>
+                                                        <FormGroup row>
+                                                            <TextField
+                                                                id="standard-name"
+                                                                label="ALK.Ph"
+                                                                className={classes.textField}
+                                                                value={this.state.name}
+                                                                onChange={this.handleChange('name')}
+                                                                margin="normal"
+                                                                style={{ width: 100, marginLeft: 20, marginTop: 0, }}
+                                                            />
+                                                            <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
+                                                                {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value={10}>Normal</MenuItem>
+                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormGroup row>
+                                                            <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                                <InputLabel htmlFor="sugar">HBsAg</InputLabel>
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value=""><em>None</em></MenuItem>
+                                                                    <MenuItem value={10}>Posetive</MenuItem>
+                                                                    <MenuItem value={20}>Negative</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>
+                                                        <FormGroup row>
+                                                            <TextField
+                                                                id="standard-name"
+                                                                label="BUN"
+                                                                className={classes.textField}
+                                                                value={this.state.name}
+                                                                onChange={this.handleChange('name')}
+                                                                margin="normal"
+                                                                style={{ width: 100, marginLeft: 20, marginTop: 0, }}
+                                                            />
+                                                            <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
+                                                                {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value={10}>Normal</MenuItem>
+                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormGroup row>
+                                                            <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                                <InputLabel htmlFor="sugar">Anti HCV Ab</InputLabel>
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value=""><em>None</em></MenuItem>
+                                                                    <MenuItem value={10}>Posetive</MenuItem>
+                                                                    <MenuItem value={20}>Negative</MenuItem>
+                                                                </Select>
+                                                        </FormControl>
+                                                        </FormGroup>
+                                                        <FormGroup row>
+                                                            <TextField
+                                                                id="standard-name"
+                                                                label="CRA"
+                                                                className={classes.textField}
+                                                                value={this.state.name}
+                                                                onChange={this.handleChange('name')}
+                                                                margin="normal"
+                                                                style={{ width: 100, marginLeft: 20, marginTop: 0, }}
+                                                            />
+                                                            <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
+                                                                {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value={10}>Normal</MenuItem>
+                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="sugar">HIV</InputLabel>
+                                                            <Select
+                                                            // value={this.state.age}
+                                                            // onChange={this.handleChange}
+                                                            >
+                                                                <MenuItem value=""><em>None</em></MenuItem>
+                                                                <MenuItem value={10}>Posetive</MenuItem>
+                                                                <MenuItem value={20}>Negative</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                    </FormGroup>
+                                                    <FormGroup>
+                                                        <FormLabel component="legend">Imaging Studies</FormLabel>
+                                                        <FormGroup row>
+                                                            <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                                <InputLabel htmlFor="sugar">EGK</InputLabel>
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value=""><em>None</em></MenuItem>
+                                                                    <MenuItem value={10}>Normal</MenuItem>
+                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                            <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
+                                                                <InputLabel htmlFor="sugar">Chest X-ray</InputLabel>
+                                                                <Select
+                                                                // value={this.state.age}
+                                                                // onChange={this.handleChange}
+                                                                >
+                                                                    <MenuItem value=""><em>None</em></MenuItem>
+                                                                    <MenuItem value={10}>Normal</MenuItem>
+                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </FormGroup>
+                                                        <FormGroup row>
+                                                            <TextField
+                                                                id="standard-multiline-flexible"
+                                                                label="Recommendation"
+                                                                multiline
+                                                                rowsMax="4"
+                                                                value={this.state.multiline}
+                                                                onChange={this.handleChange('multiline')}
+                                                                className={classes.textField}
+                                                                margin="normal"
+                                                                style={{ width: 500}}
+                                                            />
+                                                            <RadioGroup
+                                                                aria-label="Gender"
+                                                                name="gender1"
+                                                                className={classes.group}
+                                                                style={{ padding: '0 10px 10px 10px' }}
+                                                            // value={this.state.value}
+                                                            // onChange={this.handleChange}
+                                                            >
+                                                                <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Fit" />
+                                                                <FormControlLabel labelPlacement="start" value="No" control={<Radio />} label="NotFit" />
+                                                            </RadioGroup>
+                                                        </FormGroup>
+                                                    </FormGroup>
+                                                </FormGroup>
                                         </FormControl>
                                         </form>
                                     </DialogContentText>
