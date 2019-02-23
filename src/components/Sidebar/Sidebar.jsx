@@ -266,7 +266,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Recruitment Medical Exam</Typography>} />
                   </ListItem>
-                  <ListItem button className={classes.nested} component={Link} to="/TattooNote">
+                  <ListItem button className={classes.nested} component={Link} to="/DentalHistory">
                     <ListItemIcon className={classes.itemIcon}>
                       <StarBorder />
                     </ListItemIcon>
@@ -274,7 +274,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      disableTypography
                      className={classes.itemText + whiteFontClasses}
                      inset
-                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Tattoo Note</Typography>} />
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Dental History</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/OperationNote">
                     <ListItemIcon className={classes.itemIcon}>
@@ -295,6 +295,26 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      className={classes.itemText + whiteFontClasses}
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Discharge Summary</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested} component={Link} to="/GeneralCheckUp">
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>General CheckUp</Typography>} />
+                  </ListItem>
+                  <ListItem button className={classes.nested} component={Link} to="/NeonatalNote">
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Neonatal Note</Typography>} />
                   </ListItem>
                 </List>
               </Collapse>

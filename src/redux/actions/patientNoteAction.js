@@ -1,4 +1,4 @@
-import { PATIENT_NOTE_LOAD, PATIENT_NOTE_DETAIL_LOAD, LOAD_PROGRESS_NOTE, LOAD_NOTE_SUB_CATEGORY, SAVE_PATIENT_NOTE} from "./types";
+import { PATIENT_NOTE_LOAD, PATIENT_NOTE_DETAIL_LOAD, LOAD_PROGRESS_NOTE, LOAD_NOTE_SUB_CATEGORY, SAVE_PATIENT_NOTE, LOAD_TEETH, LOAD_SOCIAL_HISTORY, LOAD_FAMILY_HISTORY, LOAD_MEDICAL_HISTORY, LOAD_REVIEW_OF_SYSTEM, LOAD_PHYSICAL_EXAM, LOAD_DM_ROS, LOAD_DM_EXAM, LOAD_DM_PATIENT_EDUCATION, LOAD_DM_VACCINATION, LOAD_DM_PAST_PROCEDURE, LOAD_DM_PROBLEM_LIST, LOAD_DM_OTHER_PROBLEM, LOAD_DM_HABITS} from "./types";
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export type Action =
@@ -53,6 +53,118 @@ export const savePatientNote = (URL, data): Action => ({
             method: 'POST',
             url: URL,
             data: data
+        }
+    }
+});
+export const fetchTeeth = (URL): Action => ({
+    type: LOAD_TEETH,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchSocialHistory = (URL): Action => ({
+    type: LOAD_SOCIAL_HISTORY,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchFamilyHistory = (URL): Action => ({
+    type: LOAD_FAMILY_HISTORY,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchMedicalHistory = (URL): Action => ({
+    type: LOAD_MEDICAL_HISTORY,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchReviewofSystems = (URL): Action => ({
+    type: LOAD_REVIEW_OF_SYSTEM,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchPhysicalExam = (URL): Action => ({
+    type: LOAD_PHYSICAL_EXAM,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchDMHabit = (URL): Action => ({
+    type: LOAD_DM_HABITS,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchDMOtherProblem = (URL): Action => ({
+    type: LOAD_DM_OTHER_PROBLEM,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchDMProblemList = (URL): Action => ({
+    type: LOAD_DM_PROBLEM_LIST,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchDMPastProcedure = (URL): Action => ({
+    type: LOAD_DM_PAST_PROCEDURE,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchDMVaccination = (URL): Action => ({
+    type: LOAD_DM_VACCINATION,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchDMPatientEducation = (URL): Action => ({
+    type: LOAD_DM_PATIENT_EDUCATION,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchDMExam = (URL): Action => ({
+    type: LOAD_DM_EXAM,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchDMROS = (URL): Action => ({
+    type: LOAD_DM_ROS,
+    payload: {
+        request: {
+            url: URL
         }
     }
 });

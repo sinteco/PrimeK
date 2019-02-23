@@ -12,6 +12,7 @@ import CustomTableWithTextBox from '../Table/CustomTableWithTextBox';
 import FormLabel from '@material-ui/core/FormLabel';
 import CustomTable from '../Diagnosis/CustomDiagnosis';
 import { fetchPatientDiagnosis } from '../../redux/actions/diagnosisAction';
+import { fetchDMHabit,fetchDMOtherProblem,fetchDMProblemList,fetchDMPastProcedure,fetchDMVaccination,fetchDMPatientEducation,fetchDMExam,fetchDMROS, fetchPhysicalExam } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
 
@@ -71,6 +72,26 @@ class newDHPNote extends Component {
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
         const url = '/Diagnosis/GetDiagnosisOfPatient/' + id;
         this.props.fetchPatientDiagnosis(url);
+
+        const DMHabitURL = 'PatientNotes/GetNoteSubCategory/DM Habit';
+        this.props.fetchDMHabit(DMHabitURL);
+        const DMOtherProblemURL = 'PatientNotes/GetNoteSubCategory/DM Other Problem';
+        this.props.fetchDMOtherProblem(DMOtherProblemURL);
+        const DMProblemListURL = 'PatientNotes/GetNoteSubCategory/DM Problem List';
+        this.props.fetchDMProblemList(DMProblemListURL);
+        const DMPastProcedureURL = 'PatientNotes/GetNoteSubCategory/DM Past Procedure';
+        this.props.fetchDMPastProcedure(DMPastProcedureURL);
+        const DMVaccinationURL = 'PatientNotes/GetNoteSubCategory/DM Vaccination';
+        this.props.fetchDMVaccination(DMVaccinationURL);
+        const DMPatientEducationURL = 'PatientNotes/GetNoteSubCategory/DM Patient Education';
+        this.props.fetchDMPatientEducation(DMPatientEducationURL);
+        const DMExamURL = 'PatientNotes/GetNoteSubCategory/DM Exam';
+        this.props.fetchDMExam(DMExamURL);
+        const DMROSURL = 'PatientNotes/GetNoteSubCategory/DM ROS';
+        this.props.fetchDMROS(DMROSURL);
+        const PhysicalExamURL = 'PatientNotes/GetNoteSubCategory/Physical Exam';
+        this.props.fetchPhysicalExam(PhysicalExamURL);
+
     }
 
     render() {
@@ -160,7 +181,7 @@ class newDHPNote extends Component {
                                 <CustomTableWithTextBox
                                     tableHeaderColor="primary"
                                     tableHead={[" ", "Problem", "Remark", "Quantity", "Frequency"]}
-                                    tableData={[["Cigarattes"], ["Alchol"], ["Chat"]]}
+                                    tableData={this.props.DMHabit.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -172,10 +193,7 @@ class newDHPNote extends Component {
                                 <Table
                                     tableHeaderColor="primary"
                                     tableHead={[" ", "Problem", "Yes", "No", "Diagnosis Year", "Remark"]}
-                                    tableData={[
-                                        ["Diabetes"],
-                                        ["Other"]
-                                    ]}
+                                    tableData={this.props.DMProblemList.map(item => { return [item.Name] })}
                                     radio={2}
                                     textBox={2}
                                 />
@@ -187,11 +205,7 @@ class newDHPNote extends Component {
                                 <Table
                                     tableHeaderColor="primary"
                                     tableHead={[" ", "Problem", "Yes", "No", "Remark"]}
-                                    tableData={[
-                                        ["CAD"],
-                                        ["PVD"],
-                                        ["Other"]
-                                    ]}
+                                    tableData={this.props.DMOtherProblem.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -203,11 +217,7 @@ class newDHPNote extends Component {
                                 <TableWithDatePicker
                                     tableHeaderColor="primary"
                                     tableHead={[" ", "Problem", "Yes", "No", "Date", "Remark"]}
-                                    tableData={[
-                                        ["General Appearance"],
-                                        ["HEENT"],
-                                        ["Other"]
-                                    ]}
+                                    tableData={this.props.DMPastProcedure.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -219,11 +229,7 @@ class newDHPNote extends Component {
                                 <TableWithDatePicker
                                     tableHeaderColor="primary"
                                     tableHead={[" ", "vaccine", "Yes", "No", "Date", "Remark"]}
-                                    tableData={[
-                                        ["General Appearance"],
-                                        ["HEENT"],
-                                        ["Other"]
-                                    ]}
+                                    tableData={this.props.DMVaccination.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -235,11 +241,7 @@ class newDHPNote extends Component {
                                 <TableWithDatePicker
                                     tableHeaderColor="primary"
                                     tableHead={[" ", "education", "Yes", "No", "Date", "Remark"]}
-                                    tableData={[
-                                        ["General Appearance"],
-                                        ["HEENT"],
-                                        ["Other"]
-                                    ]}
+                                    tableData={this.props.DMPatientEducation.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -251,11 +253,7 @@ class newDHPNote extends Component {
                                 <TableWithDatePicker
                                     tableHeaderColor="primary"
                                     tableHead={[" ", "exam", "Yes", "No", "Date", "Remark"]}
-                                    tableData={[
-                                        ["General Appearance"],
-                                        ["HEENT"],
-                                        ["Other"]
-                                    ]}
+                                    tableData={this.props.DMExam.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -267,11 +265,7 @@ class newDHPNote extends Component {
                                 <TableWithDatePicker
                                     tableHeaderColor="primary"
                                     tableHead={[" ", "system", "Yes", "No", "Date", "Remark"]}
-                                    tableData={[
-                                        ["General Appearance"],
-                                        ["HEENT"],
-                                        ["Other"]
-                                    ]}
+                                    tableData={this.props.DMROS.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -305,11 +299,7 @@ class newDHPNote extends Component {
                                 <TableWithDatePicker
                                     tableHeaderColor="primary"
                                     tableHead={[" ", "system", "Yes", "No", "Date", "Remark"]}
-                                    tableData={[
-                                        ["General Appearance"],
-                                        ["HEENT"],
-                                        ["Other"]
-                                    ]}
+                                    tableData={this.props.PhysicalExam.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -323,21 +313,57 @@ class newDHPNote extends Component {
 }
 
 newDHPNote.propTypes = {
+    fetchPhysicalExam: propTypes.func.isRequired,
+    fetchDMHabit: propTypes.func.isRequired,
+    fetchDMOtherProblem: propTypes.func.isRequired,
+    fetchDMProblemList: propTypes.func.isRequired,
+    fetchDMPastProcedure: propTypes.func.isRequired,
+    fetchDMVaccination: propTypes.func.isRequired,
+    fetchDMPatientEducation: propTypes.func.isRequired,
+    fetchDMExam: propTypes.func.isRequired,
+    fetchDMROS: propTypes.func.isRequired,
     fetchPatientDiagnosis: propTypes.func.isRequired,
     patientDiagnosis: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
-    hasError: propTypes.bool.isRequired
+    hasError: propTypes.bool.isRequired,
+    DMHabit: propTypes.array.isRequired,
+    DMOtherProblem: propTypes.array.isRequired,
+    DMProblemList: propTypes.array.isRequired,
+    DMPastProcedure: propTypes.array.isRequired,
+    DMVaccination: propTypes.array.isRequired,
+    DMPatientEducation: propTypes.array.isRequired,
+    DMExam: propTypes.array.isRequired,
+    DMROS: propTypes.array.isRequired,
+    PhysicalExam: propTypes.array.isRequired
 }
 
 const mapStateToProps = (state) => ({
     patientDiagnosis: state.diagnosisOrder.patientDiagnosis,
     isLoading: state.diagnosisOrder.isLoading,
     hasError: state.diagnosisOrder.hasError,
-    selectedPatient: state.assignments.selectedPatient
+    selectedPatient: state.assignments.selectedPatient,
+    DMHabit: state.patientNote.DMHabit,
+    DMOtherProblem: state.patientNote.DMOtherProblem,
+    DMProblemList: state.patientNote.DMProblemList,
+    DMPastProcedure: state.patientNote.DMPastProcedure,
+    DMVaccination: state.patientNote.DMVaccination,
+    DMPatientEducation: state.patientNote.DMPatientEducation,
+    DMExam: state.patientNote.DMExam,
+    DMROS: state.patientNote.DMROS,
+    PhysicalExam: state.patientNote.PhysicalExam,
 });
 
 const mapDispatchToProps = dispatch => ({
-    fetchPatientDiagnosis: (url) => dispatch(fetchPatientDiagnosis(url))
+    fetchPatientDiagnosis: (url) => dispatch(fetchPatientDiagnosis(url)),
+    fetchDMHabit: (url) => dispatch(fetchDMHabit(url)),
+    fetchDMOtherProblem: (url) => dispatch(fetchDMOtherProblem(url)),
+    fetchDMProblemList: (url) => dispatch(fetchDMProblemList(url)),
+    fetchDMPastProcedure: (url) => dispatch(fetchDMPastProcedure(url)),
+    fetchDMVaccination: (url) => dispatch(fetchDMVaccination(url)),
+    fetchDMPatientEducation: (url) => dispatch(fetchDMPatientEducation(url)),
+    fetchDMExam: (url) => dispatch(fetchDMExam(url)),
+    fetchDMROS: (url) => dispatch(fetchDMROS(url)),
+    fetchPhysicalExam: (url) => dispatch(fetchPhysicalExam(url))
 });
 
 export default compose(withStyles(style), connect(mapStateToProps, mapDispatchToProps))(newDHPNote);

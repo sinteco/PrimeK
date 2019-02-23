@@ -22,11 +22,30 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import TextField from '@material-ui/core/TextField';
+import FormLabel from '@material-ui/core/FormLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormGroup from '@material-ui/core/FormGroup';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
 import qs from 'qs';
 
-const styles = {
+function TabContainer(props) {
+    return (
+        <Typography component="div" style={{ padding: 8 * 3 }}>
+            {props.children}
+        </Typography>
+    );
+}
+TabContainer.propTypes = {
+    children: PropTypes.node.isRequired,
+};
+
+const styles = theme => ({
     cardCategoryWhite: {
         "&,& a,& a:hover,& a:focus": {
             color: "rgba(255,255,255,.62)",
@@ -53,10 +72,19 @@ const styles = {
             fontWeight: "400",
             lineHeight: "1"
         }
-    }
-};
+    },
+    root: {
+        display: 'flex',
+    },
+    formControl: {
+        margin: theme.spacing.unit * 3,
+    },
+    group: {
+        margin: `${theme.spacing.unit}px 0`,
+    },
+});
 
-const category = "Tattoo Note";
+const category = "Neonatal Note";
 
 class pNote extends Component {
     constructor(props) {
@@ -68,8 +96,12 @@ class pNote extends Component {
             disabledInput: true,
             forms: [],
             open: false,
+            value: 0
         }
     }
+    tabhandleChange = (event, value) => {
+        this.setState({ value });
+    };
     handleChange = (key, name) => event => {
         let forms = [...this.state.forms];
         forms[key] = event.target.value;
@@ -216,6 +248,7 @@ class pNote extends Component {
                                 </DialogActions>
                             </Dialog>
                             <Dialog
+                                maxWidth={'lg'}
                                 fullScreen={fullScreen}
                                 open={this.state.newdialogopen}
                                 onClose={this.handleClose}
@@ -225,38 +258,121 @@ class pNote extends Component {
                                 <DialogContent>
                                     <DialogContentText>
                                         <form>
-                                            {this.props.isLoading ? <CircularProgress className={classes.progress} /> : ""}
-                                            {
-                                                this.props.noteSubCategory.map(
-                                                    (item, key) => item.InputType == "String" ?
-                                                        <TextField
-                                                            disabled={this.state.disabledInput}
-                                                            id="standard-multiline-flexible"
-                                                            label={item.Name}
-                                                            multiline
-                                                            rowsMax="4"
-                                                            fullWidth
-                                                            value={item.name}
-                                                            onChange={this.handleChange(key, item.Name)}
-                                                            className={classes.textField}
-                                                            margin="normal"
-                                                        /> : <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                                                            <DatePicker
-                                                                margin="normal"
-                                                                label={item.Name}
-                                                                // formatDate={(date) => Moment(date).format('YYYY-MM-DD')}
-                                                                value={this.state.forms[key]}
-                                                                onChange={(date) => {
-                                                                    let forms = [...this.state.forms];
-                                                                    forms[key] = date;
-                                                                    this.setState({ forms }, function () {
-                                                                        console.log(this.state.forms);
-                                                                    });
-                                                                }}
-                                                            />
+                                            <AppBar position="static" color="default">
+                                                <Tabs value={this.state.value} onChange={this.tabhandleChange}>
+                                                    <Tab label="Baby" />
+                                                    <Tab label="Mother" />
+                                                </Tabs>
+                                            </AppBar>
+                                            {this.state.value === 0 && <TabContainer>
+                                                <FormControl component="fieldset" className={classes.formControl}>
+                                                    <FormLabel component="legend">Delivery</FormLabel>
+                                                    <FormGroup row>
+                                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                                <DatePicker
+                                                                    margin="normal"
+                                                                    label="Date picker"
+                                                                    // value={selectedDate}
+                                                                    // onChange={this.handleDateChange}
+                                                                />
                                                         </MuiPickersUtilsProvider>
-                                                )
-                                            }
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Delivery Method"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            style={{ width: 150 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Indication"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            style={{ width: 100 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Sex"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 100 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Birth wt.(gm)"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 100 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Length(cm)"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 100 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="HC(cm)"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 100 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="GA"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 100 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="APGAR score as 1 min:"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 200 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="at 5min:"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 100 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                    </FormGroup>
+                                                </FormControl>
+                                            </TabContainer>}
+                                            {this.state.value === 1 && <TabContainer>
+                                            </TabContainer>}
                                         </form>
                                     </DialogContentText>
                                 </DialogContent>

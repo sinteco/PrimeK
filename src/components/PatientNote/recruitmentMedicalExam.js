@@ -84,7 +84,7 @@ class pNote extends Component {
             disabledInput: true,
             forms: [],
             open: false,
-            Hypertension: '',
+            hypertension: '',
             diabeticmellitus: '',
             Seizuredisorder: '',
             asthma: '',
@@ -102,12 +102,61 @@ class pNote extends Component {
             visualacquitylt: '',
             hearinglt: '',
             hearingrt: '',
-            
+            Teeth: '',
+            cardiovascular: '',
+            textboxVisualacquityrt: '',
+            textboxVisualacquitylt: '',
+            textboxHearinglt: '',
+            textboxHearingrt: '',
+            textboxTeeth: '',
+            textboxCardiovascular: '',
+            respiratory: '',
+            abdomen: '',
+            musculoSkeletal: '',
+            integumentary: '',
+            mentalNeurological: '',
+            textboxRespiratory: '',
+            textboxAbdomen: '',
+            textboxMusculoSkeletal: '',
+            textboxIntegumentary: '',
+            textboxMentalNeurological: '',
+            sugar: '',
+            albumin: '',
+            pusCells: '',
+            HCG: '',
+            ovalParasites: '',
+            bloodFilm: '',
+            VDRL: '',
+            hbsAg: '',
+            antiHCVAb: '',
+            HIV: '',
+            WBC: '',
+            HGB: '',
+            ESR: '',
+            FBS: '',
+            SGPT: '',
+            SGOT: '',
+            ALKPH: '',
+            BUN: '',
+            CREA: '',
+            comboboxWBC: '',
+            comboboxHGB: '',
+            comboboxESR: '',
+            comboboxFBS: '',
+            comboboxSGPT: '',
+            comboboxSGOT: '',
+            comboboxALKPH: '',
+            comboboxBUN: '',
+            comboboxCREA: '',
+            EKG: '',
+            chestXray: '',
+            recommendation: '',
+            fit: ''
         }
     }
     handleChange = name => event => {
         this.setState({ [name]: event.target.value });
-      };
+    };
     returnarrays() {
         var a = new Array();
         this.props.progressNotes.map((progressNote) => {
@@ -149,7 +198,6 @@ class pNote extends Component {
             DateTime: new Date(),
             Value: this.state.forms,
             Remark: null,
-            age: ''
         }
         if (id === 0) {
             alert("patient is not selected");
@@ -266,8 +314,8 @@ class pNote extends Component {
                                                 name="gender1"
                                                 className={classes.group}
                                                 style={{padding: '0 10px 10px 10px'}}
-                                                // value={this.state.value}
-                                                // onChange={this.handleChange}
+                                                value={this.state.hypertension}
+                                                onChange={this.handleChange('hypertension')}
                                             >
                                                 <FormLabel>Hypertension</FormLabel>
                                                 <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
@@ -281,8 +329,8 @@ class pNote extends Component {
                                                 name="gender1"
                                                 className={classes.group}
                                                 style={{padding: '0 10px 10px 10px'}}
-                                                // value={this.state.value}
-                                                // onChange={this.handleChange}
+                                                value={this.state.diabeticmellitus}
+                                                onChange={this.handleChange('diabeticmellitus')}
                                             >   
                                                 <FormLabel>Diabetis Mellitus</FormLabel>
                                                 <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
@@ -296,8 +344,8 @@ class pNote extends Component {
                                                 name="gender1"
                                                 className={classes.group}
                                                 style={{padding: '0 10px 10px 10px'}}
-                                                // value={this.state.value}
-                                                // onChange={this.handleChange}
+                                                value={this.state.Seizuredisorder}
+                                                onChange={this.handleChange('Seizuredisorder')}
                                             >   <FormLabel>Seizure Disorder</FormLabel>
                                                 <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
                                                 <FormControlLabel labelPlacement="start" value="No" control={<Radio />} label="No" />
@@ -310,8 +358,8 @@ class pNote extends Component {
                                                 name="gender1"
                                                 className={classes.group}
                                                 style={{padding: '0 10px 10px 10px'}}
-                                                // value={this.state.value}
-                                                // onChange={this.handleChange}
+                                                value={this.state.Psychariticillness}
+                                                onChange={this.handleChange('Psychariticillness')}
                                             >   <FormLabel>Psycharitic illness</FormLabel>
                                                 <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
                                                 <FormControlLabel labelPlacement="start" value="No" control={<Radio />} label="No" />
@@ -324,8 +372,8 @@ class pNote extends Component {
                                                 name="gender1"
                                                 className={classes.group}
                                                 style={{padding: '0 10px 10px 10px'}}
-                                                // value={this.state.value}
-                                                // onChange={this.handleChange}
+                                                value={this.state.Allergies}
+                                                onChange={this.handleChange('Allergies')}
                                             >
                                                 <FormLabel>Allergies</FormLabel>
                                                 <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
@@ -335,8 +383,8 @@ class pNote extends Component {
                                                 id="standard-name"
                                                 label="Other"
                                                 className={classes.textField}
-                                                // value={this.state.name}
-                                                // onChange={this.handleChange('name')}
+                                                value={this.state.Other}
+                                                onChange={this.handleChange('Other')}
                                                 margin="normal"
                                                 style={{padding: '0 10px 10px 10px'}}
                                                 />
@@ -347,8 +395,8 @@ class pNote extends Component {
                                                     id="standard-name"
                                                     label="BP(S)"
                                                     className={classes.textField}
-                                                    // value={this.state.name}
-                                                    // onChange={this.handleChange('name')}
+                                                    value={this.state.bps}
+                                                    onChange={this.handleChange('bps')}
                                                     margin="normal"
                                                     style = {{width: 100}}
                                                     />
@@ -356,8 +404,8 @@ class pNote extends Component {
                                                     id="standard-name"
                                                     label="BP(D)"
                                                     className={classes.textField}
-                                                    // value={this.state.name}
-                                                    // onChange={this.handleChange('name')}
+                                                    value={this.state.bpd}
+                                                    onChange={this.handleChange('bpd')}
                                                     margin="normal"
                                                     style = {{width: 100}}
                                                     />
@@ -365,8 +413,8 @@ class pNote extends Component {
                                                     id="standard-name"
                                                     label="PR"
                                                     className={classes.textField}
-                                                    // value={this.state.name}
-                                                    // onChange={this.handleChange('name')}
+                                                    value={this.state.pr}
+                                                    onChange={this.handleChange('pr')}
                                                     margin="normal"
                                                     style = {{width: 100}}
                                                     />
@@ -374,8 +422,8 @@ class pNote extends Component {
                                                     id="standard-name"
                                                     label="Wt"
                                                     className={classes.textField}
-                                                    // value={this.state.name}
-                                                    // onChange={this.handleChange('name')}
+                                                    value={this.state.wt}
+                                                    onChange={this.handleChange('wt')}
                                                     margin="normal"
                                                     style = {{width: 100}}
                                                     />
@@ -383,8 +431,8 @@ class pNote extends Component {
                                                     id="standard-name"
                                                     label="Ht"
                                                     className={classes.textField}
-                                                    // value={this.state.name}
-                                                    // onChange={this.handleChange('name')}
+                                                    value={this.state.ht}
+                                                    onChange={this.handleChange('ht')}
                                                     margin="normal"
                                                     style = {{width: 100}}
                                                     />
@@ -392,26 +440,26 @@ class pNote extends Component {
                                                     id="standard-name"
                                                     label="BMI"
                                                     className={classes.textField}
-                                                    // value={this.state.name}
-                                                    // onChange={this.handleChange('name')}
+                                                    value={this.state.bmi}
+                                                    onChange={this.handleChange('bmi')}
                                                     margin="normal"
                                                     style = {{ width: 100 }}
                                                     />
                                                 <FormControl style = {{ width: 105, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
                                                     <InputLabel htmlFor="blood group">Blood Group</InputLabel>
                                                     <Select
-                                                        // value={this.state.age}
-                                                        // onChange={this.handleChange}
+                                                        value={this.state.bloodgroup}
+                                                        onChange={this.handleChange('bloodgroup')}
                                                     >
                                                         <MenuItem value=""><em>None</em></MenuItem>
-                                                        <MenuItem value={10}>A+</MenuItem>
-                                                        <MenuItem value={20}>A-</MenuItem>
-                                                        <MenuItem value={30}>B+</MenuItem>
-                                                        <MenuItem value={30}>B-</MenuItem>
-                                                        <MenuItem value={30}>O+</MenuItem>
-                                                        <MenuItem value={30}>O-</MenuItem>
-                                                        <MenuItem value={30}>AB+</MenuItem>
-                                                        <MenuItem value={30}>AB-</MenuItem>
+                                                        <MenuItem value="A+">A+</MenuItem>
+                                                        <MenuItem value="A-">A-</MenuItem>
+                                                        <MenuItem value="B+">B+</MenuItem>
+                                                        <MenuItem value="B-">B-</MenuItem>
+                                                        <MenuItem value="O+">O+</MenuItem>
+                                                        <MenuItem value="O-">O-</MenuItem>
+                                                        <MenuItem value="AB+">AB+</MenuItem>
+                                                        <MenuItem value="AB-">AB-</MenuItem>
                                                     </Select>
                                                 </FormControl>
                                             </FormGroup>
@@ -422,19 +470,19 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="visual acquity rt">Visual Acquity Rt</InputLabel>
                                                             <Select
-                                                            // value={this.state.age}
-                                                            // onChange={this.handleChange}
+                                                                value={this.state.visualacquityrt}
+                                                                onChange={this.handleChange('visualacquityrt')}
                                                             >
-                                                                <MenuItem value={10}>Normal</MenuItem>
-                                                                <MenuItem value={20}>Abnormal</MenuItem>
+                                                                <MenuItem value="Normal">Normal</MenuItem>
+                                                                <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                             </Select>
                                                         </FormControl>
                                                         <TextField
                                                             id="standard-name"
                                                             // label="BMI"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.textboxVisualacquityrt}
+                                                            onChange={this.handleChange('textboxVisualacquityrt')}
                                                             margin="normal"
                                                             style={{ width: 100 }}
                                                         />
@@ -443,19 +491,19 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="visual acquity rt">Visual Acquity Lt</InputLabel>
                                                             <Select
-                                                            // value={this.state.age}
-                                                            // onChange={this.handleChange}
+                                                                value={this.state.visualacquitylt}
+                                                                onChange={this.handleChange('visualacquitylt')}
                                                             >
-                                                                <MenuItem value={10}>Normal</MenuItem>
-                                                                <MenuItem value={20}>Abnormal</MenuItem>
+                                                                <MenuItem value="Normal">Normal</MenuItem>
+                                                                <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                             </Select>
                                                         </FormControl>
                                                         <TextField
                                                             id="standard-name"
                                                             // label="BMI"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.textboxVisualacquitylt}
+                                                            onChange={this.handleChange('textboxVisualacquitylt')}
                                                             margin="normal"
                                                             style={{ width: 100 }}
                                                         />
@@ -464,19 +512,19 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="visual acquity rt">Hearing Lt</InputLabel>
                                                             <Select
-                                                            // value={this.state.age}
-                                                            // onChange={this.handleChange}
+                                                                value={this.state.hearinglt}
+                                                                onChange={this.handleChange('hearingrt')}
                                                             >
-                                                                <MenuItem value={10}>Normal</MenuItem>
-                                                                <MenuItem value={20}>Abnormal</MenuItem>
+                                                                <MenuItem value="Normal">Normal</MenuItem>
+                                                                <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                             </Select>
                                                         </FormControl>
                                                         <TextField
                                                             id="standard-name"
                                                             // label="BMI"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.textboxHearinglt}
+                                                            onChange={this.handleChange('textboxHearingrt')}
                                                             margin="normal"
                                                             style = {{width: 100}}
                                                             />
@@ -487,19 +535,19 @@ class pNote extends Component {
                                                     <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                         <InputLabel htmlFor="visual acquity rt">Hearing Rt</InputLabel>
                                                         <Select
-                                                        // value={this.state.age}
-                                                        // onChange={this.handleChange}
+                                                            value={this.state.hearingrt}
+                                                            onChange={this.handleChange('hearingrt')}
                                                         >
-                                                            <MenuItem value={10}>Normal</MenuItem>
-                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                            <MenuItem value="Normal">Normal</MenuItem>
+                                                            <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                         </Select>
                                                     </FormControl>
                                                     <TextField
                                                         id="standard-name"
                                                         // label="BMI"
                                                         className={classes.textField}
-                                                        // value={this.state.name}
-                                                        // onChange={this.handleChange('name')}
+                                                        value={this.state.textboxHearingrt}
+                                                        onChange={this.handleChange('name')}
                                                         margin="normal"
                                                         style = {{width: 100}}
                                                         />
@@ -508,19 +556,19 @@ class pNote extends Component {
                                                     <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                         <InputLabel htmlFor="visual acquity rt">Teeth</InputLabel>
                                                         <Select
-                                                        // value={this.state.age}
-                                                        // onChange={this.handleChange}
+                                                            value={this.state.Teeth}
+                                                            onChange={this.handleChange('Teeth')}
                                                         >
-                                                            <MenuItem value={10}>Normal</MenuItem>
-                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                            <MenuItem value="Normal">Normal</MenuItem>
+                                                            <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                         </Select>
                                                     </FormControl>
                                                     <TextField
                                                         id="standard-name"
                                                         // label="BMI"
                                                         className={classes.textField}
-                                                        value={this.state.name}
-                                                        onChange={this.handleChange('name')}
+                                                        value={this.state.textboxTeeth}
+                                                        onChange={this.handleChange('textboxTeeth')}
                                                         margin="normal"
                                                         style = {{width: 100}}
                                                         />
@@ -529,19 +577,19 @@ class pNote extends Component {
                                                     <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                         <InputLabel htmlFor="visual acquity rt">CardioVascular</InputLabel>
                                                         <Select
-                                                        // value={this.state.age}
-                                                        // onChange={this.handleChange}
+                                                            value={this.state.cardiovascular}
+                                                            onChange={this.handleChange('cardiovascular')}
                                                         >
-                                                            <MenuItem value={10}>Normal</MenuItem>
-                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                            <MenuItem value="Normal">Normal</MenuItem>
+                                                            <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                         </Select>
                                                     </FormControl>
                                                     <TextField
                                                         id="standard-name"
                                                         // label="BMI"
                                                         className={classes.textField}
-                                                        value={this.state.name}
-                                                        onChange={this.handleChange('name')}
+                                                        value={this.state.textboxCardiovascular}
+                                                        onChange={this.handleChange('textboxCardiovascular')}
                                                         margin="normal"
                                                         style = {{width: 100}}
                                                         />
@@ -552,19 +600,19 @@ class pNote extends Component {
                                                     <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                         <InputLabel htmlFor="visual acquity rt">Respiratory</InputLabel>
                                                         <Select
-                                                        // value={this.state.age}
-                                                        // onChange={this.handleChange}
+                                                            value={this.state.respiratory}
+                                                            onChange={this.handleChange('respiratory')}
                                                         >
-                                                            <MenuItem value={10}>Normal</MenuItem>
-                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                            <MenuItem value="Normal">Normal</MenuItem>
+                                                            <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                         </Select>
                                                     </FormControl>
                                                     <TextField
                                                         id="standard-name"
                                                         // label="BMI"
                                                         className={classes.textField}
-                                                        value={this.state.name}
-                                                        onChange={this.handleChange('name')}
+                                                        value={this.state.textboxRespiratory}
+                                                        onChange={this.handleChange('textboxRespiratory')}
                                                         margin="normal"
                                                         style = {{width: 100}}
                                                         />
@@ -573,19 +621,19 @@ class pNote extends Component {
                                                     <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                         <InputLabel htmlFor="visual acquity rt">Abdomen</InputLabel>
                                                         <Select
-                                                        // value={this.state.age}
-                                                        // onChange={this.handleChange}
+                                                            value={this.state.abdomen}
+                                                            onChange={this.handleChange('abdomen')}
                                                         >
-                                                            <MenuItem value={10}>Normal</MenuItem>
-                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                            <MenuItem value="Normal">Normal</MenuItem>
+                                                            <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                         </Select>
                                                     </FormControl>
                                                     <TextField
                                                         id="standard-name"
                                                         // label="BMI"
                                                         className={classes.textField}
-                                                        value={this.state.name}
-                                                        onChange={this.handleChange('name')}
+                                                        value={this.state.textboxAbdomen}
+                                                        onChange={this.handleChange('textboxAbdomen')}
                                                         margin="normal"
                                                         style = {{width: 100}}
                                                         />
@@ -594,19 +642,19 @@ class pNote extends Component {
                                                     <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                         <InputLabel htmlFor="visual acquity rt">Musculo Skeletal</InputLabel>
                                                         <Select
-                                                        // value={this.state.age}
-                                                        // onChange={this.handleChange}
+                                                            value={this.state.musculoSkeletal}
+                                                            onChange={this.handleChange('musculoSkeletal')}
                                                         >
-                                                            <MenuItem value={10}>Normal</MenuItem>
-                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                            <MenuItem value="Normal">Normal</MenuItem>
+                                                            <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                         </Select>
                                                     </FormControl>
                                                     <TextField
                                                         id="standard-name"
                                                         // label="BMI"
                                                         className={classes.textField}
-                                                        value={this.state.name}
-                                                        onChange={this.handleChange('name')}
+                                                        value={this.state.textboxMusculoSkeletal}
+                                                        onChange={this.handleChange('textboxMusculoSkeletal')}
                                                         margin="normal"
                                                         style = {{width: 100}}
                                                         />
@@ -617,19 +665,19 @@ class pNote extends Component {
                                                     <FormControl style={{ width: 140, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                         <InputLabel htmlFor="visual acquity rt">lntegumentary</InputLabel>
                                                         <Select
-                                                        // value={this.state.age}
-                                                        // onChange={this.handleChange}
+                                                            value={this.state.integumentary}
+                                                            onChange={this.handleChange('integumentary')}
                                                         >
-                                                            <MenuItem value={10}>Normal</MenuItem>
-                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                            <MenuItem value="Normal">Normal</MenuItem>
+                                                            <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                         </Select>
                                                     </FormControl>
                                                     <TextField
                                                         id="standard-name"
                                                         // label="BMI"
                                                         className={classes.textField}
-                                                        value={this.state.name}
-                                                        onChange={this.handleChange('name')}
+                                                        value={this.state.textboxIntegumentary}
+                                                        onChange={this.handleChange('textboxIntegumentary')}
                                                         margin="normal"
                                                         style = {{width: 100}}
                                                         />
@@ -638,19 +686,19 @@ class pNote extends Component {
                                                     <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                         <InputLabel htmlFor="visual acquity rt">Mental _Neurological</InputLabel>
                                                         <Select
-                                                        // value={this.state.age}
-                                                        // onChange={this.handleChange}
+                                                            value={this.state.mentalNeurological}
+                                                            onChange={this.handleChange('mentalNeurological')}
                                                         >
-                                                            <MenuItem value={10}>Normal</MenuItem>
-                                                            <MenuItem value={20}>Abnormal</MenuItem>
+                                                            <MenuItem value="Normal">Normal</MenuItem>
+                                                            <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                         </Select>
                                                     </FormControl>
                                                     <TextField
                                                         id="standard-name"
                                                         // label="BMI"
                                                         className={classes.textField}
-                                                        value={this.state.name}
-                                                        onChange={this.handleChange('name')}
+                                                        value={this.state.textboxMentalNeurological}
+                                                        onChange={this.handleChange('textboxMentalNeurological')}
                                                         margin="normal"
                                                         style = {{width: 100}}
                                                         />
@@ -664,12 +712,12 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="sugar">Sugar</InputLabel>
                                                             <Select
-                                                            // value={this.state.age}
-                                                            // onChange={this.handleChange}
+                                                                value={this.state.sugar}
+                                                                onChange={this.handleChange('sugar')}
                                                             >   
                                                                 <MenuItem value=""><em>None</em></MenuItem>
-                                                                <MenuItem value={10}>Posetive</MenuItem>
-                                                                <MenuItem value={20}>Negative</MenuItem>
+                                                                <MenuItem value="Posetive">Posetive</MenuItem>
+                                                                <MenuItem value="Negative">Negative</MenuItem>
                                                             </Select>
                                                         </FormControl>
                                                     </FormGroup>
@@ -678,19 +726,19 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="WBC"
                                                             className={classes.textField}
-                                                            value={this.state.name}
-                                                            onChange={this.handleChange('name')}
+                                                            value={this.state.WBC}
+                                                            onChange={this.handleChange('WBC')}
                                                             margin="normal"
                                                             style={{ width: 100,marginLeft: 20, marginTop: 0, }}
                                                         />
                                                         <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
                                                             {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
                                                             <Select
-                                                            // value={this.state.age}
-                                                            // onChange={this.handleChange}
+                                                                value={this.state.comboboxWBC}
+                                                                onChange={this.handleChange('comboboxWBC')}
                                                             >
-                                                                <MenuItem value={10}>Normal</MenuItem>
-                                                                <MenuItem value={20}>Abnormal</MenuItem>
+                                                                <MenuItem value="Normal">Normal</MenuItem>
+                                                                <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                             </Select>
                                                         </FormControl>
                                                     </FormGroup>
@@ -700,12 +748,12 @@ class pNote extends Component {
                                                             <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                                 <InputLabel htmlFor="sugar">Albumin</InputLabel>
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.albumin}
+                                                                    onChange={this.handleChange('albumin')}
                                                                 >
                                                                     <MenuItem value=""><em>None</em></MenuItem>
-                                                                    <MenuItem value={10}>Posetive</MenuItem>
-                                                                    <MenuItem value={20}>Negative</MenuItem>
+                                                                    <MenuItem value="Posetive">Posetive</MenuItem>
+                                                                    <MenuItem value="Negative">Negative</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
@@ -714,19 +762,19 @@ class pNote extends Component {
                                                                 id="standard-name"
                                                                 label="HGB"
                                                                 className={classes.textField}
-                                                                value={this.state.name}
-                                                                onChange={this.handleChange('name')}
+                                                                value={this.state.HGB}
+                                                                onChange={this.handleChange('HGB')}
                                                                 margin="normal"
                                                                 style={{ width: 100, marginLeft: 20, marginTop: 0, }}
                                                             />
                                                             <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
                                                                 {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.comboboxHGB}
+                                                                    onChange={this.handleChange('comboboxHGB')}
                                                                 >
-                                                                    <MenuItem value={10}>Normal</MenuItem>
-                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                    <MenuItem value="Normal">Normal</MenuItem>
+                                                                    <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
@@ -736,12 +784,12 @@ class pNote extends Component {
                                                             <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                                 <InputLabel htmlFor="sugar">Pus Cells</InputLabel>
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.pusCells}
+                                                                    onChange={this.handleChange('pusCells')}
                                                                 >
                                                                     <MenuItem value=""><em>None</em></MenuItem>
-                                                                    <MenuItem value={10}>Posetive</MenuItem>
-                                                                    <MenuItem value={20}>Negative</MenuItem>
+                                                                    <MenuItem value="Posetive">Posetive</MenuItem>
+                                                                    <MenuItem value="Negative">Negative</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
@@ -750,19 +798,19 @@ class pNote extends Component {
                                                                 id="standard-name"
                                                                 label="ESR"
                                                                 className={classes.textField}
-                                                                value={this.state.name}
-                                                                onChange={this.handleChange('name')}
+                                                                value={this.state.ESR}
+                                                                onChange={this.handleChange('ESR')}
                                                                 margin="normal"
                                                                 style={{ width: 100, marginLeft: 20, marginTop: 0, }}
                                                             />
                                                             <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
                                                                 {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.comboboxESR}
+                                                                    onChange={this.handleChange('comboboxESR')}
                                                                 >
-                                                                    <MenuItem value={10}>Normal</MenuItem>
-                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                    <MenuItem value="Normal">Normal</MenuItem>
+                                                                    <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
@@ -773,12 +821,12 @@ class pNote extends Component {
                                                                 <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                                     <InputLabel htmlFor="sugar">HCG</InputLabel>
                                                                     <Select
-                                                                    // value={this.state.age}
-                                                                    // onChange={this.handleChange}
+                                                                        value={this.state.HCG}
+                                                                        onChange={this.handleChange('HCG')}
                                                                     >
                                                                         <MenuItem value=""><em>None</em></MenuItem>
-                                                                        <MenuItem value={10}>Posetive</MenuItem>
-                                                                        <MenuItem value={20}>Negative</MenuItem>
+                                                                        <MenuItem value="Posetive">Posetive</MenuItem>
+                                                                        <MenuItem value="Negative">Negative</MenuItem>
                                                                     </Select>
                                                                 </FormControl>
                                                             </FormGroup>
@@ -788,19 +836,19 @@ class pNote extends Component {
                                                                 id="standard-name"
                                                                 label="FBS"
                                                                 className={classes.textField}
-                                                                value={this.state.name}
-                                                                onChange={this.handleChange('name')}
+                                                                value={this.state.FBS}
+                                                                onChange={this.handleChange('FBS')}
                                                                 margin="normal"
                                                                 style={{ width: 100, marginLeft: 20, marginTop: 0, }}
                                                             />
                                                             <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
                                                                 {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.comboboxFBS}
+                                                                    onChange={this.handleChange('comboboxFBS')}
                                                                 >
-                                                                    <MenuItem value={10}>Normal</MenuItem>
-                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                    <MenuItem value="Normal">Normal</MenuItem>
+                                                                    <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
@@ -810,12 +858,12 @@ class pNote extends Component {
                                                             <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                                 <InputLabel htmlFor="sugar">Stool Oval/Parasites</InputLabel>
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.ovalParasites}
+                                                                    onChange={this.handleChange('ovalParasites')}
                                                                 >
                                                                     <MenuItem value=""><em>None</em></MenuItem>
-                                                                    <MenuItem value={10}>Posetive</MenuItem>
-                                                                    <MenuItem value={20}>Negative</MenuItem>
+                                                                    <MenuItem value='Posetive'>Posetive</MenuItem>
+                                                                    <MenuItem value="Negative">Negative</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
@@ -824,19 +872,19 @@ class pNote extends Component {
                                                                 id="standard-name"
                                                                 label="SGPT"
                                                                 className={classes.textField}
-                                                                value={this.state.name}
-                                                                onChange={this.handleChange('name')}
+                                                                value={this.state.SGOT}
+                                                                onChange={this.handleChange('SGOT')}
                                                                 margin="normal"
                                                                 style={{ width: 100, marginLeft: 20, marginTop: 0, }}
                                                             />
                                                             <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
                                                                 {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.comboboxSGOT}
+                                                                    onChange={this.handleChange('comboboxSGOT')}
                                                                 >
-                                                                    <MenuItem value={10}>Normal</MenuItem>
-                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                    <MenuItem value="Normal">Normal</MenuItem>
+                                                                    <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
@@ -846,12 +894,12 @@ class pNote extends Component {
                                                             <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                                 <InputLabel htmlFor="sugar">Blood Blood/Film</InputLabel>
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.bloodFilm}
+                                                                    onChange={this.handleChange('bloodFilm')}
                                                                 >
                                                                     <MenuItem value=""><em>None</em></MenuItem>
-                                                                    <MenuItem value={10}>Posetive</MenuItem>
-                                                                    <MenuItem value={20}>Negative</MenuItem>
+                                                                    <MenuItem value="Posetive">Posetive</MenuItem>
+                                                                    <MenuItem value="Negative">Negative</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
@@ -860,19 +908,19 @@ class pNote extends Component {
                                                                 id="standard-name"
                                                                 label="SGOT"
                                                                 className={classes.textField}
-                                                                value={this.state.name}
-                                                                onChange={this.handleChange('name')}
+                                                                value={this.state.SGOT}
+                                                                onChange={this.handleChange('SGOT')}
                                                                 margin="normal"
                                                                 style={{ width: 100, marginLeft: 20, marginTop: 0, }}
                                                             />
                                                             <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
                                                                 {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.comboboxSGOT}
+                                                                    onChange={this.handleChange('comboboxSGOT')}
                                                                 >
-                                                                    <MenuItem value={10}>Normal</MenuItem>
-                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                    <MenuItem value="Normal">Normal</MenuItem>
+                                                                    <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>   
@@ -882,12 +930,12 @@ class pNote extends Component {
                                                             <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                                 <InputLabel htmlFor="sugar">VDRL</InputLabel>
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.VDRL}
+                                                                    onChange={this.handleChange('VDRL')}
                                                                 >
                                                                     <MenuItem value=""><em>None</em></MenuItem>
-                                                                    <MenuItem value={10}>Posetive</MenuItem>
-                                                                    <MenuItem value={20}>Negative</MenuItem>
+                                                                    <MenuItem value="Posetive">Posetive</MenuItem>
+                                                                    <MenuItem value="Negative">Negative</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
@@ -896,19 +944,19 @@ class pNote extends Component {
                                                                 id="standard-name"
                                                                 label="ALK.Ph"
                                                                 className={classes.textField}
-                                                                value={this.state.name}
-                                                                onChange={this.handleChange('name')}
+                                                                value={this.state.ALKPH}
+                                                                onChange={this.handleChange('ALKPH')}
                                                                 margin="normal"
                                                                 style={{ width: 100, marginLeft: 20, marginTop: 0, }}
                                                             />
                                                             <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
                                                                 {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.comboboxALKPH}
+                                                                    onChange={this.handleChange('comboboxALKPH')}
                                                                 >
-                                                                    <MenuItem value={10}>Normal</MenuItem>
-                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                    <MenuItem value="Normal">Normal</MenuItem>
+                                                                    <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
@@ -918,12 +966,12 @@ class pNote extends Component {
                                                             <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                                 <InputLabel htmlFor="sugar">HBsAg</InputLabel>
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.hbsAg}
+                                                                    onChange={this.handleChange('hbsAg')}
                                                                 >
                                                                     <MenuItem value=""><em>None</em></MenuItem>
-                                                                    <MenuItem value={10}>Posetive</MenuItem>
-                                                                    <MenuItem value={20}>Negative</MenuItem>
+                                                                    <MenuItem value="Posetive">Posetive</MenuItem>
+                                                                    <MenuItem value="Negative">Negative</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
@@ -932,19 +980,19 @@ class pNote extends Component {
                                                                 id="standard-name"
                                                                 label="BUN"
                                                                 className={classes.textField}
-                                                                value={this.state.name}
-                                                                onChange={this.handleChange('name')}
+                                                                value={this.state.BUN}
+                                                                onChange={this.handleChange('BUN')}
                                                                 margin="normal"
                                                                 style={{ width: 100, marginLeft: 20, marginTop: 0, }}
                                                             />
                                                             <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
                                                                 {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.comboboxBUN}
+                                                                    onChange={this.handleChange('comboboxBUN')}
                                                                 >
-                                                                    <MenuItem value={10}>Normal</MenuItem>
-                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                    <MenuItem value="Normal">Normal</MenuItem>
+                                                                    <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
@@ -954,12 +1002,12 @@ class pNote extends Component {
                                                             <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                                 <InputLabel htmlFor="sugar">Anti HCV Ab</InputLabel>
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.antiHCVAb}
+                                                                    onChange={this.handleChange('antiHCVAb')}
                                                                 >
                                                                     <MenuItem value=""><em>None</em></MenuItem>
-                                                                    <MenuItem value={10}>Posetive</MenuItem>
-                                                                    <MenuItem value={20}>Negative</MenuItem>
+                                                                    <MenuItem value="Posetive">Posetive</MenuItem>
+                                                                    <MenuItem value="Negative">Negative</MenuItem>
                                                                 </Select>
                                                         </FormControl>
                                                         </FormGroup>
@@ -968,19 +1016,19 @@ class pNote extends Component {
                                                                 id="standard-name"
                                                                 label="CRA"
                                                                 className={classes.textField}
-                                                                value={this.state.name}
-                                                                onChange={this.handleChange('name')}
+                                                                value={this.state.CREA}
+                                                                onChange={this.handleChange('CREA')}
                                                                 margin="normal"
                                                                 style={{ width: 100, marginLeft: 20, marginTop: 0, }}
                                                             />
                                                             <FormControl style={{ width: 140, marginTop: 16, marginLeft: 0 }} className={classes.formControl}>
                                                                 {/* <InputLabel htmlFor="visual acquity rt">WBC</InputLabel> */}
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.comboboxCREA}
+                                                                    onChange={this.handleChange('comboboxCREA')}
                                                                 >
-                                                                    <MenuItem value={10}>Normal</MenuItem>
-                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                    <MenuItem value="Normal">Normal</MenuItem>
+                                                                    <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
@@ -989,12 +1037,12 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="sugar">HIV</InputLabel>
                                                             <Select
-                                                            // value={this.state.age}
-                                                            // onChange={this.handleChange}
+                                                                value={this.state.HIV}
+                                                                onChange={this.handleChange('HIV')}
                                                             >
                                                                 <MenuItem value=""><em>None</em></MenuItem>
-                                                                <MenuItem value={10}>Posetive</MenuItem>
-                                                                <MenuItem value={20}>Negative</MenuItem>
+                                                                <MenuItem value="Posetive">Posetive</MenuItem>
+                                                                <MenuItem value="Negative">Negative</MenuItem>
                                                             </Select>
                                                         </FormControl>
                                                     </FormGroup>
@@ -1004,23 +1052,23 @@ class pNote extends Component {
                                                             <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                                 <InputLabel htmlFor="sugar">EGK</InputLabel>
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.EKG}
+                                                                    onChange={this.handleChange('EKG')}
                                                                 >
                                                                     <MenuItem value=""><em>None</em></MenuItem>
-                                                                    <MenuItem value={10}>Normal</MenuItem>
-                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                    <MenuItem value="Normal">Normal</MenuItem>
+                                                                    <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                             <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
                                                                 <InputLabel htmlFor="sugar">Chest X-ray</InputLabel>
                                                                 <Select
-                                                                // value={this.state.age}
-                                                                // onChange={this.handleChange}
+                                                                    value={this.state.chestXray}
+                                                                    onChange={this.handleChange('chestXray')}
                                                                 >
                                                                     <MenuItem value=""><em>None</em></MenuItem>
-                                                                    <MenuItem value={10}>Normal</MenuItem>
-                                                                    <MenuItem value={20}>Abnormal</MenuItem>
+                                                                    <MenuItem value="Normal">Normal</MenuItem>
+                                                                    <MenuItem value="Abnormal">Abnormal</MenuItem>
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
@@ -1030,8 +1078,8 @@ class pNote extends Component {
                                                                 label="Recommendation"
                                                                 multiline
                                                                 rowsMax="4"
-                                                                value={this.state.multiline}
-                                                                onChange={this.handleChange('multiline')}
+                                                                value={this.state.recommendation}
+                                                                onChange={this.handleChange('recommendation')}
                                                                 className={classes.textField}
                                                                 margin="normal"
                                                                 style={{ width: 500}}
@@ -1041,8 +1089,8 @@ class pNote extends Component {
                                                                 name="gender1"
                                                                 className={classes.group}
                                                                 style={{ padding: '0 10px 10px 10px' }}
-                                                            // value={this.state.value}
-                                                            // onChange={this.handleChange}
+                                                                value={this.state.fit}
+                                                                onChange={this.handleChange('fit')}
                                                             >
                                                                 <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Fit" />
                                                                 <FormControlLabel labelPlacement="start" value="No" control={<Radio />} label="NotFit" />

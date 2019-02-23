@@ -10,7 +10,7 @@ import Table from '../Table/CustomTableWithSelector';
 import FormLabel from '@material-ui/core/FormLabel';
 import CustomTable from '../Diagnosis/CustomDiagnosis';
 import { fetchPatientDiagnosis } from '../../redux/actions/diagnosisAction';
-import { fetchNoteSubCategory } from '../../redux/actions/patientNoteAction';
+import { fetchNoteSubCategory, fetchFamilyHistory,fetchMedicalHistory, fetchPhysicalExam, fetchSocialHistory,fetchReviewofSystems } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
 
@@ -71,49 +71,6 @@ class newHPNote extends Component {
             [name]: event.target.value,
         });
     };
-    returMedicalHistory() {
-        var a = new Array();
-        this.props.noteSubCategory.map((noteSub) => {
-            a.push([[noteSub.Name]])
-        });
-        return a;
-    }
-    returnSocialHistory(){
-        const medicalHistoryURL = 'PatientNotes/GetNoteSubCategory/Personal History';
-        this.props.fetchNoteSubCategory(medicalHistoryURL);
-        var a = new Array();
-        this.props.noteSubCategory.map((noteSub) => {
-            a.push([[noteSub.Name]])
-        });
-        return a;
-    }
-    returnFamilyHistory(){
-        const medicalHistoryURL = 'PatientNotes/GetNoteSubCategory/Family History';
-        this.props.fetchNoteSubCategory(medicalHistoryURL);
-        var a = new Array();
-        this.props.noteSubCategory.map((noteSub) => {
-            a.push([[noteSub.Name]])
-        });
-        return a;
-    }
-    returnReviewofSystems(){
-        const medicalHistoryURL = 'PatientNotes/GetNoteSubCategory/Review of Systems';
-        this.props.fetchNoteSubCategory(medicalHistoryURL);
-        var a = new Array();
-        this.props.noteSubCategory.map((noteSub) => {
-            a.push([[noteSub.Name]])
-        });
-        return a;
-    }
-    returnPhysicalExam(){
-        const medicalHistoryURL = 'PatientNotes/GetNoteSubCategory/PhysicalExam';
-        this.props.fetchNoteSubCategory(medicalHistoryURL);
-        var a = new Array();
-        this.props.noteSubCategory.map((noteSub) => {
-            a.push([[noteSub.Name]])
-        });
-        return a;
-    }
     addDiagnosis = (selected) => {
         this.setState({
             diagnosis: [...this.state.diagnosis, ["2", "Minerva Hooper", "$23,789", "Curaçao"]]
@@ -128,8 +85,19 @@ class newHPNote extends Component {
         this.props.fetchPatientDiagnosis(url);
         
         const medicalHistoryURL = 'PatientNotes/GetNoteSubCategory/Medical History';
-        this.props.fetchNoteSubCategory(medicalHistoryURL);
-        MedicalHistory = this.returMedicalHistory();
+        this.props.fetchMedicalHistory(medicalHistoryURL);
+
+        const socialHistoryURL = 'PatientNotes/GetNoteSubCategory/Personal History';
+        this.props.fetchSocialHistory(socialHistoryURL);
+
+        const familyHistoryURL = 'PatientNotes/GetNoteSubCategory/Family History';
+        this.props.fetchFamilyHistory(familyHistoryURL);
+
+        const reviewofSystemsURL = 'PatientNotes/GetNoteSubCategory/Review of Systems';
+        this.props.fetchReviewofSystems(reviewofSystemsURL);
+
+        const physicalExamURL = 'PatientNotes/GetNoteSubCategory/Physical Exam';
+        this.props.fetchPhysicalExam(physicalExamURL);
 
     }
     
@@ -174,7 +142,7 @@ class newHPNote extends Component {
                                 <Table
                                     tableHeaderColor="primary"
                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={MedicalHistory}
+                                    tableData={this.props.MedicalHistory.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -209,7 +177,7 @@ class newHPNote extends Component {
                                 <Table
                                     tableHeaderColor="primary"
                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={MedicalHistory}
+                                    tableData={this.props.FamilyHistory.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -221,7 +189,7 @@ class newHPNote extends Component {
                                 <Table
                                     tableHeaderColor="primary"
                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={SocialHistory}
+                                    tableData={this.props.SocialHistory.map(item => { return [item.Name] })}
                                     radio={0}
                                     textbox={1}
                                 />
@@ -233,7 +201,7 @@ class newHPNote extends Component {
                                 <Table
                                     tableHeaderColor="primary"
                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={ReviewofSystems}
+                                    tableData={this.props.ReviewofSystems.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -245,7 +213,7 @@ class newHPNote extends Component {
                                 <Table
                                     tableHeaderColor="primary"
                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={PhysicalExam}
+                                    tableData={this.props.PhysicalExam.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -301,12 +269,22 @@ class newHPNote extends Component {
 }
 
 newHPNote.propTypes = {
+    fetchFamilyHistory: propTypes.func.isRequired,
+    fetchMedicalHistory: propTypes.func.isRequired,
+    fetchPhysicalExam: propTypes.func.isRequired,
+    fetchSocialHistory: propTypes.func.isRequired,
+    fetchReviewofSystems: propTypes.func.isRequired,
     fetchNoteSubCategory: propTypes.func.isRequired,
     fetchPatientDiagnosis: propTypes.func.isRequired,
     patientDiagnosis: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired,
-    noteSubCategory: propTypes.array.isRequired
+    noteSubCategory: propTypes.array.isRequired,
+    SocialHistory: propTypes.array.isRequired,
+    FamilyHistory: propTypes.array.isRequired,
+    MedicalHistory: propTypes.array.isRequired,
+    ReviewofSystems: propTypes.array.isRequired,
+    PhysicalExam: propTypes.array.isRequired,
 }
 
 const mapStateToProps = (state) => ({
@@ -315,11 +293,21 @@ const mapStateToProps = (state) => ({
     hasError: state.diagnosisOrder.hasError,
     selectedPatient: state.assignments.selectedPatient,
     noteSubCategory: state.patientNote.noteSubCategory,
+    SocialHistory: state.patientNote.SocialHistory,
+    FamilyHistory: state.patientNote.FamilyHistory,
+    MedicalHistory: state.patientNote.MedicalHistory,
+    ReviewofSystems: state.patientNote.ReviewofSystems,
+    PhysicalExam: state.patientNote.PhysicalExam,
 });
 
 const mapDispatchToProps = dispatch => ({
     fetchPatientDiagnosis: (url) => dispatch(fetchPatientDiagnosis(url)),
-    fetchNoteSubCategory: (url) => dispatch(fetchNoteSubCategory(url))
+    fetchNoteSubCategory: (url) => dispatch(fetchNoteSubCategory(url)),
+    fetchFamilyHistory: (url) => dispatch(fetchFamilyHistory(url)),
+    fetchMedicalHistory: (url) => dispatch(fetchMedicalHistory(url)),
+    fetchPhysicalExam: (url) => dispatch(fetchPhysicalExam(url)),
+    fetchSocialHistory: (url) => dispatch(fetchSocialHistory(url)),
+    fetchReviewofSystems: (url) => dispatch(fetchReviewofSystems(url)),
 });
 
 export default compose(withStyles(style), connect(mapStateToProps, mapDispatchToProps))(newHPNote);
