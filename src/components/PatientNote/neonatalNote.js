@@ -33,6 +33,10 @@ import PropTypes from 'prop-types';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
 import qs from 'qs';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 
 function TabContainer(props) {
     return (
@@ -368,10 +372,323 @@ class pNote extends Component {
                                                         />
                                                     </FormGroup>
                                                     <FormGroup row>
+                                                        <FormControl style={{ width: 170, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">Resuscitated at Birth</InputLabel>
+                                                            <Select
+                                                                // value={this.state.integumentary}
+                                                                // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="Yes">Yes</MenuItem>
+                                                                <MenuItem value="No">No</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormControl style={{ width: 140, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">Vitamin K</InputLabel>
+                                                            <Select
+                                                                // value={this.state.integumentary}
+                                                                // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="Yes">Yes</MenuItem>
+                                                                <MenuItem value="No">No</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Antibiotics"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 100, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Other Treatment"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 150, marginTop: 0 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormControl style={{ width: 200, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">Dimorphic Features Birth</InputLabel>
+                                                            <Select
+                                                                // value={this.state.integumentary}
+                                                                // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="Yes">Yes</MenuItem>
+                                                                <MenuItem value="No">No</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="BR"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 100, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="RR"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 100, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Temp"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 100, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="SaO2"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 100, marginTop: 0 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="HEENT"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 350, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="GUS"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 350, marginTop: 0 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Chest"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 350, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Anus"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 350, marginTop: 0 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="CSV"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 350, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Integumentary"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 350, marginTop: 0 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Abdomen"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 350, marginTop: 0 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="CSN Moro"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 130, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Grasp"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 130, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Sucking"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 130, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Tone"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 130, marginTop: 0 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Assesment"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 350, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Plan"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 350, marginTop: 0 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Remark"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 350, marginTop: 0 }}
+                                                        />
                                                     </FormGroup>
                                                 </FormControl>
                                             </TabContainer>}
                                             {this.state.value === 1 && <TabContainer>
+                                                <FormControl component="fieldset" className={classes.formControl}>
+                                                    <FormLabel component="legend">Past Obstetrics History (from ANC)</FormLabel>
+                                                    <FormGroup row>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Gravida"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 130, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Para"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 130, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Abortion"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 130, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="No of children alive"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 180, marginTop: 0 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Age of Mother"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 130, marginTop: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Blood Blood and RH"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 130, marginTop: 0 }}
+                                                        />
+                                                    </FormGroup>
+                                                </FormControl>
                                             </TabContainer>}
                                         </form>
                                     </DialogContentText>
