@@ -316,6 +316,16 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      inset
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Neonatal Note</Typography>} />
                   </ListItem>
+                  <ListItem button className={classes.nested} component={Link} to="/ANCfollowUp">
+                    <ListItemIcon className={classes.itemIcon}>
+                      <StarBorder />
+                    </ListItemIcon>
+                    <ListItemText
+                     disableTypography
+                     className={classes.itemText + whiteFontClasses}
+                     inset
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>ANC Follow Up</Typography>} />
+                  </ListItem>
                 </List>
               </Collapse>
             </List>

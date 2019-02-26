@@ -37,6 +37,9 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 function TabContainer(props) {
     return (
@@ -677,15 +680,281 @@ class pNote extends Component {
                                                             multiline
                                                             style={{ width: 130, marginTop: 0 }}
                                                         />
+                                                        <FormControl style={{ width: 160, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">Blood Blood and RH</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="A-">A-</MenuItem>
+                                                                <MenuItem value="A+">A+</MenuItem>
+                                                                <MenuItem value="A-">AB-</MenuItem>
+                                                                <MenuItem value="A-">AB+</MenuItem>
+                                                                <MenuItem value="B-">B-</MenuItem>
+                                                                <MenuItem value="B+">B+</MenuItem>
+                                                                <MenuItem value="O-">O-</MenuItem>
+                                                                <MenuItem value="O+">O+</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormControl style={{ width: 140, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">VLDR</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="REACTIVE">REACTIVE</MenuItem>
+                                                                <MenuItem value="NONREACTIVE">NONREACTIVE</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormControl style={{ width: 160, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">Single Multiple Birth</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="SINGLTON">SINGLTON</MenuItem>
+                                                                <MenuItem value="TWINS">TWINS</MenuItem>
+                                                                <MenuItem value="TRIPLE">TRIPLE</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormControl style={{ width: 160, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">HBS Ag</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="NEGATIVE">NEGATIVE</MenuItem>
+                                                                <MenuItem value="POSETIVE">POSETIVE</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormControl style={{ width: 160, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">TB</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="NEGATIVE">NEGATIVE</MenuItem>
+                                                                <MenuItem value="POSETIVE">POSETIVE</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormControl style={{ width: 160, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">HIV STATUS</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="NEGATIVE">NEGATIVE</MenuItem>
+                                                                <MenuItem value="POSETIVE">POSETIVE</MenuItem>
+                                                                <MenuItem value="UNKNOWN">UNKNOWN</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
                                                         <TextField
                                                             id="standard-name"
-                                                            label="Blood Blood and RH"
+                                                            label="HIV Duration"
                                                             className={classes.textField}
                                                             // value={this.state.name}
                                                             // onChange={this.handleChange('name')}
                                                             margin="normal"
                                                             multiline
-                                                            style={{ width: 130, marginTop: 0 }}
+                                                            style={{ width: 150, marginTop: 0 }}
+                                                        />
+                                                        <FormControl style={{ width: 160, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">On Art</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="YES">YES</MenuItem>
+                                                                <MenuItem value="NO">NO</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Mother Regimen"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 150, marginTop: 0, marginRight: 0 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Infant Regimen"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 150, marginTop: 0, marginRight: 0 }}
+                                                        />
+                                                        <FormControl style={{ width: 190, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">Infant Regimen Options</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="YES">EBF</MenuItem>
+                                                                <MenuItem value="NO">EFF</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Other Risk Factors"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 300, marginTop: 0, marginLeft: 0 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormControlLabel
+                                                            control={
+                                                                <Checkbox
+                                                                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                                                                    checkedIcon={<CheckBoxIcon fontSize="small" />}
+                                                                    value="checkedI"
+                                                                />
+                                                            }
+                                                            style={{ marginLeft: 0 }}
+                                                            labelPlacement="start"
+                                                            label="LMP"
+                                                        />
+                                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                            <DatePicker
+                                                                style={{ marginTop: 0, marginLeft: 30 }}
+                                                                margin="normal"
+                                                                label="Date picker"
+                                                                // value={selectedDate}
+                                                                // onChange={this.handleDateChange}
+                                                            />
+                                                        </MuiPickersUtilsProvider>
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormControl style={{ width: 190, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">Labor Onset</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="SPONTANIUS">SPONTANIUS</MenuItem>
+                                                                <MenuItem value="INDUCED">INDUCED</MenuItem>
+                                                                <MenuItem value="PROM">PROM</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormControl style={{ width: 190, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">Chorioaminiontis</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="YES">YES</MenuItem>
+                                                                <MenuItem value="NO">NO</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Labor Duration"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 150, marginTop: 0, marginLeft: 0 }}
+                                                        />
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="ROM Duration"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 150, marginTop: 0, marginLeft: 0 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormControl style={{ width: 190, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">MSAF</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="YES">YES</MenuItem>
+                                                                <MenuItem value="NO">NO</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormControl style={{ width: 190, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">Thick Meconium</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="YES">YES</MenuItem>
+                                                                <MenuItem value="NO">NO</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="ROM Duration"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 300, marginTop: 0, marginLeft: 0 }}
+                                                        />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <FormControl style={{ width: 180, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">Material Hypertension</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="YES">YES</MenuItem>
+                                                                <MenuItem value="NO">NO</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormControl style={{ width: 100, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">DM</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="YES">YES</MenuItem>
+                                                                <MenuItem value="NO">NO</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                        <FormControl style={{ width: 250, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
+                                                            <InputLabel htmlFor="e">Hx of Foul Smelling Discharge</InputLabel>
+                                                            <Select
+                                                            // value={this.state.integumentary}
+                                                            // onChange={this.handleChange('integumentary')}
+                                                            >
+                                                                <MenuItem value="YES">YES</MenuItem>
+                                                                <MenuItem value="NO">NO</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            label="Remark"
+                                                            className={classes.textField}
+                                                            // value={this.state.name}
+                                                            // onChange={this.handleChange('name')}
+                                                            margin="normal"
+                                                            multiline
+                                                            style={{ width: 500, marginTop: 0, marginLeft: 0 }}
                                                         />
                                                     </FormGroup>
                                                 </FormControl>

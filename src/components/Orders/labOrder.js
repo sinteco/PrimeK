@@ -138,6 +138,7 @@ class labOrder extends Component {
                     </Card>
                     <Dialog
                             fullScreen={fullScreen}
+                            maxWidth={'lg'}
                             open={this.state.open}
                             onClose={this.handleClose}
                             aria-labelledby="responsive-dialog-title"
@@ -155,12 +156,12 @@ class labOrder extends Component {
                                             >
                                             {
                                                 this.props.Tests.map((subtype)=>
-                                                    < FormGroup > 
-                                                        <Collapsible trigger={subtype.name} className={classes.collapsible}>
+                                                    <FormGroup > 
+                                                        <FormLabel component="legend">{subtype.name}</FormLabel>
                                                             {
                                                                 subtype.TreeChileds.map((tree)=>
-                                                                    <FormGroup>
-                                                                        <Collapsible trigger={tree.name} className={classes.collapsibleChiled}>
+                                                                    <FormGroup row>
+                                                                        <FormLabel component="legend">{tree.name}</FormLabel>
                                                                             {
                                                                                 tree.SubChileds.map((chiled) =>
                                                                                     <FormControlLabel
@@ -171,10 +172,10 @@ class labOrder extends Component {
                                                                                     />
                                                                                 )
                                                                             }
-                                                                            </Collapsible>
+                                                                            
                                                                     </FormGroup>
                                                             )}
-                                                        </Collapsible>
+                                                        
                                                     </FormGroup>
                                                 )
                                             }
