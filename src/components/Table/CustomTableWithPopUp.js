@@ -24,7 +24,7 @@ class CustomTableWithPopUp extends React.Component {
         {tableHead !== undefined ? (
           <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
             <TableRow>
-                <TableCell className={classes.tableCell + " " + classes.tableHeadCell}></TableCell>
+              <TableCell className={classes.tableCell + " " + classes.tableHeadCell}></TableCell>
               {tableHead.map((prop, key) => {
                 return (
                   <TableCell

@@ -48,6 +48,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Slide from '@material-ui/core/Slide';
 
 function TabContainer(props) {
     return (
@@ -55,6 +56,9 @@ function TabContainer(props) {
             {props.children}
         </Typography>
     );
+}
+function Transition(props) {
+    return <Slide direction="up" {...props} />;
 }
 
 TabContainer.propTypes = {
@@ -111,6 +115,7 @@ class pNote extends Component {
             forms: [],
             open: false,
             value: 0,
+            addform: false,
             rows: []
         }
     }
@@ -124,6 +129,18 @@ class pNote extends Component {
             console.log(this.state.forms);
         });
     };
+    handleAddformOpen = () => {
+        this.setState({
+            addform: true
+        })
+    }
+    handleAddformClose = () => {
+        this.setState({addform: false})
+    }
+    handleAddform = () => {
+        //
+        this.setState({addform: false})
+    }
     returnarrays() {
         var a = new Array();
         this.props.progressNotes.map((progressNote) => {
@@ -339,12 +356,29 @@ class pNote extends Component {
                                                             margin="normal"
                                                             style={{ width: 150 }}
                                                         />
+                                                    </FormGroup>
+                                                    <FormGroup row>
+                                                        <Button
+                                                            className={classes.button}
+                                                            variant="contained"
+                                                            onClick={this.handleAddformOpen}
+                                                            color="primary"
+                                                        >
+                                                            Add
+                                                        </Button>
+                                                    </FormGroup>
+                                                    <FormGroup row>
                                                         <CoreTable className={classes.table}>
                                                             <TableHead>
                                                                 <TableRow>
-                                                                    <TableCell align="right">Calories</TableCell>
-                                                                    <TableCell align="right">Fat (g)</TableCell>
-                                                                    <TableCell align="right">Carbs (g)</TableCell>
+                                                                    <TableCell align="right">S. No</TableCell>
+                                                                    <TableCell align="right">Date of Birth</TableCell>
+                                                                    <TableCell align="right">GA</TableCell>
+                                                                    <TableCell align="right">Place of Delivery</TableCell>
+                                                                    <TableCell align="right">Wt(g)</TableCell>
+                                                                    <TableCell align="right">LB/SB</TableCell>
+                                                                    <TableCell align="right">Sex</TableCell>
+                                                                    <TableCell align="right">Remark</TableCell>
                                                                 </TableRow>
                                                             </TableHead>
                                                             <TableBody>
@@ -353,6 +387,11 @@ class pNote extends Component {
                                                                         <TableCell align="right">{row.calories}</TableCell>
                                                                         <TableCell align="right">{row.fat}</TableCell>
                                                                         <TableCell align="right">{row.carbs}</TableCell>
+                                                                        <TableCell align="right">{row.calories}</TableCell>
+                                                                        <TableCell align="right">{row.fat}</TableCell>
+                                                                        <TableCell align="right">{row.carbs}</TableCell>
+                                                                        <TableCell align="right">{row.calories}</TableCell>
+                                                                        <TableCell align="right">{row.fat}</TableCell>
                                                                     </TableRow>
                                                                 ))}
                                                             </TableBody>
@@ -1247,6 +1286,113 @@ class pNote extends Component {
                                     </Button>
                                     <Button onClick={this.savePatientNote} color="primary">
                                         Save
+                                    </Button>
+                                </DialogActions>
+                            </Dialog>
+                            <Dialog
+                                style={{zIndex:2000}}
+                                open={this.state.addform}
+                                TransitionComponent={Transition}
+                                keepMounted
+                                onClose={this.handleAddformClose}
+                                aria-labelledby="alert-dialog-slide-title"
+                                aria-describedby="alert-dialog-slide-description"
+                            >
+                                <DialogTitle id="alert-dialog-slide-title">
+                                    {"Obstetric History"}
+                                </DialogTitle>
+                                <DialogContent>
+                                    <DialogContentText id="alert-dialog-slide-description">
+                                        <FormGroup>
+                                            <TextField
+                                                id="standard-name"
+                                                label="Age Of Child"
+                                                className={classes.textField}
+                                                value={this.state.obstetrichistoryDeliveryAgeOfChild}
+                                                onChange={this.handleChange('obstetrichistoryDeliveryAgeOfChild')}
+                                                margin="normal"
+                                                style={{ width: 200, marginTop: 0 }}
+                                            />
+                                            <FormControl style={{ width: 200, marginTop: 0 }} className={classes.formControl}>
+                                                <InputLabel htmlFor="visual">Delivery Mode</InputLabel>
+                                                <Select
+                                                    value={this.state.obstetrichistoryDeliveryMode}
+                                                    onChange={this.handleChange('obstetrichistoryDeliveryMode')}
+                                                >
+                                                    <MenuItem value="Assisted Breach">Assisted Breach</MenuItem>
+                                                    <MenuItem value="Caesarean Section">Caesarean Section</MenuItem>
+                                                    <MenuItem value="Instrumental">Instrumental</MenuItem>
+                                                    <MenuItem value="SVD">SVD</MenuItem>
+                                                    <MenuItem value="Other">Other</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                            <TextField
+                                                id="standard-name"
+                                                label="GA"
+                                                className={classes.textField}
+                                                value={this.state.obstetrichistoryGA}
+                                                onChange={this.handleChange('obstetrichistoryGA')}
+                                                margin="normal"
+                                                style={{ width: 200, marginTop: 0 }}
+                                            />
+                                            <FormControl style={{ width: 200, marginTop: 0 }} className={classes.formControl}>
+                                                <InputLabel htmlFor="visual">Delivery Place</InputLabel>
+                                                <Select
+                                                    value={this.state.obstetrichistoryDeliveryPlace}
+                                                    onChange={this.handleChange('obstetrichistoryDeliveryPlace')}
+                                                >
+                                                    <MenuItem value="Health Care">Health Care</MenuItem>
+                                                    <MenuItem value="Home">Home</MenuItem>
+                                                    <MenuItem value="Other">Other</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                            <TextField
+                                                id="standard-name"
+                                                label="Weight (g)"
+                                                className={classes.textField}
+                                                value={this.state.obstetrichistoryWeight}
+                                                onChange={this.handleChange('obstetrichistoryWeight')}
+                                                margin="normal"
+                                                style={{ width: 200, marginTop: 0 }}
+                                            />
+                                            <FormControl style={{ width: 200, marginTop: 0 }} className={classes.formControl}>
+                                                <InputLabel htmlFor="visual">LB/SB</InputLabel>
+                                                <Select
+                                                    value={this.state.obstetrichistoryLBOrSB}
+                                                    onChange={this.handleChange('obstetrichistoryLBOrSB')}
+                                                >
+                                                    <MenuItem value="CTRNR">LB</MenuItem>
+                                                    <MenuItem value="CTRR">SB</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                            <FormControl style={{ width: 200, marginTop: 0 }} className={classes.formControl}>
+                                                <InputLabel htmlFor="visual">Sex</InputLabel>
+                                                <Select
+                                                    value={this.state.obstetrichistorySex}
+                                                    onChange={this.handleChange('obstetrichistorySex')}
+                                                >
+                                                    <MenuItem value="CTRNR">Male</MenuItem>
+                                                    <MenuItem value="CTRR">Female</MenuItem>
+                                                </Select>
+                                            </FormControl>
+                                            <TextField
+                                                id="standard-name"
+                                                label="Remark"
+                                                className={classes.textField}
+                                                value={this.state.obstetrichistoryRemark}
+                                                onChange={this.handleChange('name')}
+                                                margin="normal"
+                                                style={{ width: 200, marginTop: 0 }}
+                                            />
+                                        </FormGroup>
+                                    </DialogContentText>
+                                </DialogContent>
+                                <DialogActions>
+                                    <Button onClick={this.handleAddform} color="primary">
+                                        Save
+                                    </Button>
+                                    <Button onClick={this.handleAddformClose} color="primary">
+                                        Close
                                     </Button>
                                 </DialogActions>
                             </Dialog>
