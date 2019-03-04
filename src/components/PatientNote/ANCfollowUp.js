@@ -99,7 +99,15 @@ const styles = {
         display: 'flex',
         flexWrap: 'nowrap',
         flexDirection: 'row',
-    }
+    },
+    dropdownStyle:
+    {
+        border: "1px solid black",
+        borderRadius: "5%",
+        backgroundColor: 'lightgrey',
+        zIndex : 1500,
+        position: 'fixed'
+    },
 };
 
 const category = "ANC Follow Up";
@@ -116,17 +124,90 @@ class pNote extends Component {
             open: false,
             value: 0,
             addform: false,
-            rows: []
+            rows: [],
+            obstetrichistoryDeliveryAgeOfChild: '',
+            obstetrichistoryDeliveryMode: '',
+            obstetrichistoryGA: '',
+            obstetrichistoryDeliveryPlace: '',
+            obstetrichistoryWeight: '',
+            obstetrichistoryLBOrSB: '',
+            obstetrichistorySex: '',
+            obstetrichistoryRemark: '',
+            EDDUnknowen: true,
+            EDD: new Date(),
+            disableEDD: false,
+            menstrualCycle: '',
+            FPConseled: '',
+            Height: '',
+            Pallor: '',
+            CheckedPallor: '',
+            disablePallor: true,
+            Jaundice: '',
+            CheckedJaundice: '',
+            disableJaundice: true,
+            ChestAbnormality: '',
+            CheckedChestAbnormality: '',
+            disableChestAbnormality: true,
+            HeartAbnormality: '',
+            CheckedHeartAbnormality: '',
+            disableHeartAbnormality: true,
+            BreastExam: '',
+            CheckedBreastExam: '',
+            disableBreastExam: true,
+            VaginalExam: '',
+            CheckedVaginalExam: '',
+            disableCheckedVaginalExam: true,
+            other: ''
         }
     }
     tabhandleChange = (event, value) => {
         this.setState({ value });
     };
-    handleChange = (key, name) => event => {
-        let forms = [...this.state.forms];
-        forms[key] = event.target.value;
-        this.setState({ forms }, function () {
-            console.log(this.state.forms);
+    handleDateChange = (date, name) => {
+        this.setState({ [name]: date });
+    };
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
+    handleCheckedChange = name => event => {
+        this.setState({ [name]: event.target.checked }, function () {
+            if (!this.state.EDDUnknowen) {
+                this.setState({ disableEDD: false });
+            }else{
+                this.setState({ disableEDD: true });
+            }
+            if(this.state.CheckedPallor){
+                this.setState({ disablePallor: false });
+            }else{
+                this.setState({ disablePallor: true });
+            }
+            if (this.state.CheckedJaundice) {
+                this.setState({ disableJaundice: false });
+            } else {
+                this.setState({ disableJaundice: true });
+            }
+            if (this.state.CheckedChestAbnormality) {
+                this.setState({ disableChestAbnormality: false });
+            } else {
+                this.setState({ disableChestAbnormality: true });
+            }
+            if (this.state.CheckedHeartAbnormality) {
+                this.setState({ disableHeartAbnormality: false });
+            } else {
+                this.setState({ disableHeartAbnormality: true });
+            }
+            if (this.state.CheckedBreastExam) {
+                this.setState({ disableBreastExam: false });
+            } else {
+                this.setState({ disableBreastExam: true });
+            }
+            if (this.state.CheckedVaginalExam) {
+                this.setState({ disableCheckedVaginalExam: false });
+            } else {
+                this.setState({ disableCheckedVaginalExam: true });
+            }
         });
     };
     handleAddformOpen = () => {
@@ -138,8 +219,23 @@ class pNote extends Component {
         this.setState({addform: false})
     }
     handleAddform = () => {
-        //
-        this.setState({addform: false})
+        this.setState({
+            rows: [...this.state.rows, 
+                {
+                    DeliveryAgeOfChild: this.state.obstetrichistoryDeliveryAgeOfChild,
+                    DeliveryMode: this.state.obstetrichistoryDeliveryMode,
+                    GA: this.state.obstetrichistoryGA,
+                    DeliveryPlace: this.state.obstetrichistoryDeliveryPlace,
+                    Weight: this.state.obstetrichistoryWeight,
+                    LBOrSB: this.state.obstetrichistoryLBOrSB,
+                    Sex: this.state.obstetrichistorySex,
+                    Remark: this.state.obstetrichistoryRemark
+                }
+            ],
+            addform: false
+        }, function () {
+            console.log(this.state.rows);
+        });
     }
     returnarrays() {
         var a = new Array();
@@ -269,7 +365,6 @@ class pNote extends Component {
                                                         />
                                                 )
                                             }
-
                                         </form>
                                     </DialogContentText>
                                 </DialogContent>
@@ -371,8 +466,8 @@ class pNote extends Component {
                                                         <CoreTable className={classes.table}>
                                                             <TableHead>
                                                                 <TableRow>
-                                                                    <TableCell align="right">S. No</TableCell>
-                                                                    <TableCell align="right">Date of Birth</TableCell>
+                                                                    <TableCell align="right">Delivery Age Of Child</TableCell>
+                                                                    <TableCell align="right">Delivery Mode</TableCell>
                                                                     <TableCell align="right">GA</TableCell>
                                                                     <TableCell align="right">Place of Delivery</TableCell>
                                                                     <TableCell align="right">Wt(g)</TableCell>
@@ -384,14 +479,14 @@ class pNote extends Component {
                                                             <TableBody>
                                                                 {this.state.rows.map(row => (
                                                                     <TableRow key={row.id}>
-                                                                        <TableCell align="right">{row.calories}</TableCell>
-                                                                        <TableCell align="right">{row.fat}</TableCell>
-                                                                        <TableCell align="right">{row.carbs}</TableCell>
-                                                                        <TableCell align="right">{row.calories}</TableCell>
-                                                                        <TableCell align="right">{row.fat}</TableCell>
-                                                                        <TableCell align="right">{row.carbs}</TableCell>
-                                                                        <TableCell align="right">{row.calories}</TableCell>
-                                                                        <TableCell align="right">{row.fat}</TableCell>
+                                                                        <TableCell align="right">{row.DeliveryAgeOfChild}</TableCell>
+                                                                        <TableCell align="right">{row.DeliveryMode}</TableCell>
+                                                                        <TableCell align="right">{row.GA}</TableCell>
+                                                                        <TableCell align="right">{row.DeliveryPlace}</TableCell>
+                                                                        <TableCell align="right">{row.Weight}</TableCell>
+                                                                        <TableCell align="right">{row.LBOrSB}</TableCell>
+                                                                        <TableCell align="right">{row.Sex}</TableCell>
+                                                                        <TableCell align="right">{row.Remark}</TableCell>
                                                                     </TableRow>
                                                                 ))}
                                                             </TableBody>
@@ -403,13 +498,13 @@ class pNote extends Component {
                                                         <FormControlLabel
                                                             control={
                                                                 <Checkbox
-                                                                    // checked={this.state.checkedB}
-                                                                    // onChange={this.handleChange('checkedB')}
-                                                                    value="checkedB"
+                                                                    checked={this.state.EDDUnknowen}
+                                                                    onChange={this.handleCheckedChange('EDDUnknowen')}
+                                                                    value="EDDUnknowen"
                                                                     color="primary"
                                                                 />
                                                             }
-                                                            style={{ marginLeft: 0 }}
+                                                            style={{ marginLeft: 0, marginTop: 0 }}
                                                             labelPlacement="start"
                                                             label="LMP"
                                                         />
@@ -418,24 +513,26 @@ class pNote extends Component {
                                                                 style={{ marginTop: 0, marginLeft: 20 }}
                                                                 margin="normal"
                                                                 label="Unknowen"
-                                                                // value={selectedDate}
-                                                                // onChange={this.handleDateChange}
+                                                                value={this.state.EDD}
+                                                                onChange={(e) => this.handleDateChange(e,'EDD')}
+                                                                disabled={this.state.disableEDD}
                                                             />
                                                         </MuiPickersUtilsProvider>
                                                         <TextField
                                                             id="standard-name"
                                                             label="EDD"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.EDD}
+                                                            disabled={true}
+                                                            // onChange={this.handleChange('ED')}
                                                             margin="normal"
-                                                            style={{ width: 100, marginTop: 0, marginLeft: 0 }}
+                                                            style={{ width: 100, marginTop: 0, marginLeft: 0, marginRight: 15 }}
                                                         />
                                                         <FormControl style={{ width: 150, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">Menstrual Cycle</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.menstrualCycle}
+                                                                onChange={this.handleChange('menstrualCycle')}
                                                             >
                                                                 <MenuItem value="Regular">Regular</MenuItem>
                                                                 <MenuItem value="Iregular">Iregular</MenuItem>
@@ -448,8 +545,8 @@ class pNote extends Component {
                                                                 name="FP Conseled"
                                                                 className={classes.group}
                                                                 // style={{ marginLeft: 0, marginTop: 0, padding: '0 10px 10px 10px' }}
-                                                                value={this.state.hypertension}
-                                                                onChange={this.handleChange('hypertension')}
+                                                                value={this.state.FPConseled}
+                                                                onChange={this.handleChange('FPConseled')}
                                                             >
                                                                 <FormLabel>FP Conseled</FormLabel>
                                                                 <FormControlLabel labelPlacement="start" value="Yes" control={<Radio />} label="Yes" />
@@ -474,8 +571,8 @@ class pNote extends Component {
                                                                 id="standard-name"
                                                                 label="Height (below 150cm)"
                                                                 className={classes.textField}
-                                                                // value={this.state.name}
-                                                                // onChange={this.handleChange('name')}
+                                                                value={this.state.Height}
+                                                                onChange={this.handleChange('Height')}
                                                                 margin="normal"
                                                                 style={{ width: 180, marginTop: 0, marginLeft: 0 }}
                                                             />
@@ -483,9 +580,9 @@ class pNote extends Component {
                                                                 <FormControlLabel
                                                                     control={
                                                                         <Checkbox
-                                                                            // checked={this.state.checkedB}
-                                                                            // onChange={this.handleChange('checkedB')}
-                                                                            value="checkedB"
+                                                                            checked={this.state.CheckedPallor}
+                                                                            onChange={this.handleCheckedChange('CheckedPallor')}
+                                                                            value="CheckedPallor"
                                                                             color="primary"
                                                                         />
                                                                     }
@@ -494,11 +591,12 @@ class pNote extends Component {
                                                                     label="Pallor"
                                                                 />
                                                                 <TextField
+                                                                    disabled={this.state.disablePallor}
                                                                     id="standard-name"
                                                                     // label="Height (below 150cm)"
                                                                     className={classes.textField}
-                                                                    // value={this.state.name}
-                                                                    // onChange={this.handleChange('name')}
+                                                                    value={this.state.Pallor}
+                                                                    onChange={this.handleChange('Pallor')}
                                                                     margin="normal"
                                                                     style={{ width: 180, marginTop: 0, marginLeft: 10 }}
                                                                 />
@@ -507,9 +605,9 @@ class pNote extends Component {
                                                                 <FormControlLabel
                                                                     control={
                                                                         <Checkbox
-                                                                            // checked={this.state.checkedB}
-                                                                            // onChange={this.handleChange('checkedB')}
-                                                                            value="checkedB"
+                                                                            checked={this.state.CheckedJaundice}
+                                                                            onChange={this.handleCheckedChange('CheckedJaundice')}
+                                                                            value="CheckedJaundice"
                                                                             color="primary"
                                                                         />
                                                                     }
@@ -518,11 +616,12 @@ class pNote extends Component {
                                                                     label="Jaundice"
                                                                 />
                                                                 <TextField
+                                                                    disabled={this.state.disableJaundice}
                                                                     id="standard-name"
                                                                     // label="Height (below 150cm)"
                                                                     className={classes.textField}
-                                                                    // value={this.state.name}
-                                                                    // onChange={this.handleChange('name')}
+                                                                    value={this.state.Jaundice}
+                                                                    onChange={this.handleChange('Jaundice')}
                                                                     margin="normal"
                                                                     style={{ width: 180, marginTop: 0, marginLeft: 10 }}
                                                                 />
@@ -531,9 +630,9 @@ class pNote extends Component {
                                                                 <FormControlLabel
                                                                     control={
                                                                         <Checkbox
-                                                                            // checked={this.state.checkedB}
-                                                                            // onChange={this.handleChange('checkedB')}
-                                                                            value="checkedB"
+                                                                            checked={this.state.CheckedChestAbnormality}
+                                                                            onChange={this.handleCheckedChange('CheckedChestAbnormality')}
+                                                                            value="CheckedChestAbnormality"
                                                                             color="primary"
                                                                         />
                                                                     }
@@ -542,11 +641,12 @@ class pNote extends Component {
                                                                     label="Chest Abnormality"
                                                                 />
                                                                 <TextField
+                                                                    disabled={this.state.disableChestAbnormality}
                                                                     id="standard-name"
                                                                     // label="Height (below 150cm)"
                                                                     className={classes.textField}
-                                                                    // value={this.state.name}
-                                                                    // onChange={this.handleChange('name')}
+                                                                    value={this.state.ChestAbnormality}
+                                                                    onChange={this.handleChange('ChestAbnormality')}
                                                                     margin="normal"
                                                                     style={{ width: 180, marginTop: 0, marginLeft: 10 }}
                                                                 />
@@ -555,9 +655,9 @@ class pNote extends Component {
                                                                 <FormControlLabel
                                                                     control={
                                                                         <Checkbox
-                                                                            // checked={this.state.checkedB}
-                                                                            // onChange={this.handleChange('checkedB')}
-                                                                            value="checkedB"
+                                                                            checked={this.state.CheckedHeartAbnormality}
+                                                                            onChange={this.handleCheckedChange('CheckedHeartAbnormality')}
+                                                                            value="CheckedHeartAbnormality"
                                                                             color="primary"
                                                                         />
                                                                     }
@@ -566,11 +666,12 @@ class pNote extends Component {
                                                                     label="Heart Abnormality"
                                                                 />
                                                                 <TextField
+                                                                    disabled={this.state.disableHeartAbnormality}
                                                                     id="standard-name"
                                                                     // label="Height (below 150cm)"
                                                                     className={classes.textField}
-                                                                    // value={this.state.name}
-                                                                    // onChange={this.handleChange('name')}
+                                                                    value={this.state.HeartAbnormality}
+                                                                    onChange={this.handleChange('HeartAbnormality')}
                                                                     margin="normal"
                                                                     style={{ width: 180, marginTop: 0, marginLeft: 10 }}
                                                                 />
@@ -579,9 +680,9 @@ class pNote extends Component {
                                                                 <FormControlLabel
                                                                     control={
                                                                         <Checkbox
-                                                                            // checked={this.state.checkedB}
-                                                                            // onChange={this.handleChange('checkedB')}
-                                                                            value="checkedB"
+                                                                            checked={this.state.CheckedBreastExam}
+                                                                            onChange={this.handleCheckedChange('CheckedBreastExam')}
+                                                                            value="CheckedBreastExam"
                                                                             color="primary"
                                                                         />
                                                                     }
@@ -590,11 +691,12 @@ class pNote extends Component {
                                                                     label="Breast Exam"
                                                                 />
                                                                 <TextField
+                                                                    disabled={this.state.disableBreastExam}
                                                                     id="standard-name"
                                                                     // label="Height (below 150cm)"
                                                                     className={classes.textField}
-                                                                    // value={this.state.name}
-                                                                    // onChange={this.handleChange('name')}
+                                                                    value={this.state.BreastExam}
+                                                                    onChange={this.handleChange('BreastExam')}
                                                                     margin="normal"
                                                                     style={{ width: 180, marginTop: 0, marginLeft: 10 }}
                                                                 />
@@ -603,9 +705,9 @@ class pNote extends Component {
                                                                 <FormControlLabel
                                                                     control={
                                                                         <Checkbox
-                                                                            // checked={this.state.checkedB}
-                                                                            // onChange={this.handleChange('checkedB')}
-                                                                            value="checkedB"
+                                                                            checked={this.state.CheckedVaginalExam}
+                                                                            onChange={this.handleChange('CheckedVaginalExam')}
+                                                                            value="CheckedVaginalExam"
                                                                             color="primary"
                                                                         />
                                                                     }
@@ -614,11 +716,12 @@ class pNote extends Component {
                                                                     label="Vaginal Exam"
                                                                 />
                                                                 <TextField
+                                                                    disabled={this.state.disableCheckedVaginalExam}
                                                                     id="standard-name"
                                                                     // label="Height (below 150cm)"
                                                                     className={classes.textField}
-                                                                    // value={this.state.name}
-                                                                    // onChange={this.handleChange('name')}
+                                                                    value={this.state.VaginalExam}
+                                                                    onChange={this.handleChange('VaginalExam')}
                                                                     margin="normal"
                                                                     style={{ width: 180, marginTop: 0, marginLeft: 10 }}
                                                                 />
@@ -628,8 +731,8 @@ class pNote extends Component {
                                                                     id="standard-name"
                                                                     label="Other"
                                                                     className={classes.textField}
-                                                                    // value={this.state.name}
-                                                                    // onChange={this.handleChange('name')}
+                                                                    value={this.state.Other}
+                                                                    onChange={this.handleChange('Other')}
                                                                     margin="normal"
                                                                     style={{ width: 180, marginTop: 0, marginLeft: 10 }}
                                                                 />
@@ -1290,7 +1393,7 @@ class pNote extends Component {
                                 </DialogActions>
                             </Dialog>
                             <Dialog
-                                style={{zIndex:2000}}
+                                style={{ zIndex: 1400 }}
                                 open={this.state.addform}
                                 TransitionComponent={Transition}
                                 keepMounted
@@ -1316,6 +1419,7 @@ class pNote extends Component {
                                             <FormControl style={{ width: 200, marginTop: 0 }} className={classes.formControl}>
                                                 <InputLabel htmlFor="visual">Delivery Mode</InputLabel>
                                                 <Select
+                                                    MenuProps={{ classes: { paper: classes.dropdownStyle } }}
                                                     value={this.state.obstetrichistoryDeliveryMode}
                                                     onChange={this.handleChange('obstetrichistoryDeliveryMode')}
                                                 >
@@ -1380,7 +1484,7 @@ class pNote extends Component {
                                                 label="Remark"
                                                 className={classes.textField}
                                                 value={this.state.obstetrichistoryRemark}
-                                                onChange={this.handleChange('name')}
+                                                onChange={this.handleChange('obstetrichistoryRemark')}
                                                 margin="normal"
                                                 style={{ width: 200, marginTop: 0 }}
                                             />

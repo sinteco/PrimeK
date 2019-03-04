@@ -45,6 +45,7 @@ import GeneralCheckUp from '../../components/PatientNote/generalCheckUp';
 import DentalHistory from '../../components/PatientNote/dentalHistory';
 import NeonatalNote from '../../components/PatientNote/neonatalNote';
 import ANCfollowUp from '../../components/PatientNote/ANCfollowUp';
+import PNC from '../../components/PatientNote/PNC';
 
 const switchRoutes = (
   <Switch>
@@ -79,6 +80,7 @@ const switchRoutes = (
     <Route path='/DentalHistory' component={DentalHistory}/>
     <Route path='/NeonatalNote' component={NeonatalNote}/>
     <Route path='/ANCfollowUp' component={ANCfollowUp}/>
+    <Route path='/PNC' component={PNC}/>
     {dashboardRoutes.map((prop, key) => {
       if (prop.redirect)
         return <Redirect from={prop.path} to={prop.to} key={key} />;
