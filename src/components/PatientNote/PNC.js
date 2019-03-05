@@ -34,7 +34,11 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Checkbox from '@material-ui/core/Checkbox';
+import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import qs from 'qs';
 
 const styles = {
@@ -91,17 +95,57 @@ class pNote extends Component {
             disabledInput: true,
             forms: [],
             open: false,
-            value: 0
+            value: 0,
+            disableBreastFeeding: true,
+            disableImmunizationGiven: true,
+            checkBreastFeeding: 'No',
+            checkImmunizationGiven: 'No',
+            BreastFeeding: '',
+            ImmunizationGiven: '',
+            disableNextAppointment: true,
+            NextAppointment: new Date(),
+            checkNextAppointment: false,
+            checkFamilyPlaningPreviuoslyusedanyFPMethod: 'No',
+            checkFamilyPlaningFPCounseledandProvided: 'No',
+            checkFamilyPlaningFPCounselingGiven: 'No',
+            familyPlaningMethodChosen: '',
+            DeliveryDate: new Date()
         }
     }
     tabhandleChange = (event, value) => {
         this.setState({ value });
     };
-    handleChange = (key, name) => event => {
-        let forms = [...this.state.forms];
-        forms[key] = event.target.value;
-        this.setState({ forms }, function () {
-            console.log(this.state.forms);
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
+    handleDateChange = (date, name) => {
+        this.setState({ [name]: date });
+    };
+    handleCheckedChange = name => event => {
+        this.setState({ [name]: event.target.value }
+            , function () {
+                if (this.state.checkBreastFeeding==='Yes') {
+                    this.setState({ disableBreastFeeding: false });
+                } else {
+                    this.setState({ disableBreastFeeding: true });
+                }
+                if (this.state.checkImmunizationGiven === 'Yes') {
+                    this.setState({ disableImmunizationGiven: false });
+                } else {
+                    this.setState({ disableImmunizationGiven: true });
+                }
+                
+            }
+        )};
+    handleCheckedBoxChange = name => event => {
+        this.setState({ [name]: event.target.checked }, function () {
+            if (this.state.checkNextAppointment) {
+                this.setState({ disableNextAppointment: false });
+            } else {
+                this.setState({ disableNextAppointment: true });
+            }
         });
     };
     returnarrays() {
@@ -266,8 +310,8 @@ class pNote extends Component {
                                                             <DatePicker
                                                                 margin="normal"
                                                                 label="Delivery Date"
-                                                            // value={selectedDate}
-                                                            // onChange={this.handleDateChange}
+                                                                value={this.state.DeliveryDate}
+                                                                onChange={(e) => this.handleDateChange(e,'DeliveryDate')}
                                                             />
                                                         </MuiPickersUtilsProvider>
                                                     </FormGroup>
@@ -276,8 +320,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Wt(kg)"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.weight}
+                                                            onChange={this.handleChange('weight')}
                                                             margin="normal"
                                                             style={{ width: 100 }}
                                                         />
@@ -285,8 +329,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="BPS"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.BPS}
+                                                            onChange={this.handleChange('BPS')}
                                                             margin="normal"
                                                             style={{ width: 100 }}
                                                         />
@@ -294,8 +338,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="BPD"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.BPD}
+                                                            onChange={this.handleChange('BPD')}
                                                             margin="normal"
                                                             style={{ width: 100 }}
                                                         />
@@ -303,8 +347,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Temp"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.Temp}
+                                                            onChange={this.handleChange('Temp')}
                                                             margin="normal"
                                                             style={{ width: 100 }}
                                                         />
@@ -312,8 +356,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Hb"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.Hb}
+                                                            onChange={this.handleChange('Hb')}
                                                             margin="normal"
                                                             style={{ width: 100 }}
                                                         />
@@ -323,8 +367,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Subjective Finding"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.SubjectiveFinding}
+                                                            onChange={this.handleChange('SubjectiveFinding')}
                                                             margin="normal"
                                                             style={{ width: 500 }}
                                                         />
@@ -335,8 +379,8 @@ class pNote extends Component {
                                                             label="Physical Exam"
                                                             multiline
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.PhysicalExam}
+                                                            onChange={this.handleChange('PhysicalExam')}
                                                             margin="normal"
                                                             style={{ width: 500 }}
                                                         />
@@ -347,8 +391,8 @@ class pNote extends Component {
                                                             label="Assessment"
                                                             multiline
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.Assessment}
+                                                            onChange={this.handleChange('Assessment')}
                                                             margin="normal"
                                                             style={{ width: 500 }}
                                                         />
@@ -359,23 +403,131 @@ class pNote extends Component {
                                                             label="Plan"
                                                             multiline
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.Plan}
+                                                            onChange={this.handleChange('Plan')}
                                                             margin="normal"
                                                             style={{ width: 500 }}
                                                         />
                                                     </FormGroup>
-                                                    <FormLabel component="legend">Family Planing</FormLabel>
+                                                    <br/>
+                                                    <br/>
+                                                    <FormLabel>Family Planing</FormLabel>
                                                     <FormGroup>
                                                         <FormGroup row>
+                                                            <FormLabel style={{ marginTop: 16 }}>Previuosly used any FP Method: </FormLabel>
+                                                            <RadioGroup
+                                                                row
+                                                                aria-label="position"
+                                                                name="position"
+                                                                value={this.state.checkFamilyPlaningPreviuoslyusedanyFPMethod}
+                                                                onChange={this.handleCheckedChange('checkFamilyPlaningPreviuoslyusedanyFPMethod')}
+                                                            >
+                                                                <FormControlLabel
+                                                                    value="Yes"
+                                                                    control={<Radio color="primary" />}
+                                                                    label="Yes"
+                                                                    labelPlacement="start"
+                                                                />
+                                                                <FormControlLabel
+                                                                    value="No"
+                                                                    control={<Radio color="primary" />}
+                                                                    label="No"
+                                                                    labelPlacement="start"
+                                                                />
+                                                            </RadioGroup>
                                                         </FormGroup>
                                                         <FormGroup row>
+                                                            <FormLabel style={{ marginTop: 16 }}>FP Counseling Given: </FormLabel>
+                                                            <RadioGroup
+                                                                row
+                                                                aria-label="position"
+                                                                name="position"
+                                                                value={this.state.checkFamilyPlaningFPCounselingGiven}
+                                                                onChange={this.handleCheckedChange('checkFamilyPlaningFPCounselingGiven')}
+                                                            >
+                                                                <FormControlLabel
+                                                                    value="Yes"
+                                                                    control={<Radio color="primary" />}
+                                                                    label="Yes"
+                                                                    labelPlacement="start"
+                                                                />
+                                                                <FormControlLabel
+                                                                    value="No"
+                                                                    control={<Radio color="primary" />}
+                                                                    label="No"
+                                                                    labelPlacement="start"
+                                                                />
+                                                            </RadioGroup>
                                                         </FormGroup>
                                                         <FormGroup row>
+                                                            <FormControl style={{ width: 150, marginTop: -10, marginBottom: 10 }} className={classes.formControl}>
+                                                                <InputLabel htmlFor="e">Method Chosen</InputLabel>
+                                                                <Select
+                                                                    value={this.state.familyPlaningMethodChosen}
+                                                                    onChange={this.handleChange('familyPlaningMethodChosen')}
+                                                                >
+                                                                    <MenuItem value="Condom">Condom</MenuItem>
+                                                                    <MenuItem value="Contraceptivepill">Contraceptive pill</MenuItem>
+                                                                    <MenuItem value="EmergencyContraceptivepill">Emergency Contraceptive pill</MenuItem>
+                                                                    <MenuItem value="Implant-Implanon">Implant - Implanon</MenuItem>
+                                                                    <MenuItem value="Implant-Jadelle">Implant - Jadelle</MenuItem>
+                                                                    <MenuItem value="Implant-Sino">Implant - Sino</MenuItem>
+                                                                    <MenuItem value="Injectable">Injectable</MenuItem>
+                                                                    <MenuItem value="IUCD-CopperT-380A">IUCD - Copper T-380A</MenuItem>
+                                                                    <MenuItem value="IUCD-LNG-CuT">IUCD - LNG - CuT</MenuItem>
+                                                                    <MenuItem value="IUCD-LNG-Mirena">IUCD - LNG - Mirena</MenuItem>
+                                                                    <MenuItem value="MLS">MLS</MenuItem>
+                                                                    <MenuItem value="MSV">MSV</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
                                                         </FormGroup>
                                                         <FormGroup row>
+                                                            <FormLabel style={{ marginTop: 16 }}>FP Counseled and Provided: </FormLabel>
+                                                            <RadioGroup
+                                                                row
+                                                                aria-label="position"
+                                                                name="position"
+                                                                value={this.state.checkFamilyPlaningFPCounseledandProvided}
+                                                                onChange={this.handleCheckedChange('checkFamilyPlaningFPCounseledandProvided')}
+                                                            >
+                                                                <FormControlLabel
+                                                                    value="Yes"
+                                                                    control={<Radio color="primary" />}
+                                                                    label="Yes"
+                                                                    labelPlacement="start"
+                                                                />
+                                                                <FormControlLabel
+                                                                    value="No"
+                                                                    control={<Radio color="primary" />}
+                                                                    label="No"
+                                                                    labelPlacement="start"
+                                                                />
+                                                            </RadioGroup>
                                                         </FormGroup>
                                                         <FormGroup row>
+                                                            <FormControlLabel
+                                                                control={
+                                                                    <Checkbox
+                                                                        checked={this.state.checkNextAppointment}
+                                                                        onChange={this.handleCheckedBoxChange('checkNextAppointment')}
+                                                                        value="checkNextAppointment"
+                                                                        color="primary"
+                                                                    />
+                                                                }
+                                                                style={{ marginLeft: 0, marginTop: 0 }}
+                                                                labelPlacement="start"
+                                                                label="Next Appointment"
+                                                            />
+                                                            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                                <DatePicker
+                                                                    disabled={this.state.disableNextAppointment}
+                                                                    style={{marginLeft: 10, marginTop: 0}}
+                                                                    margin="normal"
+                                                                    // label="Date picker"
+                                                                    value={this.state.NextAppointment}
+                                                                    onChange={(e) => this.handleDateChange(e,'NextAppointment')}
+                                                                />
+                                                            </MuiPickersUtilsProvider>
                                                         </FormGroup>
                                                     </FormGroup>
                                                 </FormControl>
@@ -406,46 +558,69 @@ class pNote extends Component {
                                                         />
                                                     </FormGroup>
                                                     <FormGroup row>
-                                                        <FormLabel component="legend">labelPlacement</FormLabel>
+                                                        <FormLabel style={{ marginTop: 20 }}>Breast Feeding: </FormLabel>
                                                         <RadioGroup
+                                                            row
                                                             aria-label="position"
                                                             name="position"
-                                                            value={this.state.value}
-                                                            onChange={this.handleChange}
-                                                            row
+                                                            value={this.state.checkBreastFeeding}
+                                                            onChange={this.handleCheckedChange('checkBreastFeeding')}
                                                         >
-                                                        <FormControlLabel
-                                                            // value="top"
-                                                            control={<Radio color="primary" />}
-                                                            label="Top"
-                                                            labelPlacement="start"
-                                                        />
-                                                        <FormControlLabel
-                                                            // value="top"
-                                                            control={<Radio color="primary" />}
-                                                            label="Top"
-                                                            labelPlacement="start"
-                                                        />
+                                                            <FormControlLabel
+                                                                value="Yes"
+                                                                control={<Radio color="primary" />}
+                                                                label="Yes"
+                                                                labelPlacement="start"
+                                                            />
+                                                            <FormControlLabel
+                                                                value="No"
+                                                                control={<Radio color="primary" />}
+                                                                label="No"
+                                                                labelPlacement="start"
+                                                            />
                                                         </RadioGroup>
                                                         <TextField
                                                             id="standard-name"
-                                                            // label="General Condition"
+                                                            disabled={this.state.disableBreastFeeding}
+                                                            // label="Breast Feeding"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.BreastFeeding}
+                                                            onChange={this.handleChange('BreastFeeding')}
                                                             margin="normal"
-                                                            style={{ width: 400 }}
+                                                            style={{ width: 300, marginLeft: 5 }}
                                                         />
                                                     </FormGroup>
                                                     <FormGroup row>
+                                                        <FormLabel style={{ marginTop: 20 }}>Immunization Given: </FormLabel>
+                                                        <RadioGroup
+                                                            row
+                                                            aria-label="position"
+                                                            name="position"
+                                                            value={this.state.checkImmunizationGiven}
+                                                            onChange={this.handleCheckedChange('checkImmunizationGiven')}
+                                                        >
+                                                            <FormControlLabel
+                                                                value="Yes"
+                                                                control={<Radio color="primary" />}
+                                                                label="Yes"
+                                                                labelPlacement="start"
+                                                            />
+                                                            <FormControlLabel
+                                                                value="No"
+                                                                control={<Radio color="primary" />}
+                                                                label="No"
+                                                                labelPlacement="start"
+                                                            />
+                                                        </RadioGroup>
                                                         <TextField
                                                             id="standard-name"
-                                                            // label="General Condition"
+                                                            disabled={this.state.disableImmunizationGiven}
+                                                            // label="Immunization Given"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.ImmunizationGiven}
+                                                            onChange={this.handleChange('ImmunizationGiven')}
                                                             margin="normal"
-                                                            style={{ width: 400 }}
+                                                            style={{ width: 300, marginLeft: 5 }}
                                                         />
                                                     </FormGroup>
                                                     <FormGroup row>
