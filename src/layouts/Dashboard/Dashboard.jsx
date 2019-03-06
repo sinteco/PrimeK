@@ -44,7 +44,7 @@ import DischargeSummary from '../../components/PatientNote/dischargeSummary';
 import GeneralCheckUp from '../../components/PatientNote/generalCheckUp';
 import DentalHistory from '../../components/PatientNote/dentalHistory';
 import NeonatalNote from '../../components/PatientNote/neonatalNote';
-import ANCfollowUp from '../../components/PatientNote/ANCfollowUp';
+import ANCfollowUp from '../../components/PatientNote/ANC';
 import PNC from '../../components/PatientNote/PNC';
 
 const switchRoutes = (

@@ -324,7 +324,7 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      disableTypography
                      className={classes.itemText + whiteFontClasses}
                      inset
-                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>ANC Follow Up</Typography>} />
+                     primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>ANC</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/PNC">
                     <ListItemIcon className={classes.itemIcon}>
