@@ -1,4 +1,4 @@
-import { PATIENT_NOTE_LOAD, PATIENT_NOTE_LOAD_SUCCESS, PATIENT_NOTE_LOAD_FAIL, PATIENT_NOTE_DETAIL_LOAD_FAIL, PATIENT_NOTE_DETAIL_LOAD, PATIENT_NOTE_DETAIL_LOAD_SUCCESS, LOAD_PROCEDURE_ORDER_FAIL, LOAD_PROGRESS_NOTE_SUCCESS, LOAD_PROGRESS_NOTE_FAIL, LOAD_PROGRESS_NOTE, LOAD_NOTE_SUB_CATEGORY, LOAD_NOTE_SUB_CATEGORY_FAIL, LOAD_NOTE_SUB_CATEGORY_SUCCESS, SAVE_PATIENT_NOTE_FAIL, SAVE_PATIENT_NOTE, SAVE_PATIENT_NOTE_SUCCESS, LOAD_TEETH_FAIL, LOAD_TEETH_SUCCESS, LOAD_TEETH, LOAD_SOCIAL_HISTORY, LOAD_SOCIAL_HISTORY_FAIL, LOAD_SOCIAL_HISTORY_SUCCESS, LOAD_FAMILY_HISTORY_FAIL, LOAD_FAMILY_HISTORY_SUCCESS, LOAD_FAMILY_HISTORY, LOAD_MEDICAL_HISTORY, LOAD_MEDICAL_HISTORY_FAIL, LOAD_MEDICAL_HISTORY_SUCCESS, LOAD_REVIEW_OF_SYSTEM, LOAD_REVIEW_OF_SYSTEM_SUCCESS, LOAD_REVIEW_OF_SYSTEM_FAIL, LOAD_PHYSICAL_EXAM, LOAD_PHYSICAL_EXAM_SUCCESS, LOAD_PHYSICAL_EXAM_FAIL, LOAD_DM_HABITS_FAIL, LOAD_DM_HABITS_SUCCESS, LOAD_DM_HABITS, LOAD_DM_OTHER_PROBLEM_FAIL, LOAD_DM_OTHER_PROBLEM_SUCCESS, LOAD_DM_OTHER_PROBLEM, LOAD_DM_PROBLEM_LIST_FAIL, LOAD_DM_PROBLEM_LIST_SUCCESS, LOAD_DM_PROBLEM_LIST, LOAD_DM_PAST_PROCEDURE_FAIL, LOAD_DM_PAST_PROCEDURE_SUCCESS, LOAD_DM_PAST_PROCEDURE, LOAD_DM_VACCINATION_FAIL, LOAD_DM_VACCINATION_SUCCESS, LOAD_DM_VACCINATION, LOAD_DM_PATIENT_EDUCATION_FAIL, LOAD_DM_PATIENT_EDUCATION_SUCCESS, LOAD_DM_PATIENT_EDUCATION, LOAD_DM_EXAM_FAIL, LOAD_DM_EXAM_SUCCESS, LOAD_DM_EXAM, LOAD_DM_ROS_FAIL, LOAD_DM_ROS_SUCCESS, LOAD_DM_ROS } from "../actions/types";
+import { PATIENT_NOTE_LOAD, PATIENT_NOTE_LOAD_SUCCESS, PATIENT_NOTE_LOAD_FAIL, PATIENT_NOTE_DETAIL_LOAD_FAIL, PATIENT_NOTE_DETAIL_LOAD, PATIENT_NOTE_DETAIL_LOAD_SUCCESS, LOAD_PROGRESS_NOTE_SUCCESS, LOAD_PROGRESS_NOTE_FAIL, LOAD_PROGRESS_NOTE, LOAD_NOTE_SUB_CATEGORY, LOAD_NOTE_SUB_CATEGORY_FAIL, LOAD_NOTE_SUB_CATEGORY_SUCCESS, SAVE_PATIENT_NOTE_FAIL, SAVE_PATIENT_NOTE, SAVE_PATIENT_NOTE_SUCCESS, LOAD_TEETH_FAIL, LOAD_TEETH_SUCCESS, LOAD_TEETH, LOAD_SOCIAL_HISTORY, LOAD_SOCIAL_HISTORY_FAIL, LOAD_SOCIAL_HISTORY_SUCCESS, LOAD_FAMILY_HISTORY_FAIL, LOAD_FAMILY_HISTORY_SUCCESS, LOAD_FAMILY_HISTORY, LOAD_MEDICAL_HISTORY, LOAD_MEDICAL_HISTORY_FAIL, LOAD_MEDICAL_HISTORY_SUCCESS, LOAD_REVIEW_OF_SYSTEM, LOAD_REVIEW_OF_SYSTEM_SUCCESS, LOAD_REVIEW_OF_SYSTEM_FAIL, LOAD_PHYSICAL_EXAM, LOAD_PHYSICAL_EXAM_SUCCESS, LOAD_PHYSICAL_EXAM_FAIL, LOAD_DM_HABITS_FAIL, LOAD_DM_HABITS_SUCCESS, LOAD_DM_HABITS, LOAD_DM_OTHER_PROBLEM_FAIL, LOAD_DM_OTHER_PROBLEM_SUCCESS, LOAD_DM_OTHER_PROBLEM, LOAD_DM_PROBLEM_LIST_FAIL, LOAD_DM_PROBLEM_LIST_SUCCESS, LOAD_DM_PROBLEM_LIST, LOAD_DM_PAST_PROCEDURE_FAIL, LOAD_DM_PAST_PROCEDURE_SUCCESS, LOAD_DM_PAST_PROCEDURE, LOAD_DM_VACCINATION_FAIL, LOAD_DM_VACCINATION_SUCCESS, LOAD_DM_VACCINATION, LOAD_DM_PATIENT_EDUCATION_FAIL, LOAD_DM_PATIENT_EDUCATION_SUCCESS, LOAD_DM_PATIENT_EDUCATION, LOAD_DM_EXAM_FAIL, LOAD_DM_EXAM_SUCCESS, LOAD_DM_EXAM, LOAD_DM_ROS_FAIL, LOAD_DM_ROS_SUCCESS, LOAD_DM_ROS, LOAD_ANC_RiskFactor, LOAD_ANC_RiskFactor_SUCCESS, LOAD_ANC_RiskFactor_FAIL, LOAD_ANC_Presentation, LOAD_ANC_Presentation_SUCCESS, LOAD_ANC_Presentation_FAIL, LOAD_FPMethodType, LOAD_FPMethodType_SUCCESS, LOAD_FPMethodType_FAIL, LOAD_Department, LOAD_Department_SUCCESS, LOAD_Department_FAIL } from "../actions/types";
 
 const initialState = {
     patientnotes:[],
@@ -23,6 +23,10 @@ const initialState = {
     DMPatientEducation: [],
     DMExam: [],
     DMROS: [],
+    ANCRiskFactor: [],
+    ANCPresentation: [],
+    FPMethodType: [],
+    Department: []
 }
 
 export default function(state = initialState, action){
@@ -385,6 +389,82 @@ export default function(state = initialState, action){
           hasError: false
         }
       case LOAD_DM_ROS_FAIL:
+        return {
+          ...state,
+          isLoading: false,
+          hasError: true
+        }
+      case LOAD_ANC_RiskFactor:
+        return {
+          ...state,
+          isLoading: true,
+          hasError: false
+        }
+      case LOAD_ANC_RiskFactor_SUCCESS:
+        return {
+          ...state,
+          ANCRiskFactor: action.payload.data,
+          isLoading: false,
+          hasError: false
+        }
+      case LOAD_ANC_RiskFactor_FAIL:
+        return {
+          ...state,
+          isLoading: false,
+          hasError: true
+        }
+      case LOAD_ANC_Presentation:
+        return {
+          ...state,
+          isLoading: true,
+          hasError: false
+        }
+      case LOAD_ANC_Presentation_SUCCESS:
+        return {
+          ...state,
+          ANCPresentation: action.payload.data,
+          isLoading: false,
+          hasError: false
+        }
+      case LOAD_ANC_Presentation_FAIL:
+        return {
+          ...state,
+          isLoading: false,
+          hasError: true
+        }
+      case LOAD_FPMethodType:
+        return {
+          ...state,
+          isLoading: true,
+          hasError: false
+        }
+      case LOAD_FPMethodType_SUCCESS:
+        return {
+          ...state,
+          FPMethodType: action.payload.data,
+          isLoading: false,
+          hasError: false
+        }
+      case LOAD_FPMethodType_FAIL:
+        return {
+          ...state,
+          isLoading: false,
+          hasError: true
+        }
+      case LOAD_Department:
+        return {
+          ...state,
+          isLoading: true,
+          hasError: false
+        }
+      case LOAD_Department_SUCCESS:
+        return {
+          ...state,
+          Department: action.payload.data,
+          isLoading: false,
+          hasError: false
+        }
+      case LOAD_Department_FAIL:
         return {
           ...state,
           isLoading: false,

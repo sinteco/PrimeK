@@ -9,7 +9,7 @@ import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Moment from 'moment';
-import { fetchProgressNote, fetchPatientNoteDetail, fetchNoteSubCategory, savePatientNote } from '../../redux/actions/patientNoteAction';
+import { fetchProgressNote, fetchPatientNoteDetail, fetchNoteSubCategory, savePatientNote, fetchANCRiskFactor, fetchANCPresentation, fetchFPMethodType, fetchDepartment } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from "material-ui-flat-pagination";
@@ -23,7 +23,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import TextField from '@material-ui/core/TextField';
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
+import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
@@ -259,9 +259,27 @@ class pNote extends Component {
     handleDateChange = (date, name) => {
         this.setState({ [name]: date });
     };
+    handleANCRiskFactorChange = name => event => {
+        if (!this.state.ppRiskFactor.includes(event.target.value)){
+            this.setState({
+                [name]: [...this.state.ppRiskFactor, event.target.value]
+            }, function () {
+                console.log(this.state.ppRiskFactor);
+            });
+        }else{
+            var array = [...this.state.ppRiskFactor]; // make a separate copy of the array
+            var index = array.indexOf(event.target.value)
+            if (index !== -1) {
+                array.splice(index, 1);
+                this.setState({ ppRiskFactor: array });
+            }
+        }
+    }
     handleChange = name => event => {
         this.setState({
             [name]: event.target.value,
+        }, function () {
+            console.log(this.state.ppRiskFactor);
         });
     };
     handleCheckedChange = name => event => {
@@ -336,6 +354,14 @@ class pNote extends Component {
         });
     };
     handlePresentPragnancyOpen = () => {
+        const ANCRiskFactorURL = '/PatientNotes/GetANCRiskFactor/0';
+        this.props.fetchANCRiskFactor(ANCRiskFactorURL);
+        const ANCPresentationURL = '/PatientNotes/GetANCPresentation/0';
+        this.props.fetchANCPresentation(ANCPresentationURL);
+        const FPMethodTypeURL = '/PatientNotes/GetFPMethodType/0';
+        this.props.fetchFPMethodType(FPMethodTypeURL);
+        const DepartmentURL = '/PatientNotes/GetDepartment/0';
+        this.props.fetchDepartment(DepartmentURL);
         this.setState({ presentPragnancy: true })
     }
     handlePresentPragnancyEdit = () => {
@@ -381,6 +407,33 @@ class pNote extends Component {
                 ppAppointmentDept: this.state.ppAppointmentDept
             }], function () {
                 console.log(this.state.presentPragnancys);
+                this.setState({
+                    ppDateTime: '',
+                    ppVisitNo: '',
+                    ppGA: '',
+                    ppBPS: '',
+                    ppBPD: '',
+                    ppWeight: '',
+                    ppAnemia: '',
+                    ppEdema: '',
+                    ppPresentation: '',
+                    ppTT: '',
+                    ppIronOrVitamine: '',
+                    ppDite: '',
+                    ppSF: '',
+                    ppFHB: '',
+                    ppClinicalNote: '',
+                    ppUltasound: '',
+                    ppOptedforPPFP: '',
+                    ppFamilyPlanningMethod: '',
+                    ppRiskFactor: '',
+                    ppRiskFactorOther: '',
+                    pplab: '',
+                    ppNextAppointment: '',
+                    ppcheckNextAppointment: '',
+                    ppAppointmentNote: '',
+                    ppAppointmentDept: ''
+                });
             }
         })
     }
@@ -401,6 +454,16 @@ class pNote extends Component {
             addform: false
         }, function () {
             console.log(this.state.presentPragnancys);
+            this.setState({
+                DeliveryAgeOfChild: '',
+                DeliveryMode: '',
+                GA: '',
+                DeliveryPlace: '',
+                Weight: '',
+                LBOrSB: '',
+                Sex: '',
+                Remark: ''
+            });
         });
     }
     returnarrays() {
@@ -431,8 +494,8 @@ class pNote extends Component {
         this.setState({ open: true, disabledInput: true });
     };
     newdialogClickOpen = () => {
-        const url = 'PatientNotes/GetNoteSubCategory/' + category;
-        this.props.fetchNoteSubCategory(url);
+        const subNoteURL = 'PatientNotes/GetNoteSubCategory/ANC Medical Surgical History';
+        this.props.fetchNoteSubCategory(subNoteURL);
         this.setState({ disabledInput: false, newdialogopen: true });
     };
     savePatientNote = () => {
@@ -564,7 +627,7 @@ class pNote extends Component {
                                                         <CustomTableWithSelector
                                                             tableHeaderColor="primary"
                                                             tableHead={[" ", "Problem", "Yes", "No", "Remark"]}
-                                                            tableData={[['Mother']]}
+                                                            tableData={this.props.noteSubCategory.map(item => { return [item.Name] })}
                                                             radio={2}
                                                             textbox={1}
                                                         />
@@ -692,7 +755,7 @@ class pNote extends Component {
                                                             disabled={true}
                                                             // onChange={this.handleChange('ED')}
                                                             margin="normal"
-                                                            style={{ width: 100, marginTop: 0, marginLeft: 0, marginRight: 15 }}
+                                                            style={{ width: 125, marginTop: 0, marginLeft: 0, marginRight: 15 }}
                                                         />
                                                         <FormControl style={{ width: 150, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">Menstrual Cycle</InputLabel>
@@ -1777,7 +1840,7 @@ class pNote extends Component {
                                 open={this.state.presentPragnancy}
                                 TransitionComponent={Transition}
                                 keepMounted
-                                // onClose={this.handleClose}
+                                onClose={this.handlePresentPragnancyClose}
                                 aria-labelledby="alert-dialog-slide-title"
                                 aria-describedby="alert-dialog-slide-description"
                             >
@@ -1890,11 +1953,11 @@ class pNote extends Component {
                                                                 value={this.state.ppPresentation}
                                                                 onChange={this.handleChange('ppPresentation')}
                                                             >
-                                                                <MenuItem value="CTRNR">Breech</MenuItem>
-                                                                <MenuItem value="CTRR">Cephalic</MenuItem>
-                                                                <MenuItem value="">Obliqce</MenuItem>
-                                                                <MenuItem value="">Transverse</MenuItem>
-                                                                <MenuItem value="">Other</MenuItem>
+                                                                {
+                                                                    this.props.ANCPresentation.map((item) =>
+                                                                        <MenuItem value={item.Name}>{item.Name}</MenuItem>
+                                                                    )
+                                                                }
                                                             </Select>
                                                         </FormControl>
                                                     </FormGroup>
@@ -2021,33 +2084,28 @@ class pNote extends Component {
                                                                 value={this.state.ppFamilyPlanningMethod}
                                                                 onChange={this.handleChange('ppFamilyPlanningMethod')}
                                                             >
-                                                                <MenuItem value="Condom">Condom</MenuItem>
-                                                                <MenuItem value="Contraceptivepill">Contraceptive pill</MenuItem>
-                                                                <MenuItem value="EmergencyContraceptivepill">Emergency Contraceptive pill</MenuItem>
-                                                                <MenuItem value="Implant-Implanon">Implant - Implanon</MenuItem>
-                                                                <MenuItem value="Implant-Jadelle">Implant - Jadelle</MenuItem>
-                                                                <MenuItem value="Implant-Sino">Implant - Sino</MenuItem>
-                                                                <MenuItem value="Injectable">Injectable</MenuItem>
-                                                                <MenuItem value="IUCD-CopperT-380A">IUCD - Copper T-380A</MenuItem>
-                                                                <MenuItem value="IUCD-LNG-CuT">IUCD - LNG - CuT</MenuItem>
-                                                                <MenuItem value="IUCD-LNG-Mirena">IUCD - LNG - Mirena</MenuItem>
-                                                                <MenuItem value="MLS">MLS</MenuItem>
-                                                                <MenuItem value="MSV">MSV</MenuItem>
+                                                                { 
+                                                                    this.props.FPMethodType.map((item)=>
+                                                                        <MenuItem value={item.Name}>{item.Name}</MenuItem>
+                                                                    )
+                                                                }
                                                             </Select>
                                                         </FormControl>
                                                     </FormGroup>
                                                     <FormLabel>Risk Factor</FormLabel>
                                                     <FormGroup>
-                                                        <FormControlLabel
-                                                            control={
-                                                                <Checkbox
-                                                                    checked={this.state.ppRiskFactor}
-                                                                    onChange={this.handleChange('ppRiskFactor')}
-                                                                    value="ppRiskFactor"
+                                                        {
+                                                            this.props.ANCRiskFactor.map((item)=>
+                                                                <FormControlLabel
+                                                                    control={<Checkbox 
+                                                                        onChange={this.handleANCRiskFactorChange('ppRiskFactor')}
+                                                                        label={item.Name}
+                                                                        value={item.Name} />}
+                                                                    label={item.Name}
                                                                 />
-                                                            }
-                                                            label="Animia hb<85"
-                                                        />
+                                                            )
+                                                        }
+                                                        
                                                         <TextField
                                                             id="standard-name"
                                                             label="Other"
@@ -2115,7 +2173,11 @@ class pNote extends Component {
                                                                 value={this.state.ppAppointmentDept}
                                                                 onChange={this.handleChange('ppAppointmentDept')}
                                                             >
-                                                                <MenuItem value="CTRNR">Male</MenuItem>
+                                                                {
+                                                                    this.props.Department.map((item) =>
+                                                                        <MenuItem value={item.Name}>{item.Name}</MenuItem>
+                                                                    )
+                                                                }
                                                             </Select>
                                                         </FormControl>
                                                     </FormGroup>
@@ -2207,6 +2269,10 @@ class pNote extends Component {
 }
 
 pNote.propTypes = {
+    fetchANCRiskFactor: propTypes.isRequired,
+    fetchANCPresentation: propTypes.isRequired,
+    fetchFPMethodType: propTypes.isRequired,
+    fetchDepartment: propTypes.isRequired,
     savePatientNote: propTypes.isRequired,
     fetchNoteSubCategory: propTypes.isRequired,
     fetchProgressNote: propTypes.isRequired,
@@ -2228,7 +2294,11 @@ const mapStateToProps = (state) => ({
     selectedPatient: state.assignments.selectedPatient,
     patientnoteDetail: state.patientNote.patientnoteDetail,
     noteSubCategory: state.patientNote.noteSubCategory,
-    confirmStatus: state.patientNote.confirmStatus
+    confirmStatus: state.patientNote.confirmStatus,
+    ANCRiskFactor: state.patientNote.ANCRiskFactor,
+    ANCPresentation: state.patientNote.ANCPresentation,
+    FPMethodType: state.patientNote.FPMethodType,
+    Department: state.patientNote.Department
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -2236,6 +2306,10 @@ const mapDispatchToProps = dispatch => ({
     fetchPatientNoteDetail: (url) => dispatch(fetchPatientNoteDetail(url)),
     fetchNoteSubCategory: (url) => dispatch(fetchNoteSubCategory(url)),
     savePatientNote: (url, data) => dispatch(savePatientNote(url, data)),
+    fetchANCRiskFactor: (url) => dispatch(fetchANCRiskFactor(url)),
+    fetchANCPresentation: (url) => dispatch(fetchANCPresentation(url)),
+    fetchFPMethodType: (url) => dispatch(fetchFPMethodType(url)),
+    fetchDepartment: (url) => dispatch(fetchDepartment(url))
 });
 
 export default compose(withStyles(styles), withMobileDialog(), connect(mapStateToProps, mapDispatchToProps))(pNote);

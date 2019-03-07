@@ -1,4 +1,4 @@
-import { PATIENT_NOTE_LOAD, PATIENT_NOTE_DETAIL_LOAD, LOAD_PROGRESS_NOTE, LOAD_NOTE_SUB_CATEGORY, SAVE_PATIENT_NOTE, LOAD_TEETH, LOAD_SOCIAL_HISTORY, LOAD_FAMILY_HISTORY, LOAD_MEDICAL_HISTORY, LOAD_REVIEW_OF_SYSTEM, LOAD_PHYSICAL_EXAM, LOAD_DM_ROS, LOAD_DM_EXAM, LOAD_DM_PATIENT_EDUCATION, LOAD_DM_VACCINATION, LOAD_DM_PAST_PROCEDURE, LOAD_DM_PROBLEM_LIST, LOAD_DM_OTHER_PROBLEM, LOAD_DM_HABITS} from "./types";
+import { PATIENT_NOTE_LOAD, PATIENT_NOTE_DETAIL_LOAD, LOAD_PROGRESS_NOTE, LOAD_NOTE_SUB_CATEGORY, SAVE_PATIENT_NOTE, LOAD_TEETH, LOAD_SOCIAL_HISTORY, LOAD_FAMILY_HISTORY, LOAD_MEDICAL_HISTORY, LOAD_REVIEW_OF_SYSTEM, LOAD_PHYSICAL_EXAM, LOAD_DM_ROS, LOAD_DM_EXAM, LOAD_DM_PATIENT_EDUCATION, LOAD_DM_VACCINATION, LOAD_DM_PAST_PROCEDURE, LOAD_DM_PROBLEM_LIST, LOAD_DM_OTHER_PROBLEM, LOAD_DM_HABITS, LOAD_Table, LOAD_Department, LOAD_FPMethodType, LOAD_ANC_Presentation, LOAD_ANC_RiskFactor} from "./types";
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 export type Action =
@@ -162,6 +162,38 @@ export const fetchDMExam = (URL): Action => ({
 });
 export const fetchDMROS = (URL): Action => ({
     type: LOAD_DM_ROS,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchANCRiskFactor = (URL): Action => ({
+    type: LOAD_ANC_RiskFactor,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchANCPresentation = (URL): Action => ({
+    type: LOAD_ANC_Presentation,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchFPMethodType = (URL): Action => ({
+    type: LOAD_FPMethodType,
+    payload: {
+        request: {
+            url: URL
+        }
+    }
+});
+export const fetchDepartment = (URL): Action => ({
+    type: LOAD_Department,
     payload: {
         request: {
             url: URL

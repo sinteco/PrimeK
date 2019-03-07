@@ -51,12 +51,6 @@ const style = {
     }
   };
 
-    let MedicalHistory = [];
-    let SocialHistory = [];
-    let FamilyHistory = [];
-    let ReviewofSystems = [];
-    let PhysicalExam = [];
-
 class newHPNote extends Component {
     constructor(props) {
         super(props);
