@@ -684,7 +684,7 @@ class pNote extends Component {
                                                 </FormGroup>
                                                 <FormGroup row>
                                                     <FormControl style={{ width: 180, marginTop: 0, marginRight: 0 }} className={classes.formControl}>
-                                                        <InputLabel htmlFor="visual acquity rt">Mental _Neurological</InputLabel>
+                                                        <InputLabel htmlFor="visual acquity rt">Mental Neurological</InputLabel>
                                                         <Select
                                                             value={this.state.mentalNeurological}
                                                             onChange={this.handleChange('mentalNeurological')}
@@ -1072,7 +1072,7 @@ class pNote extends Component {
                                                                 </Select>
                                                             </FormControl>
                                                         </FormGroup>
-                                                        <FormGroup row>
+                                                        <FormGroup>
                                                             <TextField
                                                                 id="standard-multiline-flexible"
                                                                 label="Recommendation"
@@ -1085,10 +1085,12 @@ class pNote extends Component {
                                                                 style={{ width: 500}}
                                                             />
                                                             <RadioGroup
+                                                                row
                                                                 aria-label="Gender"
                                                                 name="gender1"
                                                                 className={classes.group}
-                                                                style={{ padding: '0 10px 10px 10px' }}
+                                                                style={{marginLeft: -11}}
+                                                                // style={{ padding: '0 10px 10px 10px' }}
                                                                 value={this.state.fit}
                                                                 onChange={this.handleChange('fit')}
                                                             >

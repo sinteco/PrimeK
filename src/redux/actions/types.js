@@ -167,3 +167,6 @@ export const LOAD_FPMethodType_FAIL = 'LOAD_FPMethodType_FAIL';
 export const LOAD_Department = 'LOAD_Department';
 export const LOAD_Department_SUCCESS = 'LOAD_Department_SUCCESS';
 export const LOAD_Department_FAIL = 'LOAD_Department_FAIL';
+export const LOAD_APPOINTMENT = 'LOAD_APPOINTMENT';
+export const LOAD_APPOINTMENT_SUCCESS = 'LOAD_APPOINTMENT_SUCCESS';
+export const LOAD_APPOINTMENT_FAIL = 'LOAD_APPOINTMENT_FAIL';

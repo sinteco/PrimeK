@@ -11,6 +11,7 @@ import procedureReducer from './procedureOrderReducer';
 import consultationReducer from './consultationOrderReducer';
 import investigationResuder from './InvestigationOrderReducer';
 import diagnosisReducer from './diagnosisReducer';
+import appointmentReducer from './appointmentReducer';
 
 export default combineReducers({
     assignments: assignmentReducer,
@@ -24,5 +25,6 @@ export default combineReducers({
     procedureOrder: procedureReducer,
     consultationOrder: consultationReducer,
     investigationOrder: investigationResuder,
-    diagnosisOrder: diagnosisReducer
+    diagnosisOrder: diagnosisReducer,
+    appointment: appointmentReducer
 });

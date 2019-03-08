@@ -134,9 +134,9 @@ class pNote extends Component {
             obstetrichistoryLBOrSB: '',
             obstetrichistorySex: '',
             obstetrichistoryRemark: '',
-            EDDUnknowen: true,
+            EDDUnknowen: false,
             EDD: new Date(),
-            disableEDD: false,
+            disableEDD: true,
             menstrualCycle: '',
             FPConseled: '',
             Height: '',
@@ -244,11 +244,13 @@ class pNote extends Component {
             ppUltasound: '',
             ppOptedforPPFP: '',
             ppFamilyPlanningMethod: '',
+            disableppFamilyPlanningMethod: true,
             ppRiskFactor: '',
             ppRiskFactorOther: '',
             pplab: '',
             ppNextAppointment: new Date(),
-            ppcheckNextAppointment: true,
+            ppcheckNextAppointment: false,
+            disableppNextAppointment: true,
             ppAppointmentNote: '',
             ppAppointmentDept: ''
         }
@@ -284,7 +286,7 @@ class pNote extends Component {
     };
     handleCheckedChange = name => event => {
         this.setState({ [name]: event.target.checked }, function () {
-            if (!this.state.EDDUnknowen) {
+            if (this.state.EDDUnknowen) {
                 this.setState({ disableEDD: false });
             }else{
                 this.setState({ disableEDD: true });
@@ -342,6 +344,11 @@ class pNote extends Component {
                     disableLabExaminationOther: false
                 });
             }
+            if(this.state.ppOptedforPPFP){
+                this.setState({ disableppFamilyPlanningMethod: false});
+            }else{
+                this.setState({ disableppFamilyPlanningMethod: true });
+            }
         });
     };
     handleCheckedBoxChange = name => event => {
@@ -350,6 +357,11 @@ class pNote extends Component {
                 this.setState({ disableMethodOfChoice: false });
             } else {
                 this.setState({ disableMethodOfChoice: true });
+            }
+            if(this.state.ppcheckNextAppointment){
+                this.setState({disableppNextAppointment:false});
+            }else{
+                this.setState({disableppNextAppointment:true});
             }
         });
     };
@@ -518,7 +530,7 @@ class pNote extends Component {
         this.props.savePatientNote(URL, qs.stringify(inputdata));
 
         if (!this.props.isLoading && !this.props.hasError) {
-            alert("saved Successfully");
+            alert("Saved Successfully");
             //reload after save
             const reloadURL = '/PatientNotes/GetNotesOfPatient/' + id + "?page=" + this.state.page + "&category=" + category;
             this.props.fetchProgressNote(reloadURL);
@@ -2081,6 +2093,7 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 200, marginLeft: 10, marginTop: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="visual">Method</InputLabel>
                                                             <Select
+                                                                disabled={this.state.disableppFamilyPlanningMethod}
                                                                 value={this.state.ppFamilyPlanningMethod}
                                                                 onChange={this.handleChange('ppFamilyPlanningMethod')}
                                                             >
@@ -2145,7 +2158,7 @@ class pNote extends Component {
                                                         />
                                                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                                             <DatePicker
-                                                                disabled={this.state.disableNextAppointment}
+                                                                disabled={this.state.disableppNextAppointment}
                                                                 style={{ marginLeft: 10, marginTop: 0 }}
                                                                 margin="normal"
                                                                 value={this.state.ppNextAppointment}

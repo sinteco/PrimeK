@@ -103,18 +103,90 @@ class pNote extends Component {
             disabledInput: true,
             forms: [],
             open: false,
-            value: 0
+            value: 0,
+            deliveryDate: new Date(),
+            deliveryMethod: '',
+            // indication: '',
+            sex: '',
+            birthWt: '',
+            length: '',
+            HC: '',
+            GA: '',
+            APGARscore1min: '',
+            APGARscore5min: '',
+            resuscitatedAtBirth: '',
+            vitaminK: '',
+            antibiotics: '',
+            otherTreatment: '',
+            dimorphicFeaturesBirth: '',
+            PR: '',
+            RR: '',
+            temp: '',
+            SaO2: '',
+            HEENT: '',
+            GUS: '',
+            chest: '',
+            anus: '',
+            CSV: '',
+            integumentary: '',
+            abdomen: '',
+            CSNMoro: '',
+            grasp: '',
+            sucking: '',
+            tone: '',
+            assesment: '',
+            plan: '',
+            babyremark: '',
+            motherremark: '',
+            gravida: '',
+            para: '',
+            abortion: '',
+            Noofchildrenalive: '',
+            ageofMother: '',
+            bloodBloodandRH: '',
+            VLDR: '',
+            singleMultipleBirth: '',
+            HBSAg: '',
+            TB: '',
+            HIVSTATUS: '',
+            HIVDuration: '',
+            OnArt: '',
+            motherRegimen: '',
+            infantRegimen: '',
+            infantRegimenOptions: '',
+            otherRiskFactors: '',
+            LMP: new Date(),
+            checkeLMP: true,
+            disableLMP: true,
+            laborOnset: '',
+            chorioaminiontis: '',
+            laborDuration: '',
+            ROMDuration: '',
+            MSAF: '',
+            thickMeconium: '',
+            indication: '',
+            materialHypertension: '',
+            DM: '',
+            HxofFoulSmellingDischarge: ''
         }
     }
     tabhandleChange = (event, value) => {
         this.setState({ value });
     };
-    handleChange = (key, name) => event => {
-        let forms = [...this.state.forms];
-        forms[key] = event.target.value;
-        this.setState({ forms }, function () {
-            console.log(this.state.forms);
+    handleChange = name => event => {
+        this.setState({ [name]: event.target.value, })
+    };
+    handleCheckedChange = name => event => {
+        this.setState({ [name]: event.target.checked }, function () {
+            if(this.state.checkeLMP){
+                this.setState({disableLMP:true});
+            }else{
+                this.setState({disableLMP:false});
+            }
         });
+    }
+    handleDateChange = (date, name) => {
+        this.setState({ [name]: date });
     };
     returnarrays() {
         var a = new Array();
@@ -278,17 +350,17 @@ class pNote extends Component {
                                                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                                                 <DatePicker
                                                                     margin="normal"
-                                                                    label="Date picker"
-                                                                    // value={selectedDate}
-                                                                    // onChange={this.handleDateChange}
+                                                                    label="Date Time"
+                                                                    value={this.state.deliveryDate}
+                                                                    onChange={(e)=>this.handleDateChange(e,'deliveryDate')}
                                                                 />
                                                         </MuiPickersUtilsProvider>
                                                         <TextField
                                                             id="standard-name"
                                                             label="Delivery Method"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.deliveryMethod}
+                                                            onChange={this.handleChange('deliveryMethod')}
                                                             margin="normal"
                                                             style={{ width: 150 }}
                                                         />
@@ -296,8 +368,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Indication"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.indication}
+                                                            onChange={this.handleChange('indication')}
                                                             margin="normal"
                                                             style={{ width: 100 }}
                                                         />
@@ -305,8 +377,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Sex"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.sex}
+                                                            onChange={this.handleChange('sex')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 100 }}
@@ -317,8 +389,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Birth wt.(gm)"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.birthWt}
+                                                            onChange={this.handleChange('birthWt')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 100 }}
@@ -327,8 +399,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Length(cm)"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.length}
+                                                            onChange={this.handleChange('length')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 100 }}
@@ -337,8 +409,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="HC(cm)"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.HC}
+                                                            onChange={this.handleChange('HC')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 100 }}
@@ -347,8 +419,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="GA"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.GA}
+                                                            onChange={this.handleChange('GA')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 100 }}
@@ -357,8 +429,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="APGAR score as 1 min:"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.APGARscore1min}
+                                                            onChange={this.handleChange('APGARscore1min')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 200 }}
@@ -367,8 +439,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="at 5min:"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.APGARscore5min}
+                                                            onChange={this.handleChange('APGARscore5min')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 100 }}
@@ -378,8 +450,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 170, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">Resuscitated at Birth</InputLabel>
                                                             <Select
-                                                                // value={this.state.integumentary}
-                                                                // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.resuscitatedAtBirth}
+                                                                onChange={this.handleChange('resuscitatedAtBirth')}
                                                             >
                                                                 <MenuItem value="Yes">Yes</MenuItem>
                                                                 <MenuItem value="No">No</MenuItem>
@@ -388,8 +460,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 140, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">Vitamin K</InputLabel>
                                                             <Select
-                                                                // value={this.state.integumentary}
-                                                                // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.vitaminK}
+                                                                onChange={this.handleChange('vitaminK')}
                                                             >
                                                                 <MenuItem value="Yes">Yes</MenuItem>
                                                                 <MenuItem value="No">No</MenuItem>
@@ -399,8 +471,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Antibiotics"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.antibiotics}
+                                                            onChange={this.handleChange('antibiotics')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 100, marginTop: 0 }}
@@ -409,8 +481,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Other Treatment"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.otherTreatment}
+                                                            onChange={this.handleChange('otherTreatment')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 150, marginTop: 0 }}
@@ -420,8 +492,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 200, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">Dimorphic Features Birth</InputLabel>
                                                             <Select
-                                                                // value={this.state.integumentary}
-                                                                // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.dimorphicFeaturesBirth}
+                                                                onChange={this.handleChange('dimorphicFeaturesBirth')}
                                                             >
                                                                 <MenuItem value="Yes">Yes</MenuItem>
                                                                 <MenuItem value="No">No</MenuItem>
@@ -431,8 +503,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="BR"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.BR}
+                                                            onChange={this.handleChange('BR')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 100, marginTop: 0 }}
@@ -441,8 +513,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="RR"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.RR}
+                                                            onChange={this.handleChange('RR')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 100, marginTop: 0 }}
@@ -451,8 +523,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Temp"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.temp}
+                                                            onChange={this.handleChange('temp')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 100, marginTop: 0 }}
@@ -461,8 +533,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="SaO2"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.SaO2}
+                                                            onChange={this.handleChange('SaO2')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 100, marginTop: 0 }}
@@ -473,8 +545,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="HEENT"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.HEENT}
+                                                            onChange={this.handleChange('HEENT')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 350, marginTop: 0 }}
@@ -483,8 +555,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="GUS"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.GUS}
+                                                            onChange={this.handleChange('GUS')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 350, marginTop: 0 }}
@@ -495,8 +567,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Chest"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.chest}
+                                                            onChange={this.handleChange('chest')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 350, marginTop: 0 }}
@@ -505,8 +577,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Anus"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.anus}
+                                                            onChange={this.handleChange('anus')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 350, marginTop: 0 }}
@@ -517,8 +589,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="CSV"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.CSV}
+                                                            onChange={this.handleChange('CSV')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 350, marginTop: 0 }}
@@ -527,8 +599,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Integumentary"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.integumentary}
+                                                            onChange={this.handleChange('integumentary')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 350, marginTop: 0 }}
@@ -539,8 +611,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Abdomen"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.abdomen}
+                                                            onChange={this.handleChange('abdomen')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 350, marginTop: 0 }}
@@ -551,8 +623,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="CSN Moro"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.CSNMoro}
+                                                            onChange={this.handleChange('CSNMoro')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 130, marginTop: 0 }}
@@ -561,8 +633,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Grasp"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.grasp}
+                                                            onChange={this.handleChange('grasp')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 130, marginTop: 0 }}
@@ -571,8 +643,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Sucking"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.sucking}
+                                                            onChange={this.handleChange('sucking')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 130, marginTop: 0 }}
@@ -581,8 +653,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Tone"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.tone}
+                                                            onChange={this.handleChange('tone')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 130, marginTop: 0 }}
@@ -593,8 +665,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Assesment"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.assesment}
+                                                            onChange={this.handleChange('assesment')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 350, marginTop: 0 }}
@@ -603,8 +675,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Plan"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.plan}
+                                                            onChange={this.handleChange('plan')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 350, marginTop: 0 }}
@@ -615,8 +687,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Remark"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.babyremark}
+                                                            onChange={this.handleChange('babyremark')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 350, marginTop: 0 }}
@@ -632,8 +704,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Gravida"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.gravida}
+                                                            onChange={this.handleChange('gravida')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 130, marginTop: 0 }}
@@ -642,8 +714,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Para"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.para}
+                                                            onChange={this.handleChange('para')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 130, marginTop: 0 }}
@@ -652,8 +724,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Abortion"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.abortion}
+                                                            onChange={this.handleChange('abortion')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 130, marginTop: 0 }}
@@ -662,8 +734,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="No of children alive"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.Noofchildrenalive}
+                                                            onChange={this.handleChange('Noofchildrenalive')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 180, marginTop: 0 }}
@@ -674,8 +746,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Age of Mother"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.ageofMother}
+                                                            onChange={this.handleChange('ageofMother')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 130, marginTop: 0 }}
@@ -683,8 +755,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 160, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">Blood Blood and RH</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.bloodBloodandRH}
+                                                                onChange={this.handleChange('bloodBloodandRH')}
                                                             >
                                                                 <MenuItem value="A-">A-</MenuItem>
                                                                 <MenuItem value="A+">A+</MenuItem>
@@ -699,8 +771,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 140, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">VLDR</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.VLDR}
+                                                                onChange={this.handleChange('VLDR')}
                                                             >
                                                                 <MenuItem value="REACTIVE">REACTIVE</MenuItem>
                                                                 <MenuItem value="NONREACTIVE">NONREACTIVE</MenuItem>
@@ -709,8 +781,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 160, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">Single Multiple Birth</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.singleMultipleBirth}
+                                                                onChange={this.handleChange('singleMultipleBirth')}
                                                             >
                                                                 <MenuItem value="SINGLTON">SINGLTON</MenuItem>
                                                                 <MenuItem value="TWINS">TWINS</MenuItem>
@@ -722,8 +794,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 160, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">HBS Ag</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.HBSAg}
+                                                                onChange={this.handleChange('HBSAg')}
                                                             >
                                                                 <MenuItem value="NEGATIVE">NEGATIVE</MenuItem>
                                                                 <MenuItem value="POSETIVE">POSETIVE</MenuItem>
@@ -732,8 +804,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 160, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">TB</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.TB}
+                                                                onChange={this.handleChange('TB')}
                                                             >
                                                                 <MenuItem value="NEGATIVE">NEGATIVE</MenuItem>
                                                                 <MenuItem value="POSETIVE">POSETIVE</MenuItem>
@@ -744,8 +816,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 160, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">HIV STATUS</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.HIVSTATUS}
+                                                                onChange={this.handleChange('HIVSTATUS')}
                                                             >
                                                                 <MenuItem value="NEGATIVE">NEGATIVE</MenuItem>
                                                                 <MenuItem value="POSETIVE">POSETIVE</MenuItem>
@@ -756,8 +828,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="HIV Duration"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.HIVDuration}
+                                                            onChange={this.handleChange('HIVDuration')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 150, marginTop: 0 }}
@@ -765,8 +837,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 160, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">On Art</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.OnArt}
+                                                                onChange={this.handleChange('OnArt')}
                                                             >
                                                                 <MenuItem value="YES">YES</MenuItem>
                                                                 <MenuItem value="NO">NO</MenuItem>
@@ -776,8 +848,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Mother Regimen"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.motherRegimen}
+                                                            onChange={this.handleChange('motherRegimen')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 150, marginTop: 0, marginRight: 0 }}
@@ -788,8 +860,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Infant Regimen"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.infantRegimen}
+                                                            onChange={this.handleChange('infantRegimen')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 150, marginTop: 0, marginRight: 0 }}
@@ -797,8 +869,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 190, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">Infant Regimen Options</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.infantRegimenOptions}
+                                                                onChange={this.handleChange('infantRegimenOptions')}
                                                             >
                                                                 <MenuItem value="YES">EBF</MenuItem>
                                                                 <MenuItem value="NO">EFF</MenuItem>
@@ -808,8 +880,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Other Risk Factors"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.otherRiskFactors}
+                                                            onChange={this.handleChange('otherRiskFactors')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 300, marginTop: 0, marginLeft: 0 }}
@@ -821,7 +893,10 @@ class pNote extends Component {
                                                                 <Checkbox
                                                                     icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
                                                                     checkedIcon={<CheckBoxIcon fontSize="small" />}
-                                                                    value="checkedI"
+                                                                    checked={this.state.checkeLMP}
+                                                                    onChange={this.handleCheckedChange('checkeLMP')}
+                                                                    value="checkeLMP"
+
                                                                 />
                                                             }
                                                             style={{ marginLeft: 0 }}
@@ -833,8 +908,9 @@ class pNote extends Component {
                                                                 style={{ marginTop: 0, marginLeft: 30 }}
                                                                 margin="normal"
                                                                 label="Date picker"
-                                                                // value={selectedDate}
-                                                                // onChange={this.handleDateChange}
+                                                                value={this.state.LMP}
+                                                                disabled={this.state.disableLMP}
+                                                                onChange={(e) => this.handleDateChange(e,'LMP')}
                                                             />
                                                         </MuiPickersUtilsProvider>
                                                     </FormGroup>
@@ -842,8 +918,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 190, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">Labor Onset</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.laborOnset}
+                                                                onChange={this.handleChange('laborOnset')}
                                                             >
                                                                 <MenuItem value="SPONTANIUS">SPONTANIUS</MenuItem>
                                                                 <MenuItem value="INDUCED">INDUCED</MenuItem>
@@ -853,8 +929,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 190, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">Chorioaminiontis</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.chorioaminiontis}
+                                                                onChange={this.handleChange('chorioaminiontis')}
                                                             >
                                                                 <MenuItem value="YES">YES</MenuItem>
                                                                 <MenuItem value="NO">NO</MenuItem>
@@ -864,8 +940,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Labor Duration"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.laborDuration}
+                                                            onChange={this.handleChange('laborDuration')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 150, marginTop: 0, marginLeft: 0 }}
@@ -874,8 +950,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="ROM Duration"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.ROMDuration}
+                                                            onChange={this.handleChange('ROMDuration')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 150, marginTop: 0, marginLeft: 0 }}
@@ -885,8 +961,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 190, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">MSAF</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.MSAF}
+                                                                onChange={this.handleChange('MSAF')}
                                                             >
                                                                 <MenuItem value="YES">YES</MenuItem>
                                                                 <MenuItem value="NO">NO</MenuItem>
@@ -895,8 +971,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 190, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">Thick Meconium</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.thickMeconium}
+                                                                onChange={this.handleChange('thickMeconium')}
                                                             >
                                                                 <MenuItem value="YES">YES</MenuItem>
                                                                 <MenuItem value="NO">NO</MenuItem>
@@ -904,10 +980,10 @@ class pNote extends Component {
                                                         </FormControl>
                                                         <TextField
                                                             id="standard-name"
-                                                            label="ROM Duration"
+                                                            label="Indication"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.indication}
+                                                            onChange={this.handleChange('indication')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 300, marginTop: 0, marginLeft: 0 }}
@@ -917,8 +993,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 180, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">Material Hypertension</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.materialHypertension}
+                                                                onChange={this.handleChange('materialHypertension')}
                                                             >
                                                                 <MenuItem value="YES">YES</MenuItem>
                                                                 <MenuItem value="NO">NO</MenuItem>
@@ -927,8 +1003,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 100, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">DM</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.DM}
+                                                                onChange={this.handleChange('DM')}
                                                             >
                                                                 <MenuItem value="YES">YES</MenuItem>
                                                                 <MenuItem value="NO">NO</MenuItem>
@@ -937,8 +1013,8 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 250, marginTop: 0, marginLeft: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="e">Hx of Foul Smelling Discharge</InputLabel>
                                                             <Select
-                                                            // value={this.state.integumentary}
-                                                            // onChange={this.handleChange('integumentary')}
+                                                                value={this.state.HxofFoulSmellingDischarge}
+                                                                onChange={this.handleChange('HxofFoulSmellingDischarge')}
                                                             >
                                                                 <MenuItem value="YES">YES</MenuItem>
                                                                 <MenuItem value="NO">NO</MenuItem>
@@ -950,8 +1026,8 @@ class pNote extends Component {
                                                             id="standard-name"
                                                             label="Remark"
                                                             className={classes.textField}
-                                                            // value={this.state.name}
-                                                            // onChange={this.handleChange('name')}
+                                                            value={this.state.motherremark}
+                                                            onChange={this.handleChange('motherremark')}
                                                             margin="normal"
                                                             multiline
                                                             style={{ width: 500, marginTop: 0, marginLeft: 0 }}
