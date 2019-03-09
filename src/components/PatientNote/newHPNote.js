@@ -72,7 +72,7 @@ class newHPNote extends Component {
     }
     componentDidMount() {
         this.setState({
-            diagnosis: [...this.state.diagnosis, ["panadol", "34ft", "jan 7", "new"]]
+            // diagnosis: [...this.state.diagnosis, ["panadol", "34ft", "jan 7", "new"]]
         })
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
         const url = '/Diagnosis/GetDiagnosisOfPatient/' + id;
