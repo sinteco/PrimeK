@@ -66,7 +66,7 @@ TabContainer.propTypes = {
     children: PropTypes.node.isRequired,
 };
 
-const styles = {
+const styles = theme => ( {
     cardCategoryWhite: {
         "&,& a,& a:hover,& a:focus": {
             color: "rgba(255,255,255,.62)",
@@ -108,8 +108,8 @@ const styles = {
         backgroundColor: 'lightgrey',
         zIndex : 1500,
         position: 'fixed'
-    },
-};
+    }
+});
 
 const category = "ANC Follow Up";
 
@@ -1933,6 +1933,7 @@ class pNote extends Component {
                                                         <FormControl style={{ width: 200, marginTop: 0 }} className={classes.formControl}>
                                                             <InputLabel htmlFor="visual">Anemia</InputLabel>
                                                             <Select
+                                                                style={{position:'relative'}}
                                                                 value={this.state.ppAnemia}
                                                                 onChange={this.handleChange('ppAnemia')}
                                                             >
