@@ -13,6 +13,7 @@ import { fetchPatientDiagnosis } from '../../redux/actions/diagnosisAction';
 import { fetchNoteSubCategory, fetchFamilyHistory,fetchMedicalHistory, fetchPhysicalExam, fetchSocialHistory,fetchReviewofSystems } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
+import Button from '@material-ui/core/Button';
 
 const style = {
     typo: {
@@ -58,7 +59,45 @@ class newHPNote extends Component {
             diagnosis: [],
             chifcompliant: '',
             historyofpresentillness: '',
+            currentmedications: '',
+            allergies: '',
+            assessment: '',
+            plan: '',
+            treatment: '',
+            pastMedicalHistory: [],
+            familyHistory: [],
+            socialHistory: [],
+            reviewofSystems: [],
+            physicalExam: [],
+            newDiagnosis: []
         }
+        this.hadlePastMedicalHistory = this.hadlePastMedicalHistory.bind(this);
+        this.hadlePastMedicalHistoryRemarks = this.hadlePastMedicalHistoryRemarks.bind(this);
+    }
+    hadlePastMedicalHistory(key, value) {
+        this.setState({
+            pastMedicalHistory: [...this.state.pastMedicalHistory, {
+                name: key[0],
+                value: value.substring(0, 1) == 'n' ? true : false,
+                Remark: value
+            }]
+        },() => console.log(this.state.pastMedicalHistory));
+    }
+    hadlePastMedicalHistoryRemarks(key, value, index){
+        // alert(key + " " + value);
+        if(true) {
+            var array = [...this.state.pastMedicalHistory]; // make a separate copy of the array
+            //var index = array.indexOf(key);
+            console.log(key[0]);
+            console.log(array.map(function (e) { return e.name; }).indexOf(key[0]));
+            if (index !== -1) {
+                array.splice(index, 1);
+                //this.setState({ pastMedicalHistory: array });
+            }
+        }
+    }
+    handleClick() {
+        alert("handle save");
     }
     handleChange = name => event => {
         this.setState({
@@ -137,6 +176,8 @@ class newHPNote extends Component {
                                     tableHeaderColor="primary"
                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
                                     tableData={this.props.MedicalHistory.map(item => { return [item.Name] })}
+                                    hadleTableEvent={this.hadlePastMedicalHistory}
+                                    hadleTableRemarkEvent={this.hadlePastMedicalHistoryRemarks}
                                     radio={2}
                                     textbox={1}
                                 />
@@ -255,6 +296,10 @@ class newHPNote extends Component {
                             diagnosis={this.state.diagnosis}
                             addDiagnosis={this.addDiagnosis}
                         />
+                        <br/>
+                        <Button onClick={this.handleClick} style={{ float: 'right' }} variant="contained" color="primary" className={classes.button}>
+                            Save
+                        </Button>
                     </form>
                 </CardBody>
             </Card>

@@ -24,10 +24,17 @@ class CustomTable extends React.Component {
         this.allNormal = this.allNormal.bind(this);
         this.allUbnormal = this.allUbnormal.bind(this);
     }
-    handleChange = (name, key) => event => {
+    handleRemarkChange = (name, key) => event => {
+        var value = event.target.value;
         this.setState({
             [name]: [...this.state[name].splice(0, key), event.target.value]
-        }, () => console.log(this.state[name]));
+        }, () => this.props.hadleTableRemarkEvent(this.props.tableData[key], value, this.state.selectedValue[key]));
+    }
+    handleChange = (name, key) => event => {
+        var value = event.target.value;
+        this.setState({
+            [name]: [...this.state[name].splice(0, key), event.target.value]
+        }, () => this.props.hadleTableEvent(this.props.tableData[key], value));
     };
     allNormal() {
         this.setState({
@@ -122,7 +129,6 @@ class CustomTable extends React.Component {
                                             aria-label="Ubnormal"
                                         />
                                     </TableCell>
-                                    {console.log(" hay " + radio)}
                                     {
                                         [...Array(textBox)].map((textb, k) => {
                                             return (
@@ -132,7 +138,7 @@ class CustomTable extends React.Component {
                                                             // label="Remark"
                                                             className={classes.textField}
                                                             value={this.state.remark[key]}
-                                                            onChange={this.handleChange('remark', key)}
+                                                            onChange={this.handleRemarkChange('remark', key)}
                                                             margin="normal"
                                                         />
                                                     </TableCell>
