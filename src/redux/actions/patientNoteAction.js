@@ -200,3 +200,13 @@ export const fetchDepartment = (URL): Action => ({
         }
     }
 });
+export const saveHPNote = (URL, data): Action => ({
+    type: SAVE_PATIENT_NOTE,
+    payload: {
+        request: {
+            method: 'POST',
+            url: URL,
+            data: data
+        }
+    }
+});

@@ -128,6 +128,7 @@ class CustomDiagnosis extends React.Component {
             single: '',
             popper: '',
             suggestions: [],
+            visit: 'New'
         }
     }
     handleSuggestionsFetchRequested = ({ value }) => {
@@ -141,7 +142,11 @@ class CustomDiagnosis extends React.Component {
             suggestions: [],
         });
     };
-
+    handleSelectChange = name => event =>{
+        this.setState({
+            [name]: event.target.value
+        });
+    }
     handleChange = name => (event, { newValue }) => {
         this.setState({
             [name]: newValue,
@@ -150,6 +155,7 @@ class CustomDiagnosis extends React.Component {
     cleanAutosuggest = () => {
         this.setState({
             single: '',
+            visit: 'New'
         });
     }
     filterShortDescription(){
@@ -211,7 +217,7 @@ class CustomDiagnosis extends React.Component {
                             variant="contained"
                             color="primary"
                             className={classes.button}
-                            onClick={() => { this.props.addDiagnosis(this.state.single); this.cleanAutosuggest();}}
+                            onClick={() => { this.props.addDiagnosis(this.state.single, this.state.visit); this.cleanAutosuggest();}}
                         >
                         Add
                         </Button>
@@ -220,15 +226,15 @@ class CustomDiagnosis extends React.Component {
                         {/* <InputLabel htmlFor="age-native-simple">Visit</InputLabel> */}
                         <Select
                             native
-                            // value={this.state.age}
-                            // onChange={this.handleChange('age')}
+                            value={this.state.visit}
+                            onChange={this.handleSelectChange('visit')}
                             inputProps={{
                                 name: 'age',
                                 id: 'age-native-simple',
                             }}
                         >
-                            <option value={10}>New</option>
-                            <option value={20}>Revisit</option>
+                            <option value={"New"}>New</option>
+                            <option value={"Revisit"}>Revisit</option>
                         </Select>
                     </FormControl>
                 </FormGroup>

@@ -34,7 +34,7 @@ class CustomTable extends React.Component {
         var value = event.target.value;
         this.setState({
             [name]: [...this.state[name].splice(0, key), event.target.value]
-        }, () => this.props.hadleTableEvent(this.props.tableData[key], value));
+        }, () => this.props.hadleTableEvent(this.props.tableData[key], value, this.state.remark[key]));
     };
     allNormal() {
         this.setState({

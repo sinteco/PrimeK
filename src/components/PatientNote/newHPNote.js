@@ -10,7 +10,7 @@ import Table from '../Table/CustomTableWithSelector';
 import FormLabel from '@material-ui/core/FormLabel';
 import CustomTable from '../Diagnosis/CustomDiagnosis';
 import { fetchPatientDiagnosis } from '../../redux/actions/diagnosisAction';
-import { fetchNoteSubCategory, fetchFamilyHistory,fetchMedicalHistory, fetchPhysicalExam, fetchSocialHistory,fetchReviewofSystems } from '../../redux/actions/patientNoteAction';
+import { saveHPNote, fetchNoteSubCategory, fetchFamilyHistory,fetchMedicalHistory, fetchPhysicalExam, fetchSocialHistory,fetchReviewofSystems } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
 import Button from '@material-ui/core/Button';
@@ -69,50 +69,277 @@ class newHPNote extends Component {
             socialHistory: [],
             reviewofSystems: [],
             physicalExam: [],
-            newDiagnosis: []
+            diagnosisTableNo: 1
         }
         this.hadlePastMedicalHistory = this.hadlePastMedicalHistory.bind(this);
         this.hadlePastMedicalHistoryRemarks = this.hadlePastMedicalHistoryRemarks.bind(this);
+        this.handleFamilyHistoryRemarks = this.handleFamilyHistoryRemarks.bind(this);
+        this.handleFamilyHistory = this.handleFamilyHistory.bind(this);
+        this.handleSocialHistoryRemarks = this.handleSocialHistoryRemarks.bind(this);
+        this.handleSocialHistory = this.handleSocialHistory.bind(this);
+        this.handleReviewofSystemsRemarks = this.handleReviewofSystemsRemarks.bind(this);
+        this.handleReviewofSystems = this.handleReviewofSystems.bind(this);
+        this.handlePhysicalExamRemarks = this.handlePhysicalExamRemarks.bind(this);
+        this.handlePhysicalExam = this.handlePhysicalExam.bind(this);
+        this.handleSave = this.handleSave.bind(this);
     }
-    hadlePastMedicalHistory(key, value) {
-        this.setState({
-            pastMedicalHistory: [...this.state.pastMedicalHistory, {
-                name: key[0],
-                value: value.substring(0, 1) == 'n' ? true : false,
-                Remark: value
-            }]
-        },() => console.log(this.state.pastMedicalHistory));
-    }
-    hadlePastMedicalHistoryRemarks(key, value, index){
-        // alert(key + " " + value);
-        if(true) {
+    hadlePastMedicalHistory(key, value, prevalue) {
+        if (!this.state.pastMedicalHistory.map(function (e) { return e.name; }).includes(key[0])){
+            this.setState({
+                pastMedicalHistory: [...this.state.pastMedicalHistory, {
+                    name: key[0],
+                    value: value.substring(0, 1) == 'n' ? true : false,
+                    Remark: ""
+                }]
+            }, () => console.log(this.state.pastMedicalHistory));
+        }else{
             var array = [...this.state.pastMedicalHistory]; // make a separate copy of the array
-            //var index = array.indexOf(key);
-            console.log(key[0]);
-            console.log(array.map(function (e) { return e.name; }).indexOf(key[0]));
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
             if (index !== -1) {
                 array.splice(index, 1);
-                //this.setState({ pastMedicalHistory: array });
+                array.push(
+                    {
+                        name: key[0],
+                        value: value.substring(0, 1) == 'n' ? true : false,
+                        Remark: prevalue
+                    }
+                );
+                console.log(array);
+                this.setState({ pastMedicalHistory: array });
             }
         }
     }
-    handleClick() {
-        alert("handle save");
+    hadlePastMedicalHistoryRemarks(key, value, prevalue){
+        if(true) {
+            var array = [...this.state.pastMedicalHistory]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: prevalue.substring(0, 1) == 'n' ? true : false,
+                        Remark: value
+                    }
+                );
+                console.log(array);
+                this.setState({ pastMedicalHistory: array });
+            }
+        }
+    }
+    handleFamilyHistory(key, value, prevalue) {
+        if (!this.state.familyHistory.map(function (e) { return e.name; }).includes(key[0])) {
+            this.setState({
+                familyHistory: [...this.state.familyHistory, {
+                    name: key[0],
+                    value: value.substring(0, 1) == 'n' ? true : false,
+                    Remark: ""
+                }]
+            }, () => console.log(this.state.familyHistory));
+        } else {
+            var array = [...this.state.familyHistory]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: value.substring(0, 1) == 'n' ? true : false,
+                        Remark: prevalue
+                    }
+                );
+                console.log(array);
+                this.setState({ familyHistory: array });
+            }
+        }
+    }
+    handleFamilyHistoryRemarks(key, value, prevalue) {
+        if (true) {
+            var array = [...this.state.familyHistory]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: prevalue.substring(0, 1) == 'n' ? true : false,
+                        Remark: value
+                    }
+                );
+                console.log(array);
+                this.setState({ familyHistory: array });
+            }
+        }
+    }
+    handleSocialHistory(key, value, prevalue) {
+        if (!this.state.socialHistory.map(function (e) { return e.name; }).includes(key[0])) {
+            this.setState({
+                socialHistory: [...this.state.socialHistory, {
+                    name: key[0],
+                    value: value.substring(0, 1) == 'n' ? true : false,
+                    Remark: ""
+                }]
+            }, () => console.log(this.state.socialHistory));
+        } else {
+            var array = [...this.state.socialHistory]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: value.substring(0, 1) == 'n' ? true : false,
+                        Remark: prevalue
+                    }
+                );
+                console.log(array);
+                this.setState({ socialHistory: array });
+            }
+        }
+    }
+    handleSocialHistoryRemarks(key, value, prevalue) {
+        if (true) {
+            var array = [...this.state.socialHistory]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: prevalue.substring(0, 1) == 'n' ? true : false,
+                        Remark: value
+                    }
+                );
+                console.log(array);
+                this.setState({ socialHistory: array });
+            }
+        }
+    }
+    handleReviewofSystems(key, value, prevalue) {
+        if (!this.state.reviewofSystems.map(function (e) { return e.name; }).includes(key[0])) {
+            this.setState({
+                reviewofSystems: [...this.state.reviewofSystems, {
+                    name: key[0],
+                    value: value.substring(0, 1) == 'n' ? true : false,
+                    Remark: ""
+                }]
+            }, () => console.log(this.state.reviewofSystems));
+        } else {
+            var array = [...this.state.reviewofSystems]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: value.substring(0, 1) == 'n' ? true : false,
+                        Remark: prevalue
+                    }
+                );
+                console.log(array);
+                this.setState({ reviewofSystems: array });
+            }
+        }
+    }
+    handleReviewofSystemsRemarks(key, value, prevalue) {
+        if (true) {
+            var array = [...this.state.reviewofSystems]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: prevalue.substring(0, 1) == 'n' ? true : false,
+                        Remark: value
+                    }
+                );
+                console.log(array);
+                this.setState({ reviewofSystems: array });
+            }
+        }
+    }
+    handlePhysicalExam(key, value, prevalue) {
+        if (!this.state.physicalExam.map(function (e) { return e.name; }).includes(key[0])) {
+            this.setState({
+                physicalExam: [...this.state.physicalExam, {
+                    name: key[0],
+                    value: value.substring(0, 1) == 'n' ? true : false,
+                    Remark: ""
+                }]
+            }, () => console.log(this.state.physicalExam));
+        } else {
+            var array = [...this.state.physicalExam]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: value.substring(0, 1) == 'n' ? true : false,
+                        Remark: prevalue
+                    }
+                );
+                console.log(array);
+                this.setState({ physicalExam: array });
+            }
+        }
+    }
+    handlePhysicalExamRemarks(key, value, prevalue) {
+        if (true) {
+            var array = [...this.state.physicalExam]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: prevalue.substring(0, 1) == 'n' ? true : false,
+                        Remark: value
+                    }
+                );
+                console.log(array);
+                this.setState({ physicalExam: array });
+            }
+        }
+    }
+    handleSave() {
+        const input = {
+            diagnosis: this.state.diagnosis,
+            chifcompliant: this.state.chifcompliant,
+            historyofpresentillness: this.state.historyofpresentillness,
+            currentmedications: this.state.currentmedications,
+            allergies: this.state.allergies,
+            assessment: this.state.assessment,
+            plan: this.state.plan,
+            treatment: this.state.treatment,
+            pastMedicalHistory: this.state.pastMedicalHistory,
+            familyHistory: this.state.familyHistory,
+            socialHistory: this.state.socialHistory,
+            reviewofSystems: this.state.reviewofSystems,
+            physicalExam: this.state.physicalExam
+        }
+        const url = "";
+        this.props.saveHPNote(input, url);
+        console.log(input);
     }
     handleChange = name => event => {
         this.setState({
             [name]: event.target.value,
         });
     };
-    addDiagnosis = (selected) => {
-        this.setState({
-            diagnosis: [...this.state.diagnosis, ["2", "Minerva Hooper", "$23,789", "Curaçao"]]
-        })
+    addDiagnosis = (selected, visit) => {
+        // console.log(selected);
+        if (selected != "" && visit != "" && !this.state.diagnosis.map(function (e) { return e[1]; }).includes(selected))
+        {
+            this.setState({
+                diagnosis: [...this.state.diagnosis, [this.state.diagnosisTableNo, selected, new Date().toLocaleDateString("en-US"), visit]],
+                diagnosisTableNo: this.state.diagnosisTableNo + 1
+            })
+        }
     }
     componentDidMount() {
-        this.setState({
-            // diagnosis: [...this.state.diagnosis, ["panadol", "34ft", "jan 7", "new"]]
-        })
+
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
         const url = '/Diagnosis/GetDiagnosisOfPatient/' + id;
         this.props.fetchPatientDiagnosis(url);
@@ -215,6 +442,8 @@ class newHPNote extends Component {
                                     tableData={this.props.FamilyHistory.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
+                                    hadleTableEvent={this.handleFamilyHistory}
+                                    hadleTableRemarkEvent={this.handleFamilyHistoryRemarks}
                                 />
                             }
                         </Collapsible>
@@ -227,6 +456,8 @@ class newHPNote extends Component {
                                     tableData={this.props.SocialHistory.map(item => { return [item.Name] })}
                                     radio={0}
                                     textbox={1}
+                                    hadleTableEvent={this.handleSocialHistory}
+                                    hadleTableRemarkEvent={this.handleSocialHistoryRemarks}
                                 />
                             }
                         </Collapsible>
@@ -239,6 +470,8 @@ class newHPNote extends Component {
                                     tableData={this.props.ReviewofSystems.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
+                                    hadleTableEvent={this.handleReviewofSystems}
+                                    hadleTableRemarkEvent={this.handleReviewofSystemsRemarks}
                                 />
                             }
                         </Collapsible>
@@ -251,6 +484,8 @@ class newHPNote extends Component {
                                     tableData={this.props.PhysicalExam.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
+                                    hadleTableEvent={this.handlePhysicalExam}
+                                    hadleTableRemarkEvent={this.handlePhysicalExamRemarks}
                                 />
                             }
                         </Collapsible>
@@ -297,7 +532,7 @@ class newHPNote extends Component {
                             addDiagnosis={this.addDiagnosis}
                         />
                         <br/>
-                        <Button onClick={this.handleClick} style={{ float: 'right' }} variant="contained" color="primary" className={classes.button}>
+                        <Button onClick={this.handleSave} style={{ float: 'right' }} variant="contained" color="primary" className={classes.button}>
                             Save
                         </Button>
                     </form>
@@ -347,6 +582,7 @@ const mapDispatchToProps = dispatch => ({
     fetchPhysicalExam: (url) => dispatch(fetchPhysicalExam(url)),
     fetchSocialHistory: (url) => dispatch(fetchSocialHistory(url)),
     fetchReviewofSystems: (url) => dispatch(fetchReviewofSystems(url)),
+    saveHPNote: (data, url) => dispatch(saveHPNote(data, url))
 });
 
 export default compose(withStyles(style), connect(mapStateToProps, mapDispatchToProps))(newHPNote);
