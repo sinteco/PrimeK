@@ -304,22 +304,28 @@ class newHPNote extends Component {
         }
     }
     handleSave() {
+        const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
         const input = {
-            diagnosis: this.state.diagnosis,
-            chifcompliant: this.state.chifcompliant,
-            historyofpresentillness: this.state.historyofpresentillness,
-            currentmedications: this.state.currentmedications,
-            allergies: this.state.allergies,
-            assessment: this.state.assessment,
-            plan: this.state.plan,
-            treatment: this.state.treatment,
-            pastMedicalHistory: this.state.pastMedicalHistory,
-            familyHistory: this.state.familyHistory,
-            socialHistory: this.state.socialHistory,
-            reviewofSystems: this.state.reviewofSystems,
-            physicalExam: this.state.physicalExam
+            PatientId: id,
+            Diagnosis: this.state.diagnosis,
+            Chifcompliant: this.state.chifcompliant,
+            Historyofpresentillness: this.state.historyofpresentillness,
+            Currentmedications: this.state.currentmedications,
+            Allergies: this.state.allergies,
+            Assessment: this.state.assessment,
+            Plan: this.state.plan,
+            Treatment: this.state.treatment,
+            PastMedicalHistory: this.state.pastMedicalHistory,
+            FamilyHistory: this.state.familyHistory,
+            SocialHistory: this.state.socialHistory,
+            ReviewofSystems: this.state.reviewofSystems,
+            PhysicalExam: this.state.physicalExam
         }
-        const url = "";
+        if (id === 0) {
+            alert("patient is not selected");
+            return
+        }
+        const url = "/HPNotes";
         this.props.saveHPNote(input, url);
         console.log(input);
     }
@@ -572,6 +578,7 @@ const mapStateToProps = (state) => ({
     MedicalHistory: state.patientNote.MedicalHistory,
     ReviewofSystems: state.patientNote.ReviewofSystems,
     PhysicalExam: state.patientNote.PhysicalExam,
+    selectedPatient: state.assignments.selectedPatient
 });
 
 const mapDispatchToProps = dispatch => ({
