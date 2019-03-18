@@ -43,6 +43,7 @@ class CustomTable extends React.Component {
             let item  = [];
             this.props.tableData.map((prop, key) => {
                 item.push('n'+key);
+                this.props.hadleTableEvent(prop, 'n'+key, "");
             });
             this.setState({selectedValue: [...this.state.selectedValue, ...item]});
         });
@@ -54,6 +55,7 @@ class CustomTable extends React.Component {
             let item  = [];
             this.props.tableData.map((prop, key) => {
                 item.push('u'+key);
+                this.props.hadleTableEvent(prop, 'u'+key, "");
             });
             this.setState({selectedValue: [...this.state.selectedValue, ...item]});
         });

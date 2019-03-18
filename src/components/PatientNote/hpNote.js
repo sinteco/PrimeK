@@ -96,7 +96,7 @@ class hpNote extends Component {
     }
     componentWillMount() {
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const patientNotesURL = '/PatientNotes/GetHPNotesOfPatient/' + id + "?page=" + this.state.page;
+        const patientNotesURL = '/HPNotes/GetHPNoteOfPatient/' + id + "?page=" + this.state.page;
         this.props.fetchPatientNotes(patientNotesURL);
     }
     render() {
