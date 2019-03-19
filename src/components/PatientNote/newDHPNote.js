@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import Button from '@material-ui/core/Button';
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
@@ -57,17 +58,54 @@ class newDHPNote extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            diagnosis: []
+            diagnosis: [],
+            chifcompliant: '',
+            HPI: '',
+            HMBGValues: '',
+            BPHomeMonitoringValues: '',
+            Allergies: '',
+            Medications: '',
+            Dite: '',
+            ExcerciseFITTFrequencyIntensityTypeTime: '',
+            Habits: [],
+            diagnosisTableNo: 1
         }
     }
-    addDiagnosis = (selected) => {
+    handleChange = name => event => {
         this.setState({
-            diagnosis: [...this.state.diagnosis, ["2", "Minerva Hooper", "$23,789", "Curaçao"]]
-        })
+            [name]: event.target.value,
+        });
+    };
+    addDiagnosis = (selected, visit) => {
+        // console.log(selected);
+        if (selected != "" && visit != "" && !this.state.diagnosis.map(function (e) { return e[1]; }).includes(selected)) {
+            this.setState({
+                diagnosis: [...this.state.diagnosis, [this.state.diagnosisTableNo, selected, new Date().toLocaleDateString("en-US"), visit]],
+                diagnosisTableNo: this.state.diagnosisTableNo + 1
+            })
+        }
+    }
+    handleHabits(key, value, prevalue){
+        if (true) {
+            var array = [...this.state.Habits]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: prevalue.substring(0, 1) == 'n' ? true : false,
+                        Remark: value
+                    }
+                );
+                console.log(array);
+                this.setState({ Habits: array });
+            }
+        }
     }
     componentDidMount() {
         this.setState({
-            diagnosis: [...this.state.diagnosis, ["panadol", "34ft", "jan 7", "new"]]
+            // diagnosis: [...this.state.diagnosis, ["panadol", "34ft", "jan 7", "new"]]
         })
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
         const url = '/Diagnosis/GetDiagnosisOfPatient/' + id;
@@ -113,8 +151,8 @@ class newDHPNote extends Component {
                             multiline
                             rowsMax="4"
                             fullWidth
-                            //value={values.multiline}
-                            //onChange={handleChange('multiline')}
+                            value={this.state.chifcompliant}
+                            onChange={this.handleChange('chifcompliant')}
                             className={classes.textField}
                             margin="normal"
                         />
@@ -124,20 +162,20 @@ class newDHPNote extends Component {
                             multiline
                             rowsMax="4"
                             fullWidth
-                            //value={values.multiline}
-                            //onChange={handleChange('multiline')}
+                            value={this.state.HPI}
+                            onChange={this.handleChange('HPI')}
                             className={classes.textField}
                             margin="normal"
                         />
                         <selectTable />
                         <TextField
                             id="standard-multiline-flexible"
-                            label="HMBG  Values"
+                            label="HMBG Values"
                             multiline
                             rowsMax="4"
                             fullWidth
-                            //value={values.multiline}
-                            //onChange={handleChange('multiline')}
+                            value={this.state.HMBGValues}
+                            onChange={this.handleChange('HMBGValues')}
                             className={classes.textField}
                             margin="normal"
                         />
@@ -147,8 +185,8 @@ class newDHPNote extends Component {
                             multiline
                             rowsMax="4"
                             fullWidth
-                            //value={values.multiline}
-                            //onChange={handleChange('multiline')}
+                            value={this.state.BPHomeMonitoringValues}
+                            onChange={this.handleChange('BPHomeMonitoringValues')}
                             className={classes.textField}
                             margin="normal"
                         />
@@ -158,8 +196,8 @@ class newDHPNote extends Component {
                             multiline
                             rowsMax="4"
                             fullWidth
-                            //value={values.multiline}
-                            //onChange={handleChange('multiline')}
+                            value={this.state.Allergies}
+                            onChange={this.handleChange('Allergies')}
                             className={classes.textField}
                             margin="normal"
                         />
@@ -169,8 +207,8 @@ class newDHPNote extends Component {
                             multiline
                             rowsMax="4"
                             fullWidth
-                            //value={values.multiline}
-                            //onChange={handleChange('multiline')}
+                            value={this.state.Medications}
+                            onChange={this.handleChange('Medications')}
                             className={classes.textField}
                             margin="normal"
                         />
@@ -184,6 +222,7 @@ class newDHPNote extends Component {
                                     tableData={this.props.DMHabit.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
+                                    hadleTableEvent={this.handleHabits}
                                 />
                             }
                         </Collapsible>
@@ -277,8 +316,8 @@ class newDHPNote extends Component {
                             multiline
                             rowsMax="4"
                             fullWidth
-                            //value={values.multiline}
-                            //onChange={handleChange('multiline')}
+                            value={this.state.Dite}
+                            onChange={this.handleChange('Dite')}
                             className={classes.textField}
                             margin="normal"
                         />
@@ -288,11 +327,12 @@ class newDHPNote extends Component {
                             multiline
                             rowsMax="4"
                             fullWidth
-                            //value={values.multiline}
-                            //onChange={handleChange('multiline')}
+                            value={this.state.ExcerciseFITTFrequencyIntensityTypeTime}
+                            onChange={this.handleChange('ExcerciseFITTFrequencyIntensityTypeTime')}
                             className={classes.textField}
                             margin="normal"
                         />
+                        <br />
                         <br />
                         <Collapsible trigger="Physical Exam >>" className={classes.collapsible}>
                             {
@@ -305,6 +345,18 @@ class newDHPNote extends Component {
                                 />
                             }
                         </Collapsible>
+                        <br />
+                        <FormLabel component="legend">Diagnosis</FormLabel>
+                        <CustomTable
+                            tableHeaderColor="primary"
+                            tableHead={["Diagnosis", "Code", "Date", "Visit"]}
+                            diagnosis={this.state.diagnosis}
+                            addDiagnosis={this.addDiagnosis}
+                        />
+                        <br />
+                        <Button onClick={this.handleSave} style={{ float: 'right' }} variant="contained" color="primary" className={classes.button}>
+                            Save
+                        </Button>
                     </form>
                 </CardBody>
             </Card>
