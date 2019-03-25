@@ -70,6 +70,7 @@ class newDHPNote extends Component {
             Habits: [],
             diagnosisTableNo: 1
         }
+        this.handleHabits = this.handleHabits.bind(this);
     }
     handleChange = name => event => {
         this.setState({
@@ -94,7 +95,17 @@ class newDHPNote extends Component {
                 array.push(
                     {
                         name: key[0],
-                        value: prevalue.substring(0, 1) == 'n' ? true : false,
+                        row: prevalue,//.substring(0, 1) == 'n' ? true : false,
+                        Remark: value
+                    }
+                );
+                console.log(array);
+                this.setState({ Habits: array });
+            }else{
+                array.push(
+                    {
+                        name: key[0],
+                        row: prevalue,//.substring(0, 1) == 'n' ? true : false,
                         Remark: value
                     }
                 );
@@ -133,7 +144,7 @@ class newDHPNote extends Component {
     }
 
     render() {
-        { console.log(this.props.patientDiagnosis) }
+        // { console.log(this.props.patientDiagnosis) }
         const { classes } = this.props;
         return (
             <Card>

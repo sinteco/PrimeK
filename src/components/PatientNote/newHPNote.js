@@ -84,7 +84,7 @@ class newHPNote extends Component {
         this.handleSave = this.handleSave.bind(this);
     }
     hadlePastMedicalHistory(key, value, prevalue) {
-        console.log(key+" "+value+" "+prevalue);
+        // console.log(key+" "+value+" "+prevalue);
         if (!this.state.pastMedicalHistory.map(function (e) { return e.name; }).includes(key[0])){
             this.setState({
                 pastMedicalHistory: [...this.state.pastMedicalHistory, {

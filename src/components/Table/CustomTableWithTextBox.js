@@ -10,8 +10,6 @@ import TableCell from "@material-ui/core/TableCell";
 // core components
 import tableStyle from "assets/jss/material-dashboard-react/components/tableStyle.jsx";
 import TextField from '@material-ui/core/TextField';
-import Radio from '@material-ui/core/Radio';
-import Button from '@material-ui/core/Button';
 
 
 class CustomTable extends React.Component {
@@ -19,15 +17,20 @@ class CustomTable extends React.Component {
         super(props);
         this.state = {
             selectedValue: ['a', 'b', 'c'],
-            remark: ['', '', ''],
+            remark: []
         }
         this.allNormal = this.allNormal.bind(this);
         this.allUbnormal = this.allUbnormal.bind(this);
     }
     handleChange = (name, key, row) => event => {
+        var value = event.target.value;
         this.setState({
-            [name]: [...this.state[name].splice(0, key), event.target.value]
-        }, () => console.log(key));
+            remark: [...this.state.remark, {
+                key: key,
+                value: value,
+                row: row
+            }]
+        }, () => console.log(this.state.remark));
     };
     allNormal() {
         this.setState({
@@ -93,8 +96,11 @@ class CustomTable extends React.Component {
                                             id="standard-name"
                                             // label="Remark"
                                             className={classes.textField}
-                                            value={this.state.remark[key]}
-                                            onChange={this.handleChange('remark', key, "1")}
+                                            value={this.state.remark.map((obj) => {
+                                                if(obj.key==key&&obj.row=='r1')
+                                                    return (obj.value)
+                                            })}
+                                            onChange={this.handleChange('remark', key, "r1")}
                                             margin="normal"
                                         />
                                     </TableCell>
@@ -103,8 +109,11 @@ class CustomTable extends React.Component {
                                             id="standard-name"
                                             // label="Remark"
                                             className={classes.textField}
-                                            value={this.state.remark[key]}
-                                            onChange={this.handleChange('remark', key, "2")}
+                                            value={this.state.remark.map((obj) => {
+                                                if (obj.key == key && obj.row == 'r2')
+                                                    return(obj.value)
+                                            })}
+                                            onChange={this.handleChange('remark', key, "r2")}
                                             margin="normal"
                                         />
                                     </TableCell>
@@ -113,8 +122,11 @@ class CustomTable extends React.Component {
                                             id="standard-name"
                                             // label="Remark"
                                             className={classes.textField}
-                                            value={this.state.remark[key]}
-                                            onChange={this.handleChange('remark', key, "3")}
+                                            value={this.state.remark.map((obj) => {
+                                                if (obj.key == key && obj.row == 'r3')
+                                                    return (obj.value)
+                                            })}
+                                            onChange={this.handleChange('remark', key, "r3")}
                                             margin="normal"
                                         />
                                     </TableCell>
