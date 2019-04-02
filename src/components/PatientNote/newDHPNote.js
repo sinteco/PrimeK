@@ -68,9 +68,12 @@ class newDHPNote extends Component {
             Dite: '',
             ExcerciseFITTFrequencyIntensityTypeTime: '',
             Habits: [],
+            problemListWithYearOfDiagnosis:[],
             diagnosisTableNo: 1
         }
         this.handleHabits = this.handleHabits.bind(this);
+        this.handleProblemList = this.handleProblemList.bind(this);
+        this.handleProblemListRemarks = this.handleProblemListRemarks.bind(this);
     }
     handleChange = name => event => {
         this.setState({
@@ -86,17 +89,84 @@ class newDHPNote extends Component {
             })
         }
     }
-    handleHabits(key, value, prevalue){
-        if (true) {
-            var array = [...this.state.Habits]; // make a separate copy of the array
+    handleProblemList(key, value, prevalue) {
+        if (!this.state.problemListWithYearOfDiagnosis.map(function (e) { return e.name; }).includes(key[0])) {
+            this.setState({
+                problemListWithYearOfDiagnosis: [...this.state.problemListWithYearOfDiagnosis, {
+                    name: key[0],
+                    value: value.substring(0, 1) == 'n' ? true : false,
+                    Remark: "",
+                    diagnosisYear: ""
+                }]
+            }, () => console.log(this.state.problemListWithYearOfDiagnosis));
+        } else {
+            var array = [...this.state.problemListWithYearOfDiagnosis]; // make a separate copy of the array
             var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
             if (index !== -1) {
                 array.splice(index, 1);
                 array.push(
                     {
                         name: key[0],
-                        row: prevalue,//.substring(0, 1) == 'n' ? true : false,
-                        Remark: value
+                        value: value.substring(0, 1) == 'n' ? true : false,
+                        Remark: prevalue,
+                        diagnosisYear: ""
+                    }
+                );
+                console.log(array);
+                this.setState({ problemListWithYearOfDiagnosis: array });
+            }
+        }
+    }
+    handleProblemListRemarks(key, value,textb, rowkey, prevalue) {
+        if (true) {
+            var array = [...this.state.problemListWithYearOfDiagnosis]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            var remark = '';
+            var diagnosisyear = '';
+            if (value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 1) { return obj.value; } }).length){
+                remark = value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 1) { return obj.value; } })[0].value;
+            }
+            if (value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 0) { return obj.value; } }).length){
+                diagnosisyear = value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 0) { return obj.value; } })[0].value;
+            }
+            if (index !== -1) {
+                array.splice(index, 1);
+                if(textb==1){
+                    array.push(
+                        {
+                            name: key[0],
+                            value: prevalue.substring(0, 1) == 'n' ? true : false,
+                            Remark: remark,
+                            diagnosisYear: array[0]['diagnosisYear']
+                        }
+                    );
+                }else if(textb==0){
+                    array.push(
+                        {
+                            name: key[0],
+                            value: prevalue.substring(0, 1) == 'n' ? true : false,
+                            Remark: array[0]['Remark'],
+                            diagnosisYear: diagnosisyear
+                        }
+                    );
+                }
+                // console.log(value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 1) { return obj; } })[0].value);
+                console.log(array);
+                this.setState({ problemListWithYearOfDiagnosis: array });
+            }
+        }
+    }
+    handleHabits(key, value, row){
+        if (true) {
+            var array = [...this.state.Habits]; // make a separate copy of the array
+            var index = array.findIndex(obj => obj.name == value && obj.row == row);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        value: key,
+                        row: row,
+                        name: value
                     }
                 );
                 console.log(array);
@@ -104,9 +174,9 @@ class newDHPNote extends Component {
             }else{
                 array.push(
                     {
-                        name: key[0],
-                        row: prevalue,//.substring(0, 1) == 'n' ? true : false,
-                        Remark: value
+                        value: key,
+                        row: row,
+                        name: value
                     }
                 );
                 console.log(array);
@@ -246,6 +316,8 @@ class newDHPNote extends Component {
                                     tableData={this.props.DMProblemList.map(item => { return [item.Name] })}
                                     radio={2}
                                     textBox={2}
+                                    hadleTableEvent={this.handleProblemList}
+                                    hadleTableRemarkEvent={this.handleProblemListRemarks}
                                 />
                             }
                         </Collapsible>

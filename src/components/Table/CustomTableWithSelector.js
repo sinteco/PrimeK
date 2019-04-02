@@ -19,16 +19,21 @@ class CustomTable extends React.Component {
         super(props);
         this.state = {
             selectedValue: ['a','b','c'],
-            remark: ['','',''],
+            remark: [],
         }
         this.allNormal = this.allNormal.bind(this);
         this.allUbnormal = this.allUbnormal.bind(this);
     }
-    handleRemarkChange = (name, key) => event => {
+    handleRemarkChange = (name, key, textb) => event => {
+        // console.log(key + " " + name + " " + textb);
         var value = event.target.value;
         this.setState({
-            [name]: [...this.state[name].splice(0, key), event.target.value]
-        }, () => this.props.hadleTableRemarkEvent(this.props.tableData[key], value, this.state.selectedValue[key]));
+            [name]: [...this.state[name], {
+                key: key,
+                row: textb,
+                value: value
+            }]
+        }, () => this.props.hadleTableRemarkEvent(this.props.tableData[key], this.state.remark, textb, key, this.state.selectedValue[key]));
     }
     handleChange = (name, key) => event => {
         var value = event.target.value;
@@ -139,8 +144,11 @@ class CustomTable extends React.Component {
                                                             id="standard-name"
                                                             // label="Remark"
                                                             className={classes.textField}
-                                                            value={this.state.remark[key]}
-                                                            onChange={this.handleRemarkChange('remark', key)}
+                                                            value={this.state.remark.filter(function (obj) {
+                                                                if(obj.key==key&&obj.row==k)
+                                                                    return obj;
+                                                            }).value}
+                                                            onChange={this.handleRemarkChange('remark', key, k)}
                                                             margin="normal"
                                                         />
                                                     </TableCell>

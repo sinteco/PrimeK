@@ -30,7 +30,7 @@ class CustomTable extends React.Component {
                 value: value,
                 row: row
             }]
-        }, () => console.log(this.state.remark));
+        }, () => this.props.hadleTableEvent(value,this.props.tableData[key][0],row));
     };
     allNormal() {
         this.setState({
@@ -96,10 +96,10 @@ class CustomTable extends React.Component {
                                             id="standard-name"
                                             // label="Remark"
                                             className={classes.textField}
-                                            value={this.state.remark.map((obj) => {
-                                                if(obj.key==key&&obj.row=='r1')
-                                                    return (obj.value)
-                                            })}
+                                            value={this.state.remark.filter(function(obj) {
+                                                if(obj.key == key && obj.row == 'r1')
+                                                    return(obj);
+                                            }).value}
                                             onChange={this.handleChange('remark', key, "r1")}
                                             margin="normal"
                                         />
@@ -109,10 +109,10 @@ class CustomTable extends React.Component {
                                             id="standard-name"
                                             // label="Remark"
                                             className={classes.textField}
-                                            value={this.state.remark.map((obj) => {
+                                            value={this.state.remark.filter((obj) => {
                                                 if (obj.key == key && obj.row == 'r2')
-                                                    return(obj.value)
-                                            })}
+                                                    return(obj);
+                                            }).value}
                                             onChange={this.handleChange('remark', key, "r2")}
                                             margin="normal"
                                         />
@@ -122,10 +122,10 @@ class CustomTable extends React.Component {
                                             id="standard-name"
                                             // label="Remark"
                                             className={classes.textField}
-                                            value={this.state.remark.map((obj) => {
+                                            value={this.state.remark.filter((obj) => {
                                                 if (obj.key == key && obj.row == 'r3')
-                                                    return (obj.value)
-                                            })}
+                                                    return(obj)
+                                            }).value}
                                             onChange={this.handleChange('remark', key, "r3")}
                                             margin="normal"
                                         />
