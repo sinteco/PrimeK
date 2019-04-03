@@ -13,7 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import Radio from '@material-ui/core/Radio';
 import Button from '@material-ui/core/Button';
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
+import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 
 
 class CustomTable extends React.Component {
@@ -22,6 +22,7 @@ class CustomTable extends React.Component {
         this.state = {
             selectedValue: ['a', 'b', 'c'],
             remark: ['', '', ''],
+            selectedDate: Date(),
         }
         this.allNormal = this.allNormal.bind(this);
         this.allUbnormal = this.allUbnormal.bind(this);
@@ -129,7 +130,7 @@ class CustomTable extends React.Component {
                                             <DatePicker
                                                 margin="normal"
                                                 label="Date"
-                                                // value={selectedDate}
+                                                value={this.state.selectedDate}
                                                 // onChange={this.handleDateChange}
                                             />
                                         </MuiPickersUtilsProvider>

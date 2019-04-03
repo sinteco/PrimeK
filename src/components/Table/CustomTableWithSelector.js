@@ -25,7 +25,6 @@ class CustomTable extends React.Component {
         this.allUbnormal = this.allUbnormal.bind(this);
     }
     handleRemarkChange = (name, key, textb) => event => {
-        // console.log(key + " " + name + " " + textb);
         var value = event.target.value;
         this.setState({
             [name]: [...this.state[name], {
