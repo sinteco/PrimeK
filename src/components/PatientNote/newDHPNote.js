@@ -70,7 +70,8 @@ class newDHPNote extends Component {
             Habits: [],
             problemListWithYearOfDiagnosis:[],
             diagnosisTableNo: 1,
-            OtherMedicalProblem: []
+            OtherMedicalProblem: [],
+            pastSurgicalProcedures: []
         }
         this.handleHabits = this.handleHabits.bind(this);
         this.handleProblemList = this.handleProblemList.bind(this);
@@ -219,8 +220,52 @@ class newDHPNote extends Component {
             }
         }
     }
-    handlePastSurgicalProcedures(key, value, prevalue) {}
-    handlePastSurgicalProceduresRemarks(key, value, textb, rowkey, prevalue){}
+    handlePastSurgicalProcedures(key, value, prevalue) {
+        //console.log(key+" "+value+" "+prevalue);
+        if (!this.state.pastSurgicalProcedures.map(function (e) { return e.name; }).includes(key[0])) {
+            this.setState({
+                pastSurgicalProcedures: [...this.state.pastSurgicalProcedures, {
+                    name: key[0],
+                    value: value.substring(0, 1) == 'n' ? true : false,
+                    Remark: ""
+                }]
+            }, () => console.log(this.state.pastSurgicalProcedures));
+        } else {
+            var array = [...this.state.pastSurgicalProcedures]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: value.substring(0, 1) == 'n' ? true : false,
+                        Remark: prevalue
+                    }
+                );
+                console.log(array);
+                this.setState({ pastSurgicalProcedures: array });
+            }
+        }
+    }
+    handlePastSurgicalProceduresRemarks(key, value, prevalue){
+        //console.log(key + " " + value + " " + prevalue);
+        if (true) {
+            var array = [...this.state.pastSurgicalProcedures]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        // value: prevalue.substring(0, 1) == 'n' ? true : false,
+                        Remark: value
+                    }
+                );
+                console.log(array);
+                this.setState({ pastSurgicalProcedures: array });
+            }
+        }
+    }
     handleHabits(key, value, row){
         if (true) {
             var array = [...this.state.Habits]; // make a separate copy of the array

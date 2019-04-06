@@ -22,14 +22,26 @@ class CustomTable extends React.Component {
         this.state = {
             selectedValue: ['a', 'b', 'c'],
             remark: ['', '', ''],
-            selectedDate: Date(),
+            selectedDate: []
         }
         this.allNormal = this.allNormal.bind(this);
         this.allUbnormal = this.allUbnormal.bind(this);
     }
     handleChange = (name, key) => event => {
+        var value = event.target.value;
         this.setState({
             [name]: [...this.state[name].splice(0, key), event.target.value]
+        }, () => this.props.hadleTableEvent(this.props.tableData[key], value, this.state.remark[key]));
+    };
+    handleRemarkChange = (name, key) => event => {
+        var value = event.target.value;
+        this.setState({
+            [name]: [...this.state[name].splice(0, key), event.target.value]
+        }, () => this.props.hadleTableRemarkEvent(this.props.tableData[key], value, this.state.remark[key]));
+    };
+    handleDateChange = (date, name, key) => {
+        this.setState({
+            [name]: [...this.state[name].splice(0, key), date]
         }, () => console.log(this.state[name]));
     };
     allNormal() {
@@ -54,8 +66,22 @@ class CustomTable extends React.Component {
             this.setState({ selectedValue: [...this.state.selectedValue, ...item] });
         });
     }
+    setDate(){
+        this.props.tableData.map((obj)=>{
+            var array = this.state.selectedDate;
+            array.push(Date());
+            this.setState({
+                selectedDate: array
+            });
+        });
+    }
+    componentDidMount = () => {
+        this.setDate();
+    }
+    
     render() {
         const { classes, tableHead, tableData, tableHeaderColor } = this.props;
+         
         return (
             <div className={classes.tableResponsive}>
                 <Button
@@ -130,8 +156,8 @@ class CustomTable extends React.Component {
                                             <DatePicker
                                                 margin="normal"
                                                 label="Date"
-                                                value={this.state.selectedDate}
-                                                // onChange={this.handleDateChange}
+                                                value={this.state.selectedDate[key]}
+                                                onChange={(e)=>this.handleDateChange(e,'selectedDate',key)}
                                             />
                                         </MuiPickersUtilsProvider>
                                     </TableCell>
@@ -141,7 +167,7 @@ class CustomTable extends React.Component {
                                             // label="Remark"
                                             className={classes.textField}
                                             value={this.state.remark[key]}
-                                            onChange={this.handleChange('remark', key)}
+                                            onChange={this.handleRemarkChange('remark', key)}
                                             margin="normal"
                                         />
                                     </TableCell>
