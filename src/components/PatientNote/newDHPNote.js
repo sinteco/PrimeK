@@ -13,9 +13,10 @@ import CustomTableWithTextBox from '../Table/CustomTableWithTextBox';
 import FormLabel from '@material-ui/core/FormLabel';
 import CustomTable from '../Diagnosis/CustomDiagnosis';
 import { fetchPatientDiagnosis } from '../../redux/actions/diagnosisAction';
-import { fetchDMHabit,fetchDMOtherProblem,fetchDMProblemList,fetchDMPastProcedure,fetchDMVaccination,fetchDMPatientEducation,fetchDMExam,fetchDMROS, fetchPhysicalExam } from '../../redux/actions/patientNoteAction';
+import { saveHPNote,fetchDMHabit,fetchDMOtherProblem,fetchDMProblemList,fetchDMPastProcedure,fetchDMVaccination,fetchDMPatientEducation,fetchDMExam,fetchDMROS, fetchPhysicalExam } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
+import Moment from 'moment';
 
 const style = {
     typo: {
@@ -67,11 +68,16 @@ class newDHPNote extends Component {
             Medications: '',
             Dite: '',
             ExcerciseFITTFrequencyIntensityTypeTime: '',
-            Habits: [],
+            habits: [],
             problemListWithYearOfDiagnosis:[],
             diagnosisTableNo: 1,
             OtherMedicalProblem: [],
-            pastSurgicalProcedures: []
+            pastSurgicalProcedures: [],
+            vaccinations: [],
+            patientEducation: [],
+            exams: [],
+            ROS: [],
+            physicalExam: []
         }
         this.handleHabits = this.handleHabits.bind(this);
         this.handleProblemList = this.handleProblemList.bind(this);
@@ -80,6 +86,17 @@ class newDHPNote extends Component {
         this.handleOtherMedicalProblemRemarks = this.handleOtherMedicalProblemRemarks.bind(this);
         this.handlePastSurgicalProcedures = this.handlePastSurgicalProcedures.bind(this);
         this.handlePastSurgicalProceduresRemarks = this.handlePastSurgicalProceduresRemarks.bind(this);
+        this.handleVaccinations = this.handleVaccinations.bind(this);
+        this.handleVaccinationsRemarks = this.handleVaccinationsRemarks.bind(this);
+        this.handlePatientEducation = this.handlePatientEducation.bind(this);
+        this.handlePatientEducationRemarks = this.handlePatientEducationRemarks.bind(this);
+        this.handleExams = this.handleExams.bind(this);
+        this.handleExamsRemarks = this.handleExamsRemarks.bind(this);
+        this.handleROS = this.handleROS.bind(this);
+        this.handleROSRemarks = this.handleROSRemarks.bind(this);
+        this.handlePhysicalExam = this.handlePhysicalExam.bind(this);
+        this.handlePhysicalExamRemarks = this.handlePhysicalExamRemarks.bind(this);
+        this.handleSave = this.handleSave.bind(this);
     }
     handleChange = name => event => {
         this.setState({
@@ -227,7 +244,8 @@ class newDHPNote extends Component {
                 pastSurgicalProcedures: [...this.state.pastSurgicalProcedures, {
                     name: key[0],
                     value: value.substring(0, 1) == 'n' ? true : false,
-                    Remark: ""
+                    Remark: "",
+                    date: Moment(Date()).format('YYYY-MM-DD')
                 }]
             }, () => console.log(this.state.pastSurgicalProcedures));
         } else {
@@ -239,7 +257,8 @@ class newDHPNote extends Component {
                     {
                         name: key[0],
                         value: value.substring(0, 1) == 'n' ? true : false,
-                        Remark: prevalue
+                        Remark: prevalue,
+                        date: Moment(Date()).format('YYYY-MM-DD')
                     }
                 );
                 console.log(array);
@@ -247,7 +266,7 @@ class newDHPNote extends Component {
             }
         }
     }
-    handlePastSurgicalProceduresRemarks(key, value, prevalue){
+    handlePastSurgicalProceduresRemarks(key, value, prevalue, date){
         //console.log(key + " " + value + " " + prevalue);
         if (true) {
             var array = [...this.state.pastSurgicalProcedures]; // make a separate copy of the array
@@ -257,8 +276,9 @@ class newDHPNote extends Component {
                 array.push(
                     {
                         name: key[0],
-                        // value: prevalue.substring(0, 1) == 'n' ? true : false,
-                        Remark: value
+                        value: prevalue.substring(0, 1) == 'n' ? true : false,
+                        Remark: value,
+                        date: Moment(date).format('YYYY-MM-DD')
                     }
                 );
                 console.log(array);
@@ -266,9 +286,254 @@ class newDHPNote extends Component {
             }
         }
     }
+    handleVaccinations(key, value, prevalue) {
+        //console.log(key+" "+value+" "+prevalue);
+        if (!this.state.vaccinations.map(function (e) { return e.name; }).includes(key[0])) {
+            this.setState({
+                vaccinations: [...this.state.vaccinations, {
+                    name: key[0],
+                    value: value.substring(0, 1) == 'n' ? true : false,
+                    Remark: "",
+                    date: Moment(Date()).format('YYYY-MM-DD')
+                }]
+            }, () => console.log(this.state.vaccinations));
+        } else {
+            var array = [...this.state.vaccinations]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: value.substring(0, 1) == 'n' ? true : false,
+                        Remark: prevalue,
+                        date: Moment(Date()).format('YYYY-MM-DD')
+                    }
+                );
+                console.log(array);
+                this.setState({ vaccinations: array });
+            }
+        }
+    }
+    handleVaccinationsRemarks(key, value, prevalue, date) {
+        //console.log(key + " " + value + " " + prevalue);
+        if (true) {
+            var array = [...this.state.vaccinations]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: prevalue.substring(0, 1) == 'n' ? true : false,
+                        Remark: value,
+                        date: Moment(date).format('YYYY-MM-DD')
+                    }
+                );
+                console.log(array);
+                this.setState({ vaccinations: array });
+            }
+        }
+    }
+    handlePatientEducation(key, value, prevalue) {
+        //console.log(key+" "+value+" "+prevalue);
+        if (!this.state.patientEducation.map(function (e) { return e.name; }).includes(key[0])) {
+            this.setState({
+                patientEducation: [...this.state.patientEducation, {
+                    name: key[0],
+                    value: value.substring(0, 1) == 'n' ? true : false,
+                    Remark: "",
+                    date: Moment(Date()).format('YYYY-MM-DD')
+                }]
+            }, () => console.log(this.state.patientEducation));
+        } else {
+            var array = [...this.state.patientEducation]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: value.substring(0, 1) == 'n' ? true : false,
+                        Remark: prevalue,
+                        date: Moment(Date()).format('YYYY-MM-DD')
+                    }
+                );
+                console.log(array);
+                this.setState({ patientEducation: array });
+            }
+        }
+    }
+    handlePatientEducationRemarks(key, value, prevalue, date) {
+        //console.log(key + " " + value + " " + prevalue);
+        if (true) {
+            var array = [...this.state.patientEducation]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: prevalue.substring(0, 1) == 'n' ? true : false,
+                        Remark: value,
+                        date: Moment(date).format('YYYY-MM-DD')
+                    }
+                );
+                console.log(array);
+                this.setState({ patientEducation: array });
+            }
+        }
+    }
+    handleExams(key, value, prevalue) {
+        //console.log(key+" "+value+" "+prevalue);
+        if (!this.state.exams.map(function (e) { return e.name; }).includes(key[0])) {
+            this.setState({
+                exams: [...this.state.exams, {
+                    name: key[0],
+                    value: value.substring(0, 1) == 'n' ? true : false,
+                    Remark: "",
+                    date: Moment(Date()).format('YYYY-MM-DD')
+                }]
+            }, () => console.log(this.state.exams));
+        } else {
+            var array = [...this.state.exams]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: value.substring(0, 1) == 'n' ? true : false,
+                        Remark: prevalue,
+                        date: Moment(Date()).format('YYYY-MM-DD')
+                    }
+                );
+                console.log(array);
+                this.setState({ exams: array });
+            }
+        }
+    }
+    handleExamsRemarks(key, value, prevalue, date) {
+        //console.log(key + " " + value + " " + prevalue);
+        if (true) {
+            var array = [...this.state.exams]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: prevalue.substring(0, 1) == 'n' ? true : false,
+                        Remark: value,
+                        date: Moment(date).format('YYYY-MM-DD')
+                    }
+                );
+                console.log(array);
+                this.setState({ exams: array });
+            }
+        }
+    }
+    handleROS(key, value, prevalue) {
+        //console.log(key+" "+value+" "+prevalue);
+        if (!this.state.ROS.map(function (e) { return e.name; }).includes(key[0])) {
+            this.setState({
+                ROS: [...this.state.ROS, {
+                    name: key[0],
+                    value: value.substring(0, 1) == 'n' ? true : false,
+                    Remark: "",
+                    date: Moment(Date()).format('YYYY-MM-DD')
+                }]
+            }, () => console.log(this.state.ROS));
+        } else {
+            var array = [...this.state.ROS]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: value.substring(0, 1) == 'n' ? true : false,
+                        Remark: prevalue,
+                        date: Moment(Date()).format('YYYY-MM-DD')
+                    }
+                );
+                console.log(array);
+                this.setState({ ROS: array });
+            }
+        }
+    }
+    handleROSRemarks(key, value, prevalue, date) {
+        //console.log(key + " " + value + " " + prevalue);
+        if (true) {
+            var array = [...this.state.ROS]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: prevalue.substring(0, 1) == 'n' ? true : false,
+                        Remark: value,
+                        date: Moment(date).format('YYYY-MM-DD')
+                    }
+                );
+                console.log(array);
+                this.setState({ ROS: array });
+            }
+        }
+    }
+    handlePhysicalExam(key, value, prevalue) {
+        //console.log(key+" "+value+" "+prevalue);
+        if (!this.state.physicalExam.map(function (e) { return e.name; }).includes(key[0])) {
+            this.setState({
+                physicalExam: [...this.state.physicalExam, {
+                    name: key[0],
+                    value: value.substring(0, 1) == 'n' ? true : false,
+                    Remark: "",
+                    date: Moment(Date()).format('YYYY-MM-DD')
+                }]
+            }, () => console.log(this.state.physicalExam));
+        } else {
+            var array = [...this.state.physicalExam]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: value.substring(0, 1) == 'n' ? true : false,
+                        Remark: prevalue,
+                        date: Moment(Date()).format('YYYY-MM-DD')
+                    }
+                );
+                console.log(array);
+                this.setState({ physicalExam: array });
+            }
+        }
+    }
+    handlePhysicalExamRemarks(key, value, prevalue, date) {
+        //console.log(key + " " + value + " " + prevalue);
+        if (true) {
+            var array = [...this.state.physicalExam]; // make a separate copy of the array
+            var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            if (index !== -1) {
+                array.splice(index, 1);
+                array.push(
+                    {
+                        name: key[0],
+                        value: prevalue.substring(0, 1) == 'n' ? true : false,
+                        Remark: value,
+                        date: Moment(date).format('YYYY-MM-DD')
+                    }
+                );
+                console.log(array);
+                this.setState({ physicalExam: array });
+            }
+        }
+    }
     handleHabits(key, value, row){
         if (true) {
-            var array = [...this.state.Habits]; // make a separate copy of the array
+            var array = [...this.state.habits]; // make a separate copy of the array
             var index = array.findIndex(obj => obj.name == value && obj.row == row);
             if (index !== -1) {
                 array.splice(index, 1);
@@ -280,7 +545,7 @@ class newDHPNote extends Component {
                     }
                 );
                 console.log(array);
-                this.setState({ Habits: array });
+                this.setState({ habits: array });
             }else{
                 array.push(
                     {
@@ -290,8 +555,43 @@ class newDHPNote extends Component {
                     }
                 );
                 console.log(array);
-                this.setState({ Habits: array });
+                this.setState({ habits: array });
             }
+        }
+    }
+    handleSave() {
+        const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
+        const input = {
+            PatientId: id,
+            Diagnosis: this.state.diagnosis,
+            Habits: this.state.habits,
+            ProblemListWithYearOfDiagnosis: this.state.problemListWithYearOfDiagnosis,
+            OtherMedicalProblem: this.state.OtherMedicalProblem,
+            PastSurgicalProcedures: this.state.pastSurgicalProcedures,
+            Vaccinations: this.state.vaccinations,
+            PatientEducation: this.state.patientEducation,
+            Exams: this.state.exams,
+            ROS: this.state.ROS,
+            PhysicalExam: this.state.physicalExam,
+
+            Chifcompliant: this.state.chifcompliant,
+            HPI: this.state.HPI,
+            HMBGValues: this.state.HMBGValues,
+            BPHomeMonitoringValues: this.state.BPHomeMonitoringValues,
+            Allergies: this.state.Allergies,
+            Medications: this.state.Medications,
+            Dite: this.state.Dite,
+            ExcerciseFITTFrequencyIntensityTypeTime: this.state.ExcerciseFITTFrequencyIntensityTypeTime
+        }
+        if (id === 0) {
+            alert("patient is not selected");
+            return
+        }
+        const url = "/DMs";
+        this.props.saveHPNote(input, url);
+        if (true) {
+            alert(" handle save successfully ");
+            this.props.history.push("DHPNote");
         }
     }
     componentDidMount() {
@@ -320,7 +620,6 @@ class newDHPNote extends Component {
         this.props.fetchDMROS(DMROSURL);
         const PhysicalExamURL = 'PatientNotes/GetNoteSubCategory/Physical Exam';
         this.props.fetchPhysicalExam(PhysicalExamURL);
-
     }
 
     render() {
@@ -468,6 +767,8 @@ class newDHPNote extends Component {
                                     tableData={this.props.DMVaccination.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
+                                    hadleTableEvent={this.handleVaccinations}
+                                    hadleTableRemarkEvent={this.handleVaccinationsRemarks}
                                 />
                             }
                         </Collapsible>
@@ -480,6 +781,8 @@ class newDHPNote extends Component {
                                     tableData={this.props.DMPatientEducation.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
+                                    hadleTableEvent={this.handlePatientEducation}
+                                    hadleTableRemarkEvent={this.handlePatientEducationRemarks}
                                 />
                             }
                         </Collapsible>
@@ -492,6 +795,8 @@ class newDHPNote extends Component {
                                     tableData={this.props.DMExam.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
+                                    hadleTableEvent={this.handleExams}
+                                    hadleTableRemarkEvent={this.handleExamsRemarks}
                                 />
                             }
                         </Collapsible>
@@ -504,6 +809,8 @@ class newDHPNote extends Component {
                                     tableData={this.props.DMROS.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
+                                    hadleTableEvent={this.handleROS}
+                                    hadleTableRemarkEvent={this.handleROSRemarks}
                                 />
                             }
                         </Collapsible>
@@ -539,6 +846,8 @@ class newDHPNote extends Component {
                                     tableData={this.props.PhysicalExam.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
+                                    hadleTableEvent={this.handlePhysicalExam}
+                                    hadleTableRemarkEvent={this.handlePhysicalExamRemarks}
                                 />
                             }
                         </Collapsible>
@@ -612,7 +921,8 @@ const mapDispatchToProps = dispatch => ({
     fetchDMPatientEducation: (url) => dispatch(fetchDMPatientEducation(url)),
     fetchDMExam: (url) => dispatch(fetchDMExam(url)),
     fetchDMROS: (url) => dispatch(fetchDMROS(url)),
-    fetchPhysicalExam: (url) => dispatch(fetchPhysicalExam(url))
+    fetchPhysicalExam: (url) => dispatch(fetchPhysicalExam(url)),
+    saveHPNote: (data, url) => dispatch(saveHPNote(data, url))
 });
 
 export default compose(withStyles(style), connect(mapStateToProps, mapDispatchToProps))(newDHPNote);
