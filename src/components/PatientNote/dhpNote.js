@@ -76,7 +76,7 @@ class dhpNote extends Component {
             page: (this.state.offset + 20) / 10
         });
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const patientNotesURL = '/PatientNotes/GetHPNotesOfPatient/' + id + "?page=" + (this.state.offset + 20) / 10;
+        const patientNotesURL = '/PatientNotes/GetDHPNotesOfPatient/' + id + "?page=" + (this.state.offset + 20) / 10;
         this.props.fetchPatientNotes(patientNotesURL);
     }
     handleOnRowClick = (id) => {
@@ -96,7 +96,7 @@ class dhpNote extends Component {
     }
     componentWillMount() {
         const id = this.props.selectedPatient == 0 ? 0 : this.props.selectedPatient.Id;
-        const patientNotesURL = '/PatientNotes/GetHPNotesOfPatient/' + id + "?page=" + this.state.page;
+        const patientNotesURL = '/PatientNotes/GetDHPNotesOfPatient/' + id + "?page=" + this.state.page;
         this.props.fetchPatientNotes(patientNotesURL);
     }
     render() {
