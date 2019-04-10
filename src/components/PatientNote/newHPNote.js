@@ -85,15 +85,16 @@ class newHPNote extends Component {
     }
     hadlePastMedicalHistory(key, value, prevalue) {
         // console.log(key+" "+value+" "+prevalue);
-        if (!this.state.pastMedicalHistory.map(function (e) { return e.name; }).includes(key[0])){
+        if (!this.state.pastMedicalHistory.map(function (e) { return e.name; }).includes(key[0])) {
             this.setState({
                 pastMedicalHistory: [...this.state.pastMedicalHistory, {
                     name: key[0],
                     value: value.substring(0, 1) == 'n' ? true : false,
-                    Remark: ""
+                    Remark: "",
+                    // diagnosisYear: ""
                 }]
             }, () => console.log(this.state.pastMedicalHistory));
-        }else{
+        } else {
             var array = [...this.state.pastMedicalHistory]; // make a separate copy of the array
             var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
             if (index !== -1) {
@@ -102,7 +103,8 @@ class newHPNote extends Component {
                     {
                         name: key[0],
                         value: value.substring(0, 1) == 'n' ? true : false,
-                        Remark: prevalue
+                        Remark: prevalue['value'],
+                        // diagnosisYear: ""
                     }
                 );
                 console.log(array);
@@ -110,19 +112,25 @@ class newHPNote extends Component {
             }
         }
     }
-    hadlePastMedicalHistoryRemarks(key, value, prevalue){
-        if(true) {
+    hadlePastMedicalHistoryRemarks(key, value, textb, rowkey, prevalue) {
+        if (true) {
             var array = [...this.state.pastMedicalHistory]; // make a separate copy of the array
             var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            var remark = '';
+            if (value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 0) { return obj.value; } }).length) {
+                remark = value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 0) { return obj.value; } })[0].value;
+            }
             if (index !== -1) {
                 array.splice(index, 1);
-                array.push(
-                    {
-                        name: key[0],
-                        value: prevalue.substring(0, 1) == 'n' ? true : false,
-                        Remark: value
-                    }
-                );
+                if (textb == 0) {
+                    array.push(
+                        {
+                            name: key[0],
+                            value: prevalue.substring(0, 1) == 'n' ? true : false,
+                            Remark: remark
+                        }
+                    );
+                }
                 console.log(array);
                 this.setState({ pastMedicalHistory: array });
             }
@@ -134,7 +142,8 @@ class newHPNote extends Component {
                 familyHistory: [...this.state.familyHistory, {
                     name: key[0],
                     value: value.substring(0, 1) == 'n' ? true : false,
-                    Remark: ""
+                    Remark: "",
+                    // diagnosisYear: ""
                 }]
             }, () => console.log(this.state.familyHistory));
         } else {
@@ -146,7 +155,8 @@ class newHPNote extends Component {
                     {
                         name: key[0],
                         value: value.substring(0, 1) == 'n' ? true : false,
-                        Remark: prevalue
+                        Remark: prevalue['value'],
+                        // diagnosisYear: ""
                     }
                 );
                 console.log(array);
@@ -154,19 +164,25 @@ class newHPNote extends Component {
             }
         }
     }
-    handleFamilyHistoryRemarks(key, value, prevalue) {
+    handleFamilyHistoryRemarks(key, value, textb, rowkey, prevalue) {
         if (true) {
             var array = [...this.state.familyHistory]; // make a separate copy of the array
             var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            var remark = '';
+            if (value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 0) { return obj.value; } }).length) {
+                remark = value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 0) { return obj.value; } })[0].value;
+            }
             if (index !== -1) {
                 array.splice(index, 1);
-                array.push(
-                    {
-                        name: key[0],
-                        value: prevalue.substring(0, 1) == 'n' ? true : false,
-                        Remark: value
-                    }
-                );
+                if (textb == 0) {
+                    array.push(
+                        {
+                            name: key[0],
+                            value: prevalue.substring(0, 1) == 'n' ? true : false,
+                            Remark: remark
+                        }
+                    );
+                }
                 console.log(array);
                 this.setState({ familyHistory: array });
             }
@@ -178,7 +194,8 @@ class newHPNote extends Component {
                 socialHistory: [...this.state.socialHistory, {
                     name: key[0],
                     value: value.substring(0, 1) == 'n' ? true : false,
-                    Remark: ""
+                    Remark: "",
+                    // diagnosisYear: ""
                 }]
             }, () => console.log(this.state.socialHistory));
         } else {
@@ -190,7 +207,8 @@ class newHPNote extends Component {
                     {
                         name: key[0],
                         value: value.substring(0, 1) == 'n' ? true : false,
-                        Remark: prevalue
+                        Remark: prevalue['value'],
+                        // diagnosisYear: ""
                     }
                 );
                 console.log(array);
@@ -198,21 +216,27 @@ class newHPNote extends Component {
             }
         }
     }
-    handleSocialHistoryRemarks(key, value, prevalue) {
+    handleSocialHistoryRemarks(key, value, textb, rowkey, prevalue) {
         if (true) {
-            var array = [...this.state.socialHistory]; // make a separate copy of the array
+            var array = [...this.state.familyHistory]; // make a separate copy of the array
             var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            var remark = '';
+            if (value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 0) { return obj.value; } }).length) {
+                remark = value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 0) { return obj.value; } })[0].value;
+            }
             if (index !== -1) {
                 array.splice(index, 1);
-                array.push(
-                    {
-                        name: key[0],
-                        value: prevalue.substring(0, 1) == 'n' ? true : false,
-                        Remark: value
-                    }
-                );
+                if (textb == 0) {
+                    array.push(
+                        {
+                            name: key[0],
+                            value: prevalue.substring(0, 1) == 'n' ? true : false,
+                            Remark: remark
+                        }
+                    );
+                }
                 console.log(array);
-                this.setState({ socialHistory: array });
+                this.setState({ familyHistory: array });
             }
         }
     }
@@ -222,7 +246,8 @@ class newHPNote extends Component {
                 reviewofSystems: [...this.state.reviewofSystems, {
                     name: key[0],
                     value: value.substring(0, 1) == 'n' ? true : false,
-                    Remark: ""
+                    Remark: "",
+                    // diagnosisYear: ""
                 }]
             }, () => console.log(this.state.reviewofSystems));
         } else {
@@ -234,7 +259,8 @@ class newHPNote extends Component {
                     {
                         name: key[0],
                         value: value.substring(0, 1) == 'n' ? true : false,
-                        Remark: prevalue
+                        Remark: prevalue['value'],
+                        // diagnosisYear: ""
                     }
                 );
                 console.log(array);
@@ -242,19 +268,25 @@ class newHPNote extends Component {
             }
         }
     }
-    handleReviewofSystemsRemarks(key, value, prevalue) {
+    handleReviewofSystemsRemarks(key, value, textb, rowkey, prevalue) {
         if (true) {
             var array = [...this.state.reviewofSystems]; // make a separate copy of the array
             var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            var remark = '';
+            if (value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 0) { return obj.value; } }).length) {
+                remark = value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 0) { return obj.value; } })[0].value;
+            }
             if (index !== -1) {
                 array.splice(index, 1);
-                array.push(
-                    {
-                        name: key[0],
-                        value: prevalue.substring(0, 1) == 'n' ? true : false,
-                        Remark: value
-                    }
-                );
+                if (textb == 0) {
+                    array.push(
+                        {
+                            name: key[0],
+                            value: prevalue.substring(0, 1) == 'n' ? true : false,
+                            Remark: remark
+                        }
+                    );
+                }
                 console.log(array);
                 this.setState({ reviewofSystems: array });
             }
@@ -266,7 +298,8 @@ class newHPNote extends Component {
                 physicalExam: [...this.state.physicalExam, {
                     name: key[0],
                     value: value.substring(0, 1) == 'n' ? true : false,
-                    Remark: ""
+                    Remark: "",
+                    // diagnosisYear: ""
                 }]
             }, () => console.log(this.state.physicalExam));
         } else {
@@ -278,7 +311,8 @@ class newHPNote extends Component {
                     {
                         name: key[0],
                         value: value.substring(0, 1) == 'n' ? true : false,
-                        Remark: prevalue
+                        Remark: prevalue['value'],
+                        // diagnosisYear: ""
                     }
                 );
                 console.log(array);
@@ -286,19 +320,25 @@ class newHPNote extends Component {
             }
         }
     }
-    handlePhysicalExamRemarks(key, value, prevalue) {
+    handlePhysicalExamRemarks(key, value, textb, rowkey, prevalue) {
         if (true) {
             var array = [...this.state.physicalExam]; // make a separate copy of the array
             var index = array.map(function (e) { return e.name; }).indexOf(key[0]);
+            var remark = '';
+            if (value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 0) { return obj.value; } }).length) {
+                remark = value.filter(function (obj) { if (obj.key == rowkey && obj.row == textb && textb == 0) { return obj.value; } })[0].value;
+            }
             if (index !== -1) {
                 array.splice(index, 1);
-                array.push(
-                    {
-                        name: key[0],
-                        value: prevalue.substring(0, 1) == 'n' ? true : false,
-                        Remark: value
-                    }
-                );
+                if (textb == 0) {
+                    array.push(
+                        {
+                            name: key[0],
+                            value: prevalue.substring(0, 1) == 'n' ? true : false,
+                            Remark: remark
+                        }
+                    );
+                }
                 console.log(array);
                 this.setState({ physicalExam: array });
             }
