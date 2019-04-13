@@ -10,7 +10,7 @@ import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
 import Moment from 'moment';
 import { fetchPatientNotes } from '../../redux/actions/patientNoteAction';
-import { fetchPatientNoteDetail } from '../../redux/actions/patientNoteAction';
+import { fetchDHPNotesDatail } from '../../redux/actions/patientNoteAction';
 import propTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Pagination from "material-ui-flat-pagination";
@@ -80,11 +80,12 @@ class dhpNote extends Component {
         this.props.fetchPatientNotes(patientNotesURL);
     }
     handleOnRowClick = (id) => {
+        alert("am  the row ");
         // const NoteCategory = this.props.patientNotes.filter(note => (note.Id == id ));
         // console.log(NoteCategory[0].NoteCategory);
-        const URL = '/PatientNotes/GetHPNoteDetail/' + id;
-        this.props.fetchPatientNoteDetail(URL);
-        console.log(this.props.patientnoteDetail);
+        const URL = '/PatientNotes/GetDHPNotesDatail/' + id;
+        this.props.fetchDHPNotesDatail(URL);
+        //console.log(this.props.patientnoteDetail);
         this.setState({
             detaildialog: true
         })
@@ -142,222 +143,7 @@ class dhpNote extends Component {
                             >
                                 <DialogTitle id="responsive-dialog-title">{"History And Physical Note Detail"}</DialogTitle>
                                 <DialogContent row>
-                                    <table>
-                                        <tr>
-                                            <th></th>
-                                            <th></th>
-                                            {/* <th></th> */}
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>DateTime: </b> <small>{Moment(this.props.patientnoteDetail.DateTime).format('d MMM YYYY')}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Chief Complaint: </b> <small>{this.props.patientnoteDetail.ChiefComplaint}</small>
-                                                </Typography>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>History Of PresentIllness: </b> <small>{this.props.patientnoteDetail.HistoryOfPresentIllness}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Gynacologic History: </b> <small>{this.props.patientnoteDetail.GynacologicHistory}</small>
-                                                </Typography>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Current Medications: </b> <small>{this.props.patientnoteDetail.CurrentMedications}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Allergies: </b> <small>{this.props.patientnoteDetail.Allergies}</small>
-                                                </Typography>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Investigational Tests: </b> <small>{this.props.patientnoteDetail.InvestigationalTests}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Assesment: </b> <small>{this.props.patientnoteDetail.Assesment}</small>
-                                                </Typography>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Diagnosis: </b> <small>{this.props.patientnoteDetail.Diagnosis}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Plan: </b> <small>{this.props.patientnoteDetail.Plan}</small>
-                                                </Typography>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Treatment: </b> <small>{this.props.patientnoteDetail.Treatment}</small>
-                                                </Typography></td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Respiratory Rate: </b> <small>{this.props.patientnoteDetail.RespiratoryRate}</small>
-                                                </Typography>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Height: </b> <small>{this.props.patientnoteDetail.Height}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Weight: </b> <small>{this.props.patientnoteDetail.Weight}</small>
-                                                </Typography>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Head Circumference: </b> <small>{this.props.patientnoteDetail.HeadCircumference}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Waist Circumference: </b> <small>{this.props.patientnoteDetail.WaistCircumference}</small>
-                                                </Typography>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Vision Right: </b> <small>{this.props.patientnoteDetail.VisionRight}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Vision Left: </b> <small>{this.props.patientnoteDetail.VisionLeft}</small>
-                                                </Typography>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex SR Corneal: </b> <small>{this.props.patientnoteDetail.ReflexSRCorneal}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex SR Abdomen: </b> <small>{this.props.patientnoteDetail.ReflexSRAbdomen}</small>
-                                                </Typography>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex SR Cremasteric: </b> <small>{this.props.patientnoteDetail.ReflexSRCremasteric}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex SR Plantar: </b> <small>{this.props.patientnoteDetail.ReflexSRPlantar}</small>
-                                                </Typography>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex SL Corneal: </b> <small>{this.props.patientnoteDetail.ReflexSLCorneal}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex SL Abdomen: </b> <small>{this.props.patientnoteDetail.ReflexSLAbdomen}</small>
-                                                </Typography>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex SL Cremasteric: </b> <small>{this.props.patientnoteDetail.ReflexSLCremasteric}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex SL Plantar: </b> <small>{this.props.patientnoteDetail.ReflexSLPlantar}</small>
-                                                </Typography>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>ReflexDRBiceps: </b> <small>{this.props.patientnoteDetail.ReflexDRBiceps}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex DR Triceps: </b> <small>{this.props.patientnoteDetail.ReflexDRTriceps}</small>
-                                                </Typography>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex DR Knee: </b> <small>{this.props.patientnoteDetail.ReflexDRKnee}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex DR Ankle: </b> <small>{this.props.patientnoteDetail.ReflexDRAnkle}</small>
-                                                </Typography>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex DL Biceps: </b> <small>{this.props.patientnoteDetail.ReflexDLBiceps}</small>
-                                                </Typography>
-                                            </td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex DL Triceps: </b> <small>{this.props.patientnoteDetail.ReflexDLTriceps}</small>
-                                                </Typography>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex DL Ankle: </b> <small>{this.props.patientnoteDetail.ReflexDLAnkle}></small>
-                                                </Typography></td>
-                                            <td>
-                                                <Typography variant="body2" gutterBottom>
-                                                    <b>Reflex DL Knee: </b> <small>{this.props.patientnoteDetail.ReflexDLKnee}</small>
-                                                </Typography>
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                    </table>
-
+                                    
                                 </DialogContent>
                                 <DialogActions>
                                     <Button onClick={this.detaildialoguClose} color="primary" autoFocus>
@@ -374,15 +160,33 @@ class dhpNote extends Component {
 }
 
 dhpNote.propTypes = {
-    fetchPatientNoteDetail: propTypes.func.isRequired,
+    fetchDHPNotesDatail: propTypes.func.isRequired,
     fetchVitalSigen: propTypes.func.isRequired,
     patientNotes: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired,
-    patientnoteDetail: propTypes.array.isRequired
+    DM: propTypes.array.isRequired,
+    DMHabits: propTypes.array.isRequired,
+    DMProblemLists: propTypes.array.isRequired,
+    DMOtherProblems: propTypes.array.isRequired,
+    DMPastProcedures: propTypes.array.isRequired,
+    DMVaccinations: propTypes.array.isRequired,
+    DMPatientEducations: propTypes.array.isRequired,
+    DMExams: propTypes.array.isRequired,
+    DMros: propTypes.array.isRequired,
+    DMPhysicalExams: propTypes.array.isRequired,
 }
 const mapStateToProps = (state) => ({
-    patientnoteDetail: state.patientNote.patientnoteDetail,
+    DM: state.patientNote.DM,
+    DMHabits: state.patientNote.DMHabits,
+    DMProblemLists: state.patientNote.DMProblemLists,
+    DMOtherProblems: state.patientNote.DMOtherProblems,
+    DMPastProcedures: state.patientNote.DMPastProcedures,
+    DMVaccinations: state.patientNote.DMVaccinations,
+    DMPatientEducations: state.patientNote.DMPatientEducations,
+    DMExams: state.patientNote.DMExams,
+    DMros: state.patientNote.DMros,
+    DMPhysicalExams: state.patientNote.DMPhysicalExams,
     patientNotes: state.patientNote.patientnotes,
     isLoading: state.patientNote.isLoading,
     hasError: state.patientNote.hasError,
@@ -391,7 +195,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = dispatch => ({
     fetchPatientNotes: (url) => dispatch(fetchPatientNotes(url)),
-    fetchPatientNoteDetail: (url) => dispatch(fetchPatientNoteDetail(url))
+    fetchDHPNotesDatail: (url) => dispatch(fetchDHPNotesDatail(url))
 });
 
 export default compose(withStyles(styles), withMobileDialog(), connect(mapStateToProps, mapDispatchToProps))(dhpNote);

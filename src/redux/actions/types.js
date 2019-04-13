@@ -170,3 +170,6 @@ export const LOAD_Department_FAIL = 'LOAD_Department_FAIL';
 export const LOAD_APPOINTMENT = 'LOAD_APPOINTMENT';
 export const LOAD_APPOINTMENT_SUCCESS = 'LOAD_APPOINTMENT_SUCCESS';
 export const LOAD_APPOINTMENT_FAIL = 'LOAD_APPOINTMENT_FAIL';
+export const LOAD_DHPNotesDatail = 'LOAD_DHPNotesDatail';
+export const LOAD_DHPNotesDatail_SUCCESS = 'LOAD_DHPNotesDatail_SUCCESS';
+export const LOAD_DHPNotesDatail_FAIL = 'LOAD_DHPNotesDatail_FAIL';
