@@ -20,8 +20,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 import { Link } from "react-router-dom";
+import TextField from '@material-ui/core/TextField';
+import Collapsible from 'react-collapsible';
+import FormLabel from '@material-ui/core/FormLabel';
+import CustomTable from '../Diagnosis/CustomDiagnosis';
+import TableWithDatePicker from '../Table/CustomTableWithSelector&Date';
+import CustomTableWithTextBox from '../Table/CustomTableWithTextBox';
 
 const styles = {
     cardCategoryWhite: {
@@ -80,12 +85,10 @@ class dhpNote extends Component {
         this.props.fetchPatientNotes(patientNotesURL);
     }
     handleOnRowClick = (id) => {
-        alert("am  the row ");
         // const NoteCategory = this.props.patientNotes.filter(note => (note.Id == id ));
         // console.log(NoteCategory[0].NoteCategory);
         const URL = '/PatientNotes/GetDHPNotesDatail/' + id;
         this.props.fetchDHPNotesDatail(URL);
-        //console.log(this.props.patientnoteDetail);
         this.setState({
             detaildialog: true
         })
@@ -136,6 +139,7 @@ class dhpNote extends Component {
                             />
                             <Dialog
                                 fullScreen={fullScreen}
+                                maxWidth={'md'}
                                 open={this.state.detaildialog}
                                 onClose={this.handleClose}
                                 aria-labelledby="responsive-dialog-title"
@@ -143,7 +147,241 @@ class dhpNote extends Component {
                             >
                                 <DialogTitle id="responsive-dialog-title">{"History And Physical Note Detail"}</DialogTitle>
                                 <DialogContent row>
-                                    
+                                    <form>
+                                        <TextField
+                                            disabled={true}
+                                            id="standard-multiline-flexible"
+                                            label="Chif Compliant"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.DM.ChiefComplaint != undefined ? this.props.DM.ChiefComplaint:''}
+                                            // onChange={this.handleChange('chifcompliant')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            disabled={true}
+                                            id="standard-multiline-flexible"
+                                            label="HPI"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.DM.HPI != undefined ? this.props.DM.HPI : ''}
+                                            // onChange={this.handleChange('HPI')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <selectTable />
+                                        <TextField
+                                            disabled={true}
+                                            id="standard-multiline-flexible"
+                                            label="HMBG Values"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.DM.HMBGValues != undefined ? this.props.DM.HMBGValues : ''}
+                                            // onChange={this.handleChange('HMBGValues')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            disabled={true}
+                                            id="standard-multiline-flexible"
+                                            label="BP Home Monitoring Values"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.DM.BPHomeMonitoringValues != undefined ? this.props.DM.BPHomeMonitoringValues : ''}
+                                            // onChange={this.handleChange('BPHomeMonitoringValues')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            disabled={true}
+                                            id="standard-multiline-flexible"
+                                            label="Allergies:"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.DM.Allergies != undefined ? this.props.DM.Allergies : ''}
+                                            // onChange={this.handleChange('Allergies')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            disabled={true}
+                                            id="standard-multiline-flexible"
+                                            label="Medications:"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.DM.Medication != undefined ? this.props.DM.Medication : ''}
+                                            // onChange={this.handleChange('Medications')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <br />
+                                        <br />
+                                        <Collapsible trigger="Habits >>" className={classes.collapsible}>
+                                            {
+                                                <CustomTableWithTextBox
+                                                    tableHeaderColor="primary"
+                                                    tableHead={[" ", "Problem", "Remark", "Quantity", "Frequency"]}
+                                                    tableData={this.props.DMHabits.map(item => { return [item.Habit] })}
+                                                    radio={2}
+                                                    textbox={1}
+                                                    hadleTableEvent={this.handleHabits}
+                                                    disabled={true}
+                                                />
+                                            }
+                                        </Collapsible>
+                                        <br />
+                                        <Collapsible trigger="Problem List with year of diagnosis >>" className={classes.collapsible}>
+                                            {
+                                                <Table
+                                                    tableHeaderColor="primary"
+                                                    tableHead={[" ", "Problem", "Yes", "No", "Diagnosis Year", "Remark"]}
+                                                    tableData={this.props.DMProblemLists.map(item => { return [item.Problem] })}
+                                                    radio={2}
+                                                    textBox={2}
+                                                    hadleTableEvent={this.handleProblemList}
+                                                    hadleTableRemarkEvent={this.handleProblemListRemarks}
+                                                />
+                                            }
+                                        </Collapsible>
+                                        <br />
+                                        <Collapsible trigger="Other Medical Problem >>" className={classes.collapsible}>
+                                            {
+                                                <Table
+                                                    tableHeaderColor="primary"
+                                                    tableHead={[" ", "Problem", "Yes", "No", "Remark"]}
+                                                    tableData={this.props.DMOtherProblems.map(item => { return [item.Problem] })}
+                                                    hadleTableEvent={this.handleOtherMedicalProblem}
+                                                    hadleTableRemarkEvent={this.handleOtherMedicalProblemRemarks}
+                                                    radio={2}
+                                                    textbox={1}
+                                                />
+                                            }
+                                        </Collapsible>
+                                        <br />
+                                        <Collapsible trigger="Past Surgical Procedures >>" className={classes.collapsible}>
+                                            {
+                                                <TableWithDatePicker
+                                                    tableHeaderColor="primary"
+                                                    tableHead={[" ", "Problem", "Yes", "No", "Date", "Remark"]}
+                                                    tableData={this.props.DMPastProcedures.map(item => { return [item.Procedure] })}
+                                                    radio={2}
+                                                    textbox={1}
+                                                    hadleTableEvent={this.handlePastSurgicalProcedures}
+                                                    hadleTableRemarkEvent={this.handlePastSurgicalProceduresRemarks}
+                                                />
+                                            }
+                                        </Collapsible>
+                                        <br />
+                                        <Collapsible trigger="Vaccinations >>" className={classes.collapsible}>
+                                            {
+                                                <TableWithDatePicker
+                                                    tableHeaderColor="primary"
+                                                    tableHead={[" ", "vaccine", "Yes", "No", "Date", "Remark"]}
+                                                    tableData={this.props.DMVaccinations.map(item => { return [item.Vaccine] })}
+                                                    radio={2}
+                                                    textbox={1}
+                                                    hadleTableEvent={this.handleVaccinations}
+                                                    hadleTableRemarkEvent={this.handleVaccinationsRemarks}
+                                                />
+                                            }
+                                        </Collapsible>
+                                        <br />
+                                        <Collapsible trigger="Patient Education >>" className={classes.collapsible}>
+                                            {
+                                                <TableWithDatePicker
+                                                    tableHeaderColor="primary"
+                                                    tableHead={[" ", "education", "Yes", "No", "Date", "Remark"]}
+                                                    tableData={this.props.DMPatientEducations.map(item => { return [item.Education] })}
+                                                    radio={2}
+                                                    textbox={1}
+                                                    hadleTableEvent={this.handlePatientEducation}
+                                                    hadleTableRemarkEvent={this.handlePatientEducationRemarks}
+                                                />
+                                            }
+                                        </Collapsible>
+                                        <br />
+                                        <Collapsible trigger="Exams >>" className={classes.collapsible}>
+                                            {
+                                                <TableWithDatePicker
+                                                    tableHeaderColor="primary"
+                                                    tableHead={[" ", "exam", "Yes", "No", "Date", "Remark"]}
+                                                    tableData={this.props.DMExams.map(item => { return [item.Exam] })}
+                                                    radio={2}
+                                                    textbox={1}
+                                                    hadleTableEvent={this.handleExams}
+                                                    hadleTableRemarkEvent={this.handleExamsRemarks}
+                                                />
+                                            }
+                                        </Collapsible>
+                                        <br />
+                                        <Collapsible trigger="ROS >>" className={classes.collapsible}>
+                                            {
+                                                <TableWithDatePicker
+                                                    tableHeaderColor="primary"
+                                                    tableHead={[" ", "system", "Yes", "No", "Date", "Remark"]}
+                                                    tableData={this.props.DMros.map(item => { return [item.System] })}
+                                                    radio={2}
+                                                    textbox={1}
+                                                    hadleTableEvent={this.handleROS}
+                                                    hadleTableRemarkEvent={this.handleROSRemarks}
+                                                />
+                                            }
+                                        </Collapsible>
+                                        <TextField
+                                            disabled={true}
+                                            id="standard-multiline-flexible"
+                                            label="Dite"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.DM.Diet != undefined ? this.props.DM.Diet : ''}
+                                            // onChange={this.handleChange('Dite')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            disabled={true}
+                                            id="standard-multiline-flexible"
+                                            label="Excercise F.I.T.T. Frequency Intensity Type Time"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.DM.Exercise != undefined ? this.props.DM.Exercise : ''}
+                                            // onChange={this.handleChange('ExcerciseFITTFrequencyIntensityTypeTime')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <br />
+                                        <br />
+                                        <Collapsible trigger="Physical Exam >>" className={classes.collapsible}>
+                                            {
+                                                <TableWithDatePicker
+                                                    tableHeaderColor="primary"
+                                                    tableHead={[" ", "system", "Yes", "No", "Date", "Remark"]}
+                                                    tableData={this.props.DMPhysicalExams.map(item => { return [item.System] })}
+                                                    radio={2}
+                                                    textbox={1}
+                                                    hadleTableEvent={this.handlePhysicalExam}
+                                                    hadleTableRemarkEvent={this.handlePhysicalExamRemarks}
+                                                />
+                                            }
+                                        </Collapsible>
+                                        {/* <br />
+                                        <FormLabel component="legend">Diagnosis</FormLabel>
+                                        <CustomTable
+                                            tableHeaderColor="primary"
+                                            tableHead={["Diagnosis", "Code", "Date", "Visit"]}
+                                            diagnosis={this.state.diagnosis}
+                                            addDiagnosis={this.addDiagnosis}
+                                        /> */}
+                                    </form>
                                 </DialogContent>
                                 <DialogActions>
                                     <Button onClick={this.detaildialoguClose} color="primary" autoFocus>
@@ -165,16 +403,16 @@ dhpNote.propTypes = {
     patientNotes: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired,
-    DM: propTypes.array.isRequired,
-    DMHabits: propTypes.array.isRequired,
-    DMProblemLists: propTypes.array.isRequired,
-    DMOtherProblems: propTypes.array.isRequired,
-    DMPastProcedures: propTypes.array.isRequired,
-    DMVaccinations: propTypes.array.isRequired,
-    DMPatientEducations: propTypes.array.isRequired,
-    DMExams: propTypes.array.isRequired,
-    DMros: propTypes.array.isRequired,
-    DMPhysicalExams: propTypes.array.isRequired,
+    // DM: propTypes.array.isRequired,
+    // DMHabits: propTypes.array.isRequired,
+    // DMProblemLists: propTypes.array.isRequired,
+    // DMOtherProblems: propTypes.array.isRequired,
+    // DMPastProcedures: propTypes.array.isRequired,
+    // DMVaccinations: propTypes.array.isRequired,
+    // DMPatientEducations: propTypes.array.isRequired,
+    // DMExams: propTypes.array.isRequired,
+    // DMros: propTypes.array.isRequired,
+    // DMPhysicalExams: propTypes.array.isRequired,
 }
 const mapStateToProps = (state) => ({
     DM: state.patientNote.DM,

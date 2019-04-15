@@ -55,7 +55,7 @@ class CustomTable extends React.Component {
         });
     }
     render() {
-        const { classes, tableHead, tableData, tableHeaderColor } = this.props;
+        const { classes, tableHead, tableData, tableHeaderColor, disabled } = this.props;
         return (
             <div className={classes.tableResponsive}>
                 <Table className={classes.table}>
@@ -95,6 +95,7 @@ class CustomTable extends React.Component {
                                         <TextField
                                             id="standard-name"
                                             // label="Remark"
+                                            disabled={disabled!=""?disabled:false}
                                             className={classes.textField}
                                             value={this.state.remark.filter(function(obj) {
                                                 if(obj.key == key && obj.row == 'r1')
@@ -108,6 +109,7 @@ class CustomTable extends React.Component {
                                         <TextField
                                             id="standard-name"
                                             // label="Remark"
+                                            disabled={disabled != "" ? disabled : false}
                                             className={classes.textField}
                                             value={this.state.remark.filter((obj) => {
                                                 if (obj.key == key && obj.row == 'r2')
@@ -121,6 +123,7 @@ class CustomTable extends React.Component {
                                         <TextField
                                             id="standard-name"
                                             // label="Remark"
+                                            disabled={disabled != "" ? disabled : false}
                                             className={classes.textField}
                                             value={this.state.remark.filter((obj) => {
                                                 if (obj.key == key && obj.row == 'r3')

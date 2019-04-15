@@ -489,16 +489,16 @@ export default function(state = initialState, action){
       case LOAD_DHPNotesDatail_SUCCESS:
         return {
           ...state,
-          DM:action.payload.dm,
-          DMHabits:action.payload.dmHabits,
-          DMProblemLists:action.payload.dmProblemLists,
-          DMOtherProblems:action.payload.dmOtherProblems,
-          DMPastProcedures:action.payload.dmPastProcedures,
-          DMVaccinations:action.payload.dmVaccinations,
-          DMPatientEducations:action.payload.dmPatientEducations,
-          DMExams:action.payload.dmExams,
-          DMros:action.payload.dmros,
-          DMPhysicalExams:action.payload.dmPhysicalExams,
+          DM: action.payload.data.dm,
+          DMHabits: action.payload.data.dmHabits,
+          DMProblemLists: action.payload.data.dmProblemLists,
+          DMOtherProblems: action.payload.data.dmOtherProblems,
+          DMPastProcedures: action.payload.data.dmPastProcedures,
+          DMVaccinations: action.payload.data.dmVaccinations,
+          DMPatientEducations: action.payload.data.dmPatientEducations,
+          DMExams: action.payload.data.dmExams,
+          DMros: action.payload.data.dmros,
+          DMPhysicalExams: action.payload.data.dmPhysicalExams,
           isLoading: false,
           hasError: false
         }
