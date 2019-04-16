@@ -55,7 +55,7 @@ class CustomTable extends React.Component {
         });
     }
     render() {
-        const { classes, tableHead, tableData, tableHeaderColor, disabled } = this.props;
+        const { classes, tableHead, tableData, tableHeaderColor, disabled, dataTable } = this.props;
         return (
             <div className={classes.tableResponsive}>
                 <Table className={classes.table}>
@@ -97,7 +97,7 @@ class CustomTable extends React.Component {
                                             // label="Remark"
                                             disabled={disabled!=""?disabled:false}
                                             className={classes.textField}
-                                            value={this.state.remark.filter(function(obj) {
+                                            value={dataTable != undefined ? dataTable[key].Remark : this.state.remark.filter(function(obj) {
                                                 if(obj.key == key && obj.row == 'r1')
                                                     return(obj);
                                             }).value}
@@ -111,7 +111,7 @@ class CustomTable extends React.Component {
                                             // label="Remark"
                                             disabled={disabled != "" ? disabled : false}
                                             className={classes.textField}
-                                            value={this.state.remark.filter((obj) => {
+                                            value={dataTable != undefined ? dataTable[key].Quantity : this.state.remark.filter((obj) => {
                                                 if (obj.key == key && obj.row == 'r2')
                                                     return(obj);
                                             }).value}
@@ -125,7 +125,7 @@ class CustomTable extends React.Component {
                                             // label="Remark"
                                             disabled={disabled != "" ? disabled : false}
                                             className={classes.textField}
-                                            value={this.state.remark.filter((obj) => {
+                                            value={dataTable != undefined ? dataTable[key].Frequency : this.state.remark.filter((obj) => {
                                                 if (obj.key == key && obj.row == 'r3')
                                                     return(obj)
                                             }).value}

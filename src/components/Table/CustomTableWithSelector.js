@@ -65,7 +65,7 @@ class CustomTable extends React.Component {
         });
     }
     render() {
-        const { classes, tableHead, tableData, tableHeaderColor, textBox, radio } = this.props;
+        const { classes, tableHead, tableData, tableHeaderColor, textBox, radio, disabled, dataTable } = this.props;
         return (
             <div className={classes.tableResponsive}>
                 <Button 
@@ -119,18 +119,20 @@ class CustomTable extends React.Component {
                                     })}
                                     <TableCell>
                                         <Radio
-                                            checked={this.state.selectedValue[key] === "n" + key}
+                                            checked={dataTable != undefined ? dataTable[key].Yes : this.state.selectedValue[key] === "n" + key}
                                             onChange={this.handleChange('selectedValue', key)}
                                             value={"n" + key}
+                                            disabled={disabled != "" ? disabled : false}
                                             name={"radio-button-demo-"+key}
                                             aria-label="Normal"
                                         />
                                     </TableCell>
                                     <TableCell>
                                         <Radio
-                                            checked={this.state.selectedValue[key] === "u" + key}
+                                            checked={dataTable != undefined ? dataTable[key].No : this.state.selectedValue[key] === "u" + key}
                                             onChange={this.handleChange('selectedValue', key)}
                                             value={"u" + key}
+                                            disabled={disabled != "" ? disabled : false}
                                             name={"radio-button-demo-"+key}
                                             aria-label="Ubnormal"
                                         />
@@ -142,8 +144,9 @@ class CustomTable extends React.Component {
                                                         <TextField
                                                             id="standard-name"
                                                             // label="Remark"
+                                                            disabled={disabled != "" ? disabled : false}
                                                             className={classes.textField}
-                                                            value={this.state.remark.filter(function (obj) {
+                                                            value={dataTable != undefined ? dataTable[key][k==0?'DiagnosisYear':'Remark'] : this.state.remark.filter(function (obj) {
                                                                 if(obj.key==key&&obj.row==k)
                                                                     return obj;
                                                             }).value}

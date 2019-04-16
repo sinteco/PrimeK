@@ -5,6 +5,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import GridItem from "components/Grid/GridItem.jsx";
 import GridContainer from "components/Grid/GridContainer.jsx";
 import Table from "components/Table/CustomTableWithPopUp.js";
+import CustomTableWithSelector from '../Table/CustomTableWithSelector';
 import Card from "components/Card/Card.jsx";
 import CardHeader from "components/Card/CardHeader.jsx";
 import CardBody from "components/Card/CardBody.jsx";
@@ -229,6 +230,7 @@ class dhpNote extends Component {
                                                     tableHeaderColor="primary"
                                                     tableHead={[" ", "Problem", "Remark", "Quantity", "Frequency"]}
                                                     tableData={this.props.DMHabits.map(item => { return [item.Habit] })}
+                                                    dataTable={this.props.DMHabits}
                                                     radio={2}
                                                     textbox={1}
                                                     hadleTableEvent={this.handleHabits}
@@ -239,7 +241,7 @@ class dhpNote extends Component {
                                         <br />
                                         <Collapsible trigger="Problem List with year of diagnosis >>" className={classes.collapsible}>
                                             {
-                                                <Table
+                                                <CustomTableWithSelector
                                                     tableHeaderColor="primary"
                                                     tableHead={[" ", "Problem", "Yes", "No", "Diagnosis Year", "Remark"]}
                                                     tableData={this.props.DMProblemLists.map(item => { return [item.Problem] })}
@@ -247,13 +249,15 @@ class dhpNote extends Component {
                                                     textBox={2}
                                                     hadleTableEvent={this.handleProblemList}
                                                     hadleTableRemarkEvent={this.handleProblemListRemarks}
+                                                    disabled={true}
+                                                    dataTable={this.props.DMProblemLists}
                                                 />
                                             }
                                         </Collapsible>
                                         <br />
                                         <Collapsible trigger="Other Medical Problem >>" className={classes.collapsible}>
                                             {
-                                                <Table
+                                                <CustomTableWithSelector
                                                     tableHeaderColor="primary"
                                                     tableHead={[" ", "Problem", "Yes", "No", "Remark"]}
                                                     tableData={this.props.DMOtherProblems.map(item => { return [item.Problem] })}
@@ -261,6 +265,8 @@ class dhpNote extends Component {
                                                     hadleTableRemarkEvent={this.handleOtherMedicalProblemRemarks}
                                                     radio={2}
                                                     textbox={1}
+                                                    disabled={true}
+                                                    dataTable={this.props.DMOtherProblems}
                                                 />
                                             }
                                         </Collapsible>
@@ -275,6 +281,8 @@ class dhpNote extends Component {
                                                     textbox={1}
                                                     hadleTableEvent={this.handlePastSurgicalProcedures}
                                                     hadleTableRemarkEvent={this.handlePastSurgicalProceduresRemarks}
+                                                    disabled={true}
+                                                    dataTable={this.props.DMPastProcedures}
                                                 />
                                             }
                                         </Collapsible>
@@ -289,6 +297,8 @@ class dhpNote extends Component {
                                                     textbox={1}
                                                     hadleTableEvent={this.handleVaccinations}
                                                     hadleTableRemarkEvent={this.handleVaccinationsRemarks}
+                                                    disabled={true}
+                                                    dataTable={this.props.DMVaccinations}
                                                 />
                                             }
                                         </Collapsible>
@@ -303,6 +313,8 @@ class dhpNote extends Component {
                                                     textbox={1}
                                                     hadleTableEvent={this.handlePatientEducation}
                                                     hadleTableRemarkEvent={this.handlePatientEducationRemarks}
+                                                    disabled={true}
+                                                    dataTable={this.props.DMPatientEducations}
                                                 />
                                             }
                                         </Collapsible>
@@ -317,6 +329,8 @@ class dhpNote extends Component {
                                                     textbox={1}
                                                     hadleTableEvent={this.handleExams}
                                                     hadleTableRemarkEvent={this.handleExamsRemarks}
+                                                    disabled={true}
+                                                    dataTable={this.props.DMExams}
                                                 />
                                             }
                                         </Collapsible>
@@ -331,6 +345,8 @@ class dhpNote extends Component {
                                                     textbox={1}
                                                     hadleTableEvent={this.handleROS}
                                                     hadleTableRemarkEvent={this.handleROSRemarks}
+                                                    disabled={true}
+                                                    dataTable={this.props.DMros}
                                                 />
                                             }
                                         </Collapsible>
@@ -370,6 +386,8 @@ class dhpNote extends Component {
                                                     textbox={1}
                                                     hadleTableEvent={this.handlePhysicalExam}
                                                     hadleTableRemarkEvent={this.handlePhysicalExamRemarks}
+                                                    disabled={true}
+                                                    dataTable={this.props.DMPhysicalExams}
                                                 />
                                             }
                                         </Collapsible>

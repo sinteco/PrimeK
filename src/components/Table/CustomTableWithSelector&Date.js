@@ -80,7 +80,7 @@ class CustomTable extends React.Component {
     }
     
     render() {
-        const { classes, tableHead, tableData, tableHeaderColor } = this.props;
+        const { classes, tableHead, tableData, tableHeaderColor, disabled, dataTable } = this.props;
          
         return (
             <div className={classes.tableResponsive}>
@@ -135,28 +135,31 @@ class CustomTable extends React.Component {
                                     })}
                                     <TableCell>
                                         <Radio
-                                            checked={this.state.selectedValue[key] === "n" + key}
+                                            checked={dataTable != undefined ? dataTable[key].Yes != undefined ? dataTable[key].Yes : dataTable[key].Normal : this.state.selectedValue[key] === "n" + key}
                                             onChange={this.handleChange('selectedValue', key)}
                                             value={"n" + key}
                                             name={"radio-button-demo-" + key}
                                             aria-label="Normal"
+                                            disabled={disabled != "" ? disabled : false}
                                         />
                                     </TableCell>
                                     <TableCell>
                                         <Radio
-                                            checked={this.state.selectedValue[key] === "u" + key}
+                                            checked={dataTable != undefined ? dataTable[key].Yes != undefined ? dataTable[key].No : dataTable[key].Abnormal : this.state.selectedValue[key] === "u" + key}
                                             onChange={this.handleChange('selectedValue', key)}
                                             value={"u" + key}
                                             name={"radio-button-demo-" + key}
                                             aria-label="Ubnormal"
+                                            disabled={disabled != "" ? disabled : false}
                                         />
                                     </TableCell>
                                     <TableCell>
                                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                             <DatePicker
+                                                disabled={disabled != "" ? disabled : false}
                                                 margin="normal"
                                                 label="Date"
-                                                value={this.state.selectedDate[key]}
+                                                value={dataTable != undefined ? dataTable[key].Date : this.state.selectedDate[key]}
                                                 onChange={(e)=>this.handleDateChange(e,'selectedDate',key)}
                                             />
                                         </MuiPickersUtilsProvider>
@@ -165,8 +168,9 @@ class CustomTable extends React.Component {
                                         <TextField
                                             id="standard-name"
                                             // label="Remark"
+                                            disabled={disabled != "" ? disabled : false}
                                             className={classes.textField}
-                                            value={this.state.remark[key]}
+                                            value={dataTable != undefined ? dataTable[key].Remark : this.state.remark[key]}
                                             onChange={this.handleRemarkChange('remark', key)}
                                             margin="normal"
                                         />

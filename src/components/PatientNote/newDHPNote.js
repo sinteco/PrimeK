@@ -637,7 +637,7 @@ class newDHPNote extends Component {
                     <form>
                         <TextField
                             id="standard-multiline-flexible"
-                            label="Chif Compliant"
+                            label="Chif Compliant *"
                             multiline
                             rowsMax="4"
                             fullWidth
