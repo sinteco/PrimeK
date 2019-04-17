@@ -517,7 +517,7 @@ class newHPNote extends Component {
                                 <Table
                                     tableHeaderColor="primary"
                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                    tableData={this.props.ReviewofSystems.map(item => { return [item.Name] })}
+                                    tableData={this.props.ReviewofSystem.map(item => { return [item.Name] })}
                                     radio={2}
                                     textbox={1}
                                     hadleTableEvent={this.handleReviewofSystems}
@@ -607,7 +607,7 @@ newHPNote.propTypes = {
     SocialHistory: propTypes.array.isRequired,
     FamilyHistory: propTypes.array.isRequired,
     MedicalHistory: propTypes.array.isRequired,
-    ReviewofSystems: propTypes.array.isRequired,
+    ReviewofSystem: propTypes.array.isRequired,
     PhysicalExam: propTypes.array.isRequired,
 }
 
@@ -620,7 +620,7 @@ const mapStateToProps = (state) => ({
     SocialHistory: state.patientNote.SocialHistory,
     FamilyHistory: state.patientNote.FamilyHistory,
     MedicalHistory: state.patientNote.MedicalHistory,
-    ReviewofSystems: state.patientNote.ReviewofSystems,
+    ReviewofSystem: state.patientNote.ReviewofSystem,
     PhysicalExam: state.patientNote.PhysicalExam,
     selectedPatient: state.assignments.selectedPatient
 });

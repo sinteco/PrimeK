@@ -144,7 +144,7 @@ class Assignments extends Component {
     returnarrays(){
         var a = new Array();
         this.props.assignments.map((assignment)=>{
-            a.push([[assignment.Id],[assignment.CardNumber],[assignment.PatientFullName],[assignment.DoctorFullName],[Moment(assignment.Date).format('d MMM')]])
+            a.push([[assignment.Id],[assignment.CardNumber],[assignment.PatientFullName],[assignment.DoctorFullName],[Moment(assignment.Date).format('DD MMM YY')]])
         });
         return a;    
     }

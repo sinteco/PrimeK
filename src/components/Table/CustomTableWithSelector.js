@@ -73,6 +73,7 @@ class CustomTable extends React.Component {
                     color="primary"
                     className={classes.button}
                     onClick={this.allNormal}
+                    disabled={disabled != "" ? disabled : false}
                 >
                     All Normal
                 </Button>
@@ -81,6 +82,7 @@ class CustomTable extends React.Component {
                     color="primary"
                     className={classes.button}
                     onClick={this.allUbnormal}
+                    disabled={disabled != "" ? disabled : false}
                 >
                     All Ubnormal
                 </Button>

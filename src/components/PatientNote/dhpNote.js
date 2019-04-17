@@ -72,7 +72,7 @@ class dhpNote extends Component {
     returnarrays() {
         var a = new Array();
         this.props.patientNotes.map((patientNote) => {
-            a.push([[patientNote.Id], [patientNote.PatientId], [Moment(patientNote.DateTime).format('d MMM')], [patientNote.NoteCategory], [patientNote.Note], [patientNote.Doctor]])
+            a.push([[patientNote.Id], [patientNote.PatientId], [Moment(patientNote.DateTime).format('DD MMM YY')], [patientNote.NoteCategory], [patientNote.Note], [patientNote.Doctor]])
         });
         return a;
     }

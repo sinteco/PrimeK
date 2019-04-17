@@ -173,3 +173,6 @@ export const LOAD_APPOINTMENT_FAIL = 'LOAD_APPOINTMENT_FAIL';
 export const LOAD_DHPNotesDatail = 'LOAD_DHPNotesDatail';
 export const LOAD_DHPNotesDatail_SUCCESS = 'LOAD_DHPNotesDatail_SUCCESS';
 export const LOAD_DHPNotesDatail_FAIL = 'LOAD_DHPNotesDatail_FAIL';
+export const LOAD_HPNoteDetail = 'LOAD_HPNoteDetail';
+export const LOAD_HPNoteDetail_SUCCESS = 'LOAD_HPNoteDetail_SUCCESS';
+export const LOAD_HPNoteDetail_FAIL = 'LOAD_HPNoteDetail_FAIL';
