@@ -19,7 +19,9 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Collapsible from 'react-collapsible';
+import CustomTableWithSelector from '../Table/CustomTableWithSelector';
 import { Link } from "react-router-dom";
 
 const styles = {
@@ -141,7 +143,167 @@ class hpNote extends Component {
                             >
                                 <DialogTitle id="responsive-dialog-title">{"History And Physical Note Detail"}</DialogTitle>
                                 <DialogContent row>
-                                        
+                                    <form>
+                                        <TextField
+                                            id="standard-multiline-flexible"
+                                            label="Chif Compliant *"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.hpNote != undefined ? this.props.hpNote.chifcompliant : ''}
+                                            // onChange={this.handleChange('chifcompliant')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            id="standard-multiline-flexible"
+                                            label="History Of Present illness"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.hpNote != undefined ? this.props.hpNote.historyofpresentillness : ''}
+                                            // onChange={this.handleChange('historyofpresentillness')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <br />
+                                        <br />
+                                        <Collapsible trigger="Past Medical History >>" className={classes.collapsible}>
+                                            {
+                                                <Table
+                                                    tableHeaderColor="primary"
+                                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                                                    tableData={this.props.hpNote != undefined ? this.props.hpNote.medicalHistorys.map(item => { return [item.NoteSubcategory] }):''}
+                                                    hadleTableEvent={this.hadlePastMedicalHistory}
+                                                    hadleTableRemarkEvent={this.hadlePastMedicalHistoryRemarks}
+                                                    radio={2}
+                                                    textbox={1}
+                                                />
+                                            }
+                                        </Collapsible>
+                                        <TextField
+                                            id="standard-multiline-flexible"
+                                            label="Current Medications"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.hpNote != undefined ? this.props.hpNote.currentmedications: ''}
+                                            // onChange={this.handleChange('currentmedications')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            id="standard-multiline-flexible"
+                                            label="Allergies"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.hpNote != undefined ? this.props.hpNote.allergies:''}
+                                            // onChange={this.handleChange('allergies')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <br />
+                                        <br />
+                                        <Collapsible trigger="Family History >>" className={classes.collapsible}>
+                                            {
+                                                <CustomTableWithSelector
+                                                    tableHeaderColor="primary"
+                                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                                                    tableData={this.props.hpNote != undefined ? this.props.hpNote.FamilyHistory.map(item => { return [item.NoteSubcategory] }):''}
+                                                    radio={2}
+                                                    textbox={1}
+                                                    hadleTableEvent={this.handleFamilyHistory}
+                                                    hadleTableRemarkEvent={this.handleFamilyHistoryRemarks}
+                                                />
+                                            }
+                                        </Collapsible>
+                                        <br />
+                                        <Collapsible trigger="Social History >>" className={classes.collapsible}>
+                                            {
+                                                <CustomTableWithSelector
+                                                    tableHeaderColor="primary"
+                                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                                                    tableData={this.props.hpNote != undefined ? this.props.hpNote.SocialHistory.map(item => { return [item.NoteSubcategory] }): ''}
+                                                    radio={0}
+                                                    textbox={1}
+                                                    hadleTableEvent={this.handleSocialHistory}
+                                                    hadleTableRemarkEvent={this.handleSocialHistoryRemarks}
+                                                />
+                                            }
+                                        </Collapsible>
+                                        <br />
+                                        <Collapsible trigger="Review of Systems >>" className={classes.collapsible}>
+                                            {
+                                                <CustomTableWithSelector
+                                                    tableHeaderColor="primary"
+                                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                                                    tableData={this.props.hpNote != undefined ? this.props.hpNote.ReviewofSystem.map(item => { return [item.NoteSubcategory] }): ''}
+                                                    radio={2}
+                                                    textbox={1}
+                                                    hadleTableEvent={this.handleReviewofSystems}
+                                                    hadleTableRemarkEvent={this.handleReviewofSystemsRemarks}
+                                                />
+                                            }
+                                        </Collapsible>
+                                        <br />
+                                        <Collapsible trigger="Physical Exam >>" className={classes.collapsible}>
+                                            {
+                                                <CustomTableWithSelector
+                                                    tableHeaderColor="primary"
+                                                    tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
+                                                    tableData={this.props.hpNote != undefined ? this.props.hpNote.PhysicalExam.map(item => { return [item.NoteSubcategory] }): ''}
+                                                    radio={2}
+                                                    textbox={1}
+                                                    hadleTableEvent={this.handlePhysicalExam}
+                                                    hadleTableRemarkEvent={this.handlePhysicalExamRemarks}
+                                                />
+                                            }
+                                        </Collapsible>
+                                        <TextField
+                                            id="standard-multiline-flexible"
+                                            label="Assessment"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.hpNote != undefined ? this.props.hpNote.assessment: ''}
+                                            // onChange={this.handleChange('assessment')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            id="standard-multiline-flexible"
+                                            label="Plan"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.hpNote != undefined ? this.props.hpNote.plan: ''}
+                                            // onChange={this.handleChange('plan')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            id="standard-multiline-flexible"
+                                            label="Treatment"
+                                            multiline
+                                            rowsMax="4"
+                                            fullWidth
+                                            value={this.props.hpNote != undefined ? this.props.hpNote.treatment: ''}
+                                            // onChange={this.handleChange('treatment')}
+                                            className={classes.textField}
+                                            margin="normal"
+                                        />
+                                        {/* <br /> */}
+                                        {/* <br /> */}
+                                        {/* <FormLabel component="legend">Diagnosis</FormLabel>
+                                        <CustomTable
+                                            tableHeaderColor="primary"
+                                            tableHead={["Diagnosis", "Code", "Date", "Visit"]}
+                                            diagnosis={this.state.diagnosis}
+                                            addDiagnosis={this.addDiagnosis}
+                                        />
+                                        <br /> */}
+                                    </form>
                                 </DialogContent>
                                 <DialogActions>
                                     <Button onClick={this.detaildialoguClose} color="primary" autoFocus>
@@ -163,11 +325,7 @@ hpNote.propTypes = {
     patientNotes: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired,
-    medicalHistorys: propTypes.array.isRequired,
-    familyHistories: propTypes.array.isRequired,
-    reviewOfSystems: propTypes.array.isRequired,
-    physicalExams: propTypes.array.isRequired,
-    personalHistories: propTypes.array.isRequired
+    hpNote: propTypes.array.isRequired,
 }
 const mapStateToProps = (state) => ({
     fetchHPNoteDetail: state.patientNote.fetchHPNoteDetail,
@@ -176,11 +334,7 @@ const mapStateToProps = (state) => ({
     hasError: state.patientNote.hasError,
     totalCount: state.patientNote.totalCount,
     selectedPatient: state.assignments.selectedPatient,
-    medicalHistorys: state.patientNote.medicalHistorys,
-    familyHistories: state.patientNote.familyHistories,
-    reviewOfSystems: state.patientNote.reviewOfSystems,
-    physicalExams: state.patientNote.physicalExams,
-    personalHistories: state.patientNote.personalHistories
+    hpNote: state.patientNote.medicalHistorys
 });
 const mapDispatchToProps = dispatch => ({
     fetchPatientNotes: (url) => dispatch(fetchPatientNotes(url)),

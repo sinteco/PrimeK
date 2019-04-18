@@ -37,11 +37,7 @@ const initialState = {
     DMExams:[],
     DMros:[],
     DMPhysicalExams:[],
-    medicalHistorys :[],
-    familyHistories :[],
-    reviewOfSystems :[],
-    physicalExams :[],
-    personalHistories :[]
+    hpNote :[]
 }
 
 export default function(state = initialState, action){
@@ -522,11 +518,7 @@ export default function(state = initialState, action){
       case LOAD_HPNoteDetail_SUCCESS:
         return {
           ...state,
-          medicalHistorys: action.payload.data.medicalHistorys,
-          familyHistories: action.payload.data.familyHistories,
-          reviewOfSystems: action.payload.data.reviewOfSystems,
-          physicalExams: action.payload.data.physicalExams,
-          personalHistories: action.payload.data.personalHistories,
+          hpNote: action.payload.data.hpNote,
           isLoading: false,
           hasError: false
         }
