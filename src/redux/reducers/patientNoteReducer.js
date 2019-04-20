@@ -37,7 +37,12 @@ const initialState = {
     DMExams:[],
     DMros:[],
     DMPhysicalExams:[],
-    hpNote :[]
+    hpNote:[],
+    medicalHistorys: [],
+    familyHistories: [],
+    reviewOfSystems: [],
+    physicalExams: [],
+    personalHistories: []
 }
 
 export default function(state = initialState, action){
@@ -519,6 +524,11 @@ export default function(state = initialState, action){
         return {
           ...state,
           hpNote: action.payload.data.hpNote,
+          medicalHistorys: action.payload.data.medicalHistorys,
+          familyHistories: action.payload.data.familyHistories,
+          reviewOfSystems: action.payload.data.reviewOfSystems,
+          physicalExams: action.payload.data.physicalExams,
+          personalHistories: action.payload.data.personalHistories,
           isLoading: false,
           hasError: false
         }

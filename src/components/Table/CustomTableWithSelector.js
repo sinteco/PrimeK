@@ -121,7 +121,7 @@ class CustomTable extends React.Component {
                                     })}
                                     <TableCell>
                                         <Radio
-                                            checked={dataTable != undefined ? dataTable[key].Yes : this.state.selectedValue[key] === "n" + key}
+                                            checked={dataTable != undefined ? dataTable[key].Yes != undefined ? dataTable[key].Yes : dataTable[key].Normal : this.state.selectedValue[key] === "n" + key}
                                             onChange={this.handleChange('selectedValue', key)}
                                             value={"n" + key}
                                             disabled={disabled != "" ? disabled : false}
@@ -131,7 +131,7 @@ class CustomTable extends React.Component {
                                     </TableCell>
                                     <TableCell>
                                         <Radio
-                                            checked={dataTable != undefined ? dataTable[key].No : this.state.selectedValue[key] === "u" + key}
+                                            checked={dataTable != undefined ? dataTable[key].Yes != undefined ? dataTable[key].No : dataTable[key].Abnormal : this.state.selectedValue[key] === "u" + key}
                                             onChange={this.handleChange('selectedValue', key)}
                                             value={"u" + key}
                                             disabled={disabled != "" ? disabled : false}
@@ -140,6 +140,9 @@ class CustomTable extends React.Component {
                                         />
                                     </TableCell>
                                     {
+                                        Array.isArray(textBox) && textBox.length === 1?
+                                        alert("j")
+                                        :
                                         [...Array(textBox)].map((textb, k) => {
                                             return (
                                                     <TableCell>

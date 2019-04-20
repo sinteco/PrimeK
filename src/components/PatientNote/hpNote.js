@@ -85,7 +85,7 @@ class hpNote extends Component {
         // console.log(NoteCategory[0].NoteCategory);
         const URL = '/HPNotes/GetHPNoteDetail/' + id;
         this.props.fetchHPNoteDetail(URL);
-        // console.log(this.props.patientnoteDetail);
+        console.log(this.props.hpNotes);
         this.setState({
             detaildialog: true
         })
@@ -136,6 +136,7 @@ class hpNote extends Component {
                             />
                             <Dialog
                                 fullScreen={fullScreen}
+                                maxWidth={'md'}
                                 open={this.state.detaildialog}
                                 onClose={this.handleClose}
                                 aria-labelledby="responsive-dialog-title"
@@ -150,10 +151,11 @@ class hpNote extends Component {
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.props.hpNote != undefined ? this.props.hpNote.chifcompliant : ''}
+                                            value={this.props.hpNotes.ChiefComplaint != undefined ? this.props.hpNotes.ChiefComplaint : ''}
                                             // onChange={this.handleChange('chifcompliant')}
                                             className={classes.textField}
                                             margin="normal"
+                                            disabled={true}
                                         />
                                         <TextField
                                             id="standard-multiline-flexible"
@@ -161,23 +163,26 @@ class hpNote extends Component {
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.props.hpNote != undefined ? this.props.hpNote.historyofpresentillness : ''}
+                                            value={this.props.hpNotes.HistoryOfPresentIllness != undefined ? this.props.hpNotes.HistoryOfPresentIllness : ''}
                                             // onChange={this.handleChange('historyofpresentillness')}
                                             className={classes.textField}
                                             margin="normal"
+                                            disabled={true}
                                         />
                                         <br />
                                         <br />
                                         <Collapsible trigger="Past Medical History >>" className={classes.collapsible}>
                                             {
-                                                <Table
+                                                <CustomTableWithSelector
                                                     tableHeaderColor="primary"
                                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                                    tableData={this.props.hpNote != undefined ? this.props.hpNote.medicalHistorys.map(item => { return [item.NoteSubcategory] }):''}
+                                                    tableData={this.props.medicalHistorys != undefined ? this.props.medicalHistorys.map(item => { return [item.NoteSubcategory] }):''}
                                                     hadleTableEvent={this.hadlePastMedicalHistory}
                                                     hadleTableRemarkEvent={this.hadlePastMedicalHistoryRemarks}
                                                     radio={2}
                                                     textbox={1}
+                                                    disabled={true}
+                                                    dataTable={this.props.medicalHistorys != undefined ? this.props.medicalHistorys:''}
                                                 />
                                             }
                                         </Collapsible>
@@ -187,10 +192,11 @@ class hpNote extends Component {
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.props.hpNote != undefined ? this.props.hpNote.currentmedications: ''}
+                                            value={this.props.hpNotes.CurrentMedications != undefined ? this.props.hpNotes.CurrentMedications: ''}
                                             // onChange={this.handleChange('currentmedications')}
                                             className={classes.textField}
                                             margin="normal"
+                                            disabled={true}
                                         />
                                         <TextField
                                             id="standard-multiline-flexible"
@@ -198,10 +204,11 @@ class hpNote extends Component {
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.props.hpNote != undefined ? this.props.hpNote.allergies:''}
+                                            value={this.props.hpNotes.Allergies != undefined ? this.props.hpNotes.Allergies:''}
                                             // onChange={this.handleChange('allergies')}
                                             className={classes.textField}
                                             margin="normal"
+                                            disabled={true}
                                         />
                                         <br />
                                         <br />
@@ -210,11 +217,13 @@ class hpNote extends Component {
                                                 <CustomTableWithSelector
                                                     tableHeaderColor="primary"
                                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                                    tableData={this.props.hpNote != undefined ? this.props.hpNote.FamilyHistory.map(item => { return [item.NoteSubcategory] }):''}
+                                                    tableData={this.props.familyHistories != undefined ? this.props.familyHistories.map(item => { return [item.NoteSubcategory] }):''}
                                                     radio={2}
                                                     textbox={1}
                                                     hadleTableEvent={this.handleFamilyHistory}
                                                     hadleTableRemarkEvent={this.handleFamilyHistoryRemarks}
+                                                    disabled={true}
+                                                    dataTable={this.props.familyHistories != undefined ? this.props.familyHistories:''}
                                                 />
                                             }
                                         </Collapsible>
@@ -224,11 +233,13 @@ class hpNote extends Component {
                                                 <CustomTableWithSelector
                                                     tableHeaderColor="primary"
                                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                                    tableData={this.props.hpNote != undefined ? this.props.hpNote.SocialHistory.map(item => { return [item.NoteSubcategory] }): ''}
+                                                    tableData={this.props.personalHistories != undefined ? this.props.personalHistories.map(item => { return [item.NoteSubcategory] }): ''}
                                                     radio={0}
                                                     textbox={1}
                                                     hadleTableEvent={this.handleSocialHistory}
                                                     hadleTableRemarkEvent={this.handleSocialHistoryRemarks}
+                                                    disabled={true}
+                                                    dataTable={this.props.personalHistories != undefined ? this.props.personalHistories:''}
                                                 />
                                             }
                                         </Collapsible>
@@ -238,11 +249,13 @@ class hpNote extends Component {
                                                 <CustomTableWithSelector
                                                     tableHeaderColor="primary"
                                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                                    tableData={this.props.hpNote != undefined ? this.props.hpNote.ReviewofSystem.map(item => { return [item.NoteSubcategory] }): ''}
+                                                    tableData={this.props.reviewOfSystems != undefined ? this.props.reviewOfSystems.map(item => { return [item.NoteSubcategory] }): ''}
                                                     radio={2}
                                                     textbox={1}
                                                     hadleTableEvent={this.handleReviewofSystems}
                                                     hadleTableRemarkEvent={this.handleReviewofSystemsRemarks}
+                                                    disabled={true}
+                                                    dataTable={this.props.reviewOfSystems != undefined ? this.props.reviewOfSystems:''}
                                                 />
                                             }
                                         </Collapsible>
@@ -252,11 +265,13 @@ class hpNote extends Component {
                                                 <CustomTableWithSelector
                                                     tableHeaderColor="primary"
                                                     tableHead={[" ", " ", "Normal", "Abnormal", "Remark"]}
-                                                    tableData={this.props.hpNote != undefined ? this.props.hpNote.PhysicalExam.map(item => { return [item.NoteSubcategory] }): ''}
+                                                    tableData={this.props.physicalExams != undefined ? this.props.physicalExams.map(item => { return [item.NoteSubcategory] }): ''}
                                                     radio={2}
                                                     textbox={1}
                                                     hadleTableEvent={this.handlePhysicalExam}
                                                     hadleTableRemarkEvent={this.handlePhysicalExamRemarks}
+                                                    disabled={true}
+                                                    dataTable={this.props.physicalExams != undefined ? this.props.physicalExams:''}
                                                 />
                                             }
                                         </Collapsible>
@@ -266,10 +281,11 @@ class hpNote extends Component {
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.props.hpNote != undefined ? this.props.hpNote.assessment: ''}
+                                            value={this.props.hpNotes.Assesment != undefined ? this.props.hpNotes.Assesment: ''}
                                             // onChange={this.handleChange('assessment')}
                                             className={classes.textField}
                                             margin="normal"
+                                            disabled={true}
                                         />
                                         <TextField
                                             id="standard-multiline-flexible"
@@ -277,10 +293,11 @@ class hpNote extends Component {
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.props.hpNote != undefined ? this.props.hpNote.plan: ''}
+                                            value={this.props.hpNotes.Plan != undefined ? this.props.hpNotes.Plan: ''}
                                             // onChange={this.handleChange('plan')}
                                             className={classes.textField}
                                             margin="normal"
+                                            disabled={true}
                                         />
                                         <TextField
                                             id="standard-multiline-flexible"
@@ -288,10 +305,11 @@ class hpNote extends Component {
                                             multiline
                                             rowsMax="4"
                                             fullWidth
-                                            value={this.props.hpNote != undefined ? this.props.hpNote.treatment: ''}
+                                            value={this.props.hpNotes.Treatment != undefined ? this.props.hpNotes.Treatment: ''}
                                             // onChange={this.handleChange('treatment')}
                                             className={classes.textField}
                                             margin="normal"
+                                            disabled={true}
                                         />
                                         {/* <br /> */}
                                         {/* <br /> */}
@@ -325,7 +343,7 @@ hpNote.propTypes = {
     patientNotes: propTypes.array.isRequired,
     isLoading: propTypes.bool.isRequired,
     hasError: propTypes.bool.isRequired,
-    hpNote: propTypes.array.isRequired,
+    // hpNotes: propTypes.array.isRequired
 }
 const mapStateToProps = (state) => ({
     fetchHPNoteDetail: state.patientNote.fetchHPNoteDetail,
@@ -334,7 +352,12 @@ const mapStateToProps = (state) => ({
     hasError: state.patientNote.hasError,
     totalCount: state.patientNote.totalCount,
     selectedPatient: state.assignments.selectedPatient,
-    hpNote: state.patientNote.medicalHistorys
+    hpNotes: state.patientNote.hpNote,
+    medicalHistorys: state.patientNote.medicalHistorys,
+    familyHistories: state.patientNote.familyHistories,
+    reviewOfSystems: state.patientNote.reviewOfSystems,
+    physicalExams: state.patientNote.physicalExams,
+    personalHistories: state.patientNote.personalHistories
 });
 const mapDispatchToProps = dispatch => ({
     fetchPatientNotes: (url) => dispatch(fetchPatientNotes(url)),
