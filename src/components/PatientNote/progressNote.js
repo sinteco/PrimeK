@@ -79,7 +79,7 @@ class pNote extends Component {
     returnarrays() {
         var a = new Array();
         this.props.progressNotes.map((progressNote) => {
-            a.push([[progressNote.Id], [progressNote.PatientId], [Moment(progressNote.DateTime).format('d MMM')], [progressNote.NoteCategory]])
+            a.push([[progressNote.Id], [progressNote.Patient], [Moment(progressNote.DateTime).format('DD MMM YY')], [progressNote.NoteCategory]])
         });
         return a;
     }
@@ -118,9 +118,9 @@ class pNote extends Component {
         const inputdata = {
             PatientId: id,
             NoteCategory: category,
-            note: '',
+            note: this.state.note,
             DateTime: new Date(),
-            Value: this.state.forms,
+            Value: [],
             Remark: null
         }
         if (id === 0) {
@@ -130,7 +130,7 @@ class pNote extends Component {
         const URL = '/PatientNotes';
         this.setState({ newdialogopen: false });
         console.log(inputdata);
-        this.props.savePatientNote(URL, qs.stringify(inputdata));
+        this.props.savePatientNote(URL, inputdata);
 
         if (!this.props.isLoading && !this.props.hasError) {
             alert("saved Successfully");
@@ -150,7 +150,7 @@ class pNote extends Component {
     render() {
         const { classes } = this.props;
         const { fullScreen } = this.props;
-        { console.log(this.props.noteSubCategory) }
+        // { console.log(this.props.noteSubCategory) }
         return (
             <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>

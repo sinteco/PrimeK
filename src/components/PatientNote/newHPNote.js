@@ -69,7 +69,8 @@ class newHPNote extends Component {
             socialHistory: [],
             reviewofSystems: [],
             physicalExam: [],
-            diagnosisTableNo: 1
+            diagnosisTableNo: 1,
+            disableSave: true
         }
         this.hadlePastMedicalHistory = this.hadlePastMedicalHistory.bind(this);
         this.hadlePastMedicalHistoryRemarks = this.hadlePastMedicalHistoryRemarks.bind(this);
@@ -360,7 +361,7 @@ class newHPNote extends Component {
             FamilyHistory: this.state.familyHistory,
             SocialHistory: this.state.socialHistory,
             ReviewofSystems: this.state.reviewofSystems,
-            PhysicalExam: this.state.physicalExam
+            PhysicalExam: this.state.physicalExam,
         }
         if (id === 0) {
             alert("patient is not selected");
@@ -378,6 +379,18 @@ class newHPNote extends Component {
             [name]: event.target.value,
         });
     };
+    handleKey = () => {
+        if(this.state.chifcompliant!=""){
+            this.setState({
+                disableSave: false
+            })
+        }else{
+            this.setState({
+                disableSave: true
+            })
+        }
+        
+    }
     addDiagnosis = (selected, visit) => {
         // console.log(selected);
         if (selected != "" && visit != "" && !this.state.diagnosis.map(function (e) { return e[1]; }).includes(selected))
@@ -425,12 +438,13 @@ class newHPNote extends Component {
                     <form>
                         <TextField
                             id="standard-multiline-flexible"
-                            label="Chif Compliant"
+                            label="Chif Compliant *"
                             multiline
                             rowsMax="4"
                             fullWidth
                             value={this.state.chifcompliant}
                             onChange={this.handleChange('chifcompliant')}
+                            onKeyUp={this.handleKey}
                             className={classes.textField}
                             margin="normal"
                         />
@@ -582,7 +596,7 @@ class newHPNote extends Component {
                             addDiagnosis={this.addDiagnosis}
                         />
                         <br/>
-                        <Button onClick={this.handleSave} style={{ float: 'right' }} variant="contained" color="primary" className={classes.button}>
+                        <Button disabled={this.state.disableSave} onClick={this.handleSave} style={{ float: 'right' }} variant="contained" color="primary" className={classes.button}>
                             Save
                         </Button>
                     </form>

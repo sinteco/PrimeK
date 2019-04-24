@@ -126,7 +126,7 @@ class pNote extends Component {
         const URL = '/PatientNotes';
         this.setState({ newdialogopen: false });
         console.log(inputdata);
-        this.props.savePatientNote(URL, qs.stringify(inputdata));
+        this.props.savePatientNote(URL, inputdata);
 
         if (!this.props.isLoading && !this.props.hasError) {
             alert("saved Successfully");
@@ -189,6 +189,8 @@ class pNote extends Component {
                                     <DialogContentText>
                                         <form>
                                             {
+                                                this.props.patientnoteDetail == undefined ?
+                                                true :
                                                 this.props.patientnoteDetail.map(
                                                     (note, k) =>
                                                         <TextField
@@ -226,7 +228,8 @@ class pNote extends Component {
                                     <DialogContentText>
                                         <form>
                                             {this.props.isLoading ? <CircularProgress className={classes.progress} /> : ""}
-                                            {
+                                            {this.props.noteSubCategory==undefined?
+                                                true:
                                                 this.props.noteSubCategory.map(
                                                     (item, key) => item.InputType == "" ?
                                                         <TextField

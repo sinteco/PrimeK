@@ -85,7 +85,7 @@ class hpNote extends Component {
         // console.log(NoteCategory[0].NoteCategory);
         const URL = '/HPNotes/GetHPNoteDetail/' + id;
         this.props.fetchHPNoteDetail(URL);
-        console.log(this.props.hpNotes);
+        //console.log(this.props.hpNotes);
         this.setState({
             detaildialog: true
         })

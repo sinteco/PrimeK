@@ -66,6 +66,7 @@ class CustomTable extends React.Component {
     }
     render() {
         const { classes, tableHead, tableData, tableHeaderColor, textBox, radio, disabled, dataTable } = this.props;
+        
         return (
             <div className={classes.tableResponsive}>
                 <Button 
@@ -140,15 +141,30 @@ class CustomTable extends React.Component {
                                         />
                                     </TableCell>
                                     {
-                                        Array.isArray(textBox) && textBox.length === 1?
-                                        alert("j")
+                                        Array(textBox).length==1?
+                                        [...Array(textBox)].map((textb, k) => {
+                                            return (
+                                                    <TableCell>
+                                                        <TextField
+                                                            id="standard-name"
+                                                            disabled={disabled != "" ? disabled : false}
+                                                            className={classes.textField}
+                                                            value={dataTable != undefined ? dataTable[key][k==0?'Remark':'Remark'] : this.state.remark.filter(function (obj) {
+                                                                if(obj.key==key&&obj.row==k)
+                                                                    return obj;
+                                                            }).value}
+                                                            onChange={this.handleRemarkChange('remark', key, k)}
+                                                            margin="normal"
+                                                        />
+                                                    </TableCell>
+                                            );
+                                        })
                                         :
                                         [...Array(textBox)].map((textb, k) => {
                                             return (
                                                     <TableCell>
                                                         <TextField
                                                             id="standard-name"
-                                                            // label="Remark"
                                                             disabled={disabled != "" ? disabled : false}
                                                             className={classes.textField}
                                                             value={dataTable != undefined ? dataTable[key][k==0?'DiagnosisYear':'Remark'] : this.state.remark.filter(function (obj) {

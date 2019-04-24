@@ -77,7 +77,8 @@ class newDHPNote extends Component {
             patientEducation: [],
             exams: [],
             ROS: [],
-            physicalExam: []
+            physicalExam: [],
+            disableSave: true
         }
         this.handleHabits = this.handleHabits.bind(this);
         this.handleProblemList = this.handleProblemList.bind(this);
@@ -103,6 +104,18 @@ class newDHPNote extends Component {
             [name]: event.target.value,
         });
     };
+    handleKey = () => {
+        if (this.state.chifcompliant != "") {
+            this.setState({
+                disableSave: false
+            })
+        } else {
+            this.setState({
+                disableSave: true
+            })
+        }
+
+    }
     addDiagnosis = (selected, visit) => {
         // console.log(selected);
         if (selected != "" && visit != "" && !this.state.diagnosis.map(function (e) { return e[1]; }).includes(selected)) {
@@ -643,6 +656,7 @@ class newDHPNote extends Component {
                             fullWidth
                             value={this.state.chifcompliant}
                             onChange={this.handleChange('chifcompliant')}
+                            onKeyUp={this.handleKey}
                             className={classes.textField}
                             margin="normal"
                         />
@@ -860,7 +874,7 @@ class newDHPNote extends Component {
                             addDiagnosis={this.addDiagnosis}
                         />
                         <br />
-                        <Button onClick={this.handleSave} style={{ float: 'right' }} variant="contained" color="primary" className={classes.button}>
+                        <Button disabled={this.state.disableSave} onClick={this.handleSave} style={{ float: 'right' }} variant="contained" color="primary" className={classes.button}>
                             Save
                         </Button>
                     </form>

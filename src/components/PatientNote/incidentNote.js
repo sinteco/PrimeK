@@ -126,7 +126,7 @@ class pNote extends Component {
         const URL = '/PatientNotes';
         this.setState({ newdialogopen: false });
         console.log(inputdata);
-        this.props.savePatientNote(URL, qs.stringify(inputdata));
+        this.props.savePatientNote(URL, inputdata);
 
         if (!this.props.isLoading && !this.props.hasError) {
             alert("saved Successfully");
