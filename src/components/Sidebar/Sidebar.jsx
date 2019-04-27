@@ -11,16 +11,16 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
+import ArrowRight from '@material-ui/icons/ArrowRight';
 // core components
 import HeaderLinks from "components/Header/HeaderLinks.jsx";
-
 import sidebarStyle from "assets/jss/material-dashboard-react/components/sidebarStyle.jsx";
 import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 import StarBorder from '@material-ui/icons/StarBorder';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+// import InboxIcon from '@material-ui/icons/MoveToInbox';
 
 const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
   // verifies if routeName is the one active (in browser input)
@@ -56,8 +56,12 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
           >{(prop.omenu!=null)?
             <List>
               <ListItem className={whiteFontClasses} button onClick={ohandleClick}>
-                <ListItemIcon className={classes.itemIcon}>
-                  <InboxIcon />
+                <ListItemIcon className={classes.itemIcon2}>
+                    {typeof prop.icon === "string" ? (
+                      <Icon>{prop.icon}</Icon>
+                    ) : (
+                        <prop.icon />
+                      )}
                 </ListItemIcon>
                 <ListItemText
                  disableTypography
@@ -69,8 +73,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
               <Collapse in={omenuopen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   <ListItem button className={classes.nested} component={Link} to="/OrderSheet">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -79,8 +83,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Order Seet</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/MedicationOrder">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -89,8 +93,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Medication Order</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/LabOrder">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -99,8 +103,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Lab Order</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/RadOrder">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -109,8 +113,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Imaging Studies</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/ConseltationOrder">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -119,8 +123,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Conseltation Order</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/ProcedureOrder">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -129,8 +133,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Procedure Order</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/InvestigationOrder">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -144,8 +148,12 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
           : (prop.pnmenu!=null)?
             <List>
               <ListItem className={whiteFontClasses} button onClick={pnhandleClick}>
-                <ListItemIcon className={classes.itemIcon}>
-                  <InboxIcon />
+                <ListItemIcon className={classes.itemIcon2}>
+                      {typeof prop.icon === "string" ? (
+                        <Icon>{prop.icon}</Icon>
+                      ) : (
+                          <prop.icon />
+                        )}
                 </ListItemIcon>
                 <ListItemText
                  disableTypography
@@ -156,19 +164,19 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
               </ListItem>
               <Collapse in={pnmenuopen} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                      <ListItem button className={classes.nested} component={Link} to="/DHPNote">
-                        <ListItemIcon className={classes.itemIcon}>
-                          <StarBorder />
-                        </ListItemIcon>
-                        <ListItemText
-                          disableTypography
-                          className={classes.itemText + whiteFontClasses}
-                          inset
-                          primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Diabetis History And Physical</Typography>} />
-                      </ListItem>
+                  <ListItem button className={classes.nested} component={Link} to="/DHPNote">
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
+                    </ListItemIcon>
+                    <ListItemText
+                      disableTypography
+                      className={classes.itemText + whiteFontClasses}
+                      inset
+                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Diabetis History And Physical</Typography>} />
+                  </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/historyAndPhysical">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -177,8 +185,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>History And Physical</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/progressNote">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -187,8 +195,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Progress Note</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/ConsultationNote">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -197,8 +205,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Consultation Note</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/ProcedureNote">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -207,8 +215,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Procedure Note</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/DeathNote">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -217,8 +225,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Death Note</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/IncidentNote">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -227,8 +235,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Incident Note</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/medicalCertificate">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -237,8 +245,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Medical Certeficate</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/RefferalNote">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -247,8 +255,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Refferal Note</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested}>
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -257,8 +265,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Case Summary</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/RecruitmentMedicalExam">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -267,8 +275,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Recruitment Medical Exam</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/DentalHistory">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -277,8 +285,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Dental History</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/OperationNote">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -287,8 +295,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Operation Note</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/DischargeSummary">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -297,8 +305,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Discharge Summary</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/GeneralCheckUp">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -307,8 +315,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>General CheckUp</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/NeonatalNote">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -317,8 +325,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>Neonatal Note</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/ANCfollowUp">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                      disableTypography
@@ -327,8 +335,8 @@ const Sidebar = ({ pnhandleClick, ohandleClick, ...props}) => {
                      primary={<Typography type="body2" style={{ color: '#FFFFFF' }}>ANC</Typography>} />
                   </ListItem>
                   <ListItem button className={classes.nested} component={Link} to="/PNC">
-                    <ListItemIcon className={classes.itemIcon}>
-                      <StarBorder />
+                    <ListItemIcon className={classes.itemIcon3}>
+                      <ArrowRight />
                     </ListItemIcon>
                     <ListItemText
                       disableTypography

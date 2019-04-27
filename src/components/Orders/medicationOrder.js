@@ -20,7 +20,14 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import withMobileDialog from '@material-ui/core/withMobileDialog';
-import EditableTable from '../Table/EditableTable';
+import TextField from '@material-ui/core/TextField';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import Input from '@material-ui/core/Input';
 
 const styles = {
     cardCategoryWhite: {
@@ -60,8 +67,14 @@ class medicationOrder extends Component {
             offset: 0,
             page: 1,
             rows: [],
+            selectedDate: Date()
         }
     }
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
     handleClickOpen = () => {
         this.setState({ open: true });
     };
@@ -130,7 +143,7 @@ class medicationOrder extends Component {
                     </Card>
                     <Dialog
                             fullScreen={fullScreen}
-                            maxWidth = {'lg'}
+                            // maxWidth = {'lg'}
                             open={this.state.open}
                             onClose={this.handleClose}
                             aria-labelledby="responsive-dialog-title"
@@ -139,9 +152,72 @@ class medicationOrder extends Component {
                             <DialogTitle id="responsive-dialog-title">{"New Medication Order"}</DialogTitle>
                             <DialogContent>
                                 <DialogContentText>
-                                    < EditableTable
-                                        handleSetstate={this.handleSetstate}
-                                    ></EditableTable>
+                                <form>
+                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <DatePicker
+                                            margin="normal"
+                                            label="Order Date Time"
+                                            value={this.state.selectedDate}
+                                            onChange={this.handleDateChange}
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                    <TextField
+                                        id="standard-multiline-flexible"
+                                        label="Dose *"
+                                        // multiline
+                                        // rowsMax="4"
+                                        // fullWidth
+                                        value={this.state.chifcompliant}
+                                        onChange={this.handleChange('chifcompliant')}
+                                        // onKeyUp={this.handleKey}
+                                        className={classes.textField}
+                                        margin="normal"
+                                    />
+                                    <FormControl className={classes.formControl}>
+                                        <InputLabel htmlFor="frequency">Frequency</InputLabel>
+                                        <Select
+                                            value={this.state.ClinicalStaging}
+                                            onChange={this.handleChange('ClinicalStaging')}
+                                        >
+                                            <MenuItem value="Stage I">Stage I</MenuItem>
+                                            <MenuItem value="Stage II">Stage II</MenuItem>
+                                            <MenuItem value="Stage III">Stage III</MenuItem>
+                                            <MenuItem value="Stage IV">Stage IV</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                    <FormControl className={classes.formControl}>
+                                        <InputLabel htmlFor="frequency">Route</InputLabel>
+                                        <Select
+                                            value={this.state.ClinicalStaging}
+                                            onChange={this.handleChange('ClinicalStaging')}
+                                        >
+                                            <MenuItem value="Stage I">Stage I</MenuItem>
+                                            <MenuItem value="Stage II">Stage II</MenuItem>
+                                            <MenuItem value="Stage III">Stage III</MenuItem>
+                                            <MenuItem value="Stage IV">Stage IV</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <DatePicker
+                                            margin="normal"
+                                            label="Started Date"
+                                            value={this.state.selectedDate}
+                                            onChange={this.handleDateChange}
+                                        />
+                                    </MuiPickersUtilsProvider>
+                                    <TextField
+                                        id="standard-multiline-flexible"
+                                        label="Number of Days *"
+                                        // multiline
+                                        // rowsMax="4"
+                                        // fullWidth
+                                        value={this.state.chifcompliant}
+                                        onChange={this.handleChange('chifcompliant')}
+                                        // onKeyUp={this.handleKey}
+                                        className={classes.textField}
+                                        margin="normal"
+                                    />
+                                </form>
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>

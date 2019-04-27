@@ -150,6 +150,28 @@ const sidebarStyle = theme => ({
     verticalAlign: "middle",
     color: "rgba(255, 255, 255, 0.8)"
   },
+  itemIcon2: {
+    width: "24px",
+    height: "30px",
+    fontSize: "24px",
+    lineHeight: "30px",
+    float: "left",
+    marginLeft: "15px",
+    textAlign: "center",
+    verticalAlign: "middle",
+    color: "rgba(255, 255, 255, 0.8)"
+  },
+  itemIcon3: {
+    width: "24px",
+    height: "30px",
+    fontSize: "24px",
+    lineHeight: "30px",
+    float: "left",
+    marginLeft: "30px",
+    textAlign: "center",
+    verticalAlign: "middle",
+    color: "rgba(255, 255, 255, 0.8)"
+  },
   itemText: {
     ...defaultFont,
     margin: "0",

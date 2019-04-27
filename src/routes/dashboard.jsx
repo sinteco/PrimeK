@@ -7,6 +7,11 @@ import BubbleChart from "@material-ui/icons/BubbleChart";
 import LocationOn from "@material-ui/icons/LocationOn";
 import Notifications from "@material-ui/icons/Notifications";
 import Unarchive from "@material-ui/icons/Unarchive";
+import AssignmentTurnedIn from '@material-ui/icons/AssignmentTurnedIn';
+import Assignment from '@material-ui/icons/Assignment';
+import Event from '@material-ui/icons/Event';
+import Note from '@material-ui/icons/Note';
+import Reorder from '@material-ui/icons/Reorder';
 // core components/views
 import DashboardPage from "views/Dashboard/Dashboard.jsx";
 import UserProfile from "views/UserProfile/UserProfile.jsx";
@@ -25,7 +30,7 @@ const dashboardRoutes = [
   {
     path: "/dashboard",
     sidebarName: "Dashboard",
-    navbarName: "Material Dashboard",
+    navbarName: "Prime Care EHR Dashboard",
     icon: Dashboard,
     component: DashboardPage
   },
@@ -33,21 +38,21 @@ const dashboardRoutes = [
     path: "/Assignments",
     sidebarName: "Assignments",
     navbarName: "Assignments",
-    icon: Unarchive,
+    icon: Assignment,
     component: Assignments
   },
   {
     path: "/VitalSigns",
     sidebarName: "Vital Signs",
     navbarName: "Vital Signs",
-    icon: Unarchive,
+    icon: AssignmentTurnedIn,
     component: VitalSigns,
   },
   {
     path: "/OrderSheet",
     sidebarName: "Orders",
     navbarName: "Orders",
-    icon: Unarchive,
+    icon: Reorder,
     component: OrderSheet,
     omenu: true
   },
@@ -55,7 +60,7 @@ const dashboardRoutes = [
     path: "/PatientNote",
     sidebarName: "Patient Note",
     navbarName: "Patient Note",
-    icon: Unarchive,
+    icon: Note,
     component: PatientNote,
     pnmenu: true
   },
@@ -63,50 +68,8 @@ const dashboardRoutes = [
     path: "/Appointment",
     sidebarName: "Appointment",
     navbarName: "Appointment",
-    icon: Unarchive,
+    icon: Event,
     component: Appointment
-  },
-  {
-    path: "/user",
-    sidebarName: "User Profile",
-    navbarName: "Profile",
-    icon: Person,
-    component: UserProfile
-  },
-  {
-    path: "/table",
-    sidebarName: "Table List",
-    navbarName: "Table List",
-    icon: "content_paste",
-    component: TableList
-  },
-  {
-    path: "/typography",
-    sidebarName: "Typography",
-    navbarName: "Typography",
-    icon: LibraryBooks,
-    component: Typography
-  },
-  {
-    path: "/icons",
-    sidebarName: "Icons",
-    navbarName: "Icons",
-    icon: BubbleChart,
-    component: Icons
-  },
-  {
-    path: "/maps",
-    sidebarName: "Maps",
-    navbarName: "Map",
-    icon: LocationOn,
-    component: Maps
-  },
-  {
-    path: "/notifications",
-    sidebarName: "Notifications",
-    navbarName: "Notifications",
-    icon: Notifications,
-    component: NotificationsPage
   },
   { 
     redirect: true,
